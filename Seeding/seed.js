@@ -28,30 +28,25 @@ const buildHistoricPrice = (count, deltaVariation, price) => {
 	return priceArray;
 };
 
-const buildOneStock = () => {
-	let stock = {};
-	const startPrice = Math.random() * 200;
-	stock.name = names.shift();
-	stock.symbol = symbols.shift();
-	stock.analystHold = Math.floor(Math.random() * 100);
-	stock.robinhoodOwners = Math.floor(Math.random() * 200000);
-	stock.historicPrice1D = buildHistoricPrice(108, 6, startPrice);
-	stock.historicPrice1W = buildHistoricPrice(198, 6, startPrice);
-	stock.historicPrice1M = buildHistoricPrice(108, 6, startPrice);
-	stock.historicPrice3M = buildHistoricPrice(108, 6, startPrice);
-	stock.historicPrice1Y = buildHistoricPrice(108, 6, startPrice);
-	stock.historicPrice5Y = buildHistoricPrice(108, 6, startPrice);
-  allStocks.push(stock);
-};
-
-const buildAllStocks = () => {
+const buildStocks = () => {
 	buildSymbols();
 	for (let i = 0; i < 100; i++) {
-		buildOneStock();
-
+		let stock = {};
+		const startPrice = Math.random() * 200;
+		stock.name = names.shift();
+		stock.symbol = symbols.shift();
+		stock.analystHold = Math.floor(Math.random() * 100);
+		stock.robinhoodOwners = Math.floor(Math.random() * 200000);
+		stock.historicPrice1D = buildHistoricPrice(108, 6, startPrice);
+		stock.historicPrice1W = buildHistoricPrice(198, 6, startPrice);
+		stock.historicPrice1M = buildHistoricPrice(108, 6, startPrice);
+		stock.historicPrice3M = buildHistoricPrice(108, 6, startPrice);
+		stock.historicPrice1Y = buildHistoricPrice(108, 6, startPrice);
+		stock.historicPrice5Y = buildHistoricPrice(108, 6, startPrice);
+		allStocks.push(stock);
 	}
 };
 
-buildAllStocks();
+buildStocks();
 db.save(allStocks);
 
