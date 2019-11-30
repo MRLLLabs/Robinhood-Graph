@@ -78,6 +78,7 @@ class Graph extends React.Component {
 	}
 
 	changeView(option) {
+		console.log('changing view');
 		this.setState({
 			view: option
 		})

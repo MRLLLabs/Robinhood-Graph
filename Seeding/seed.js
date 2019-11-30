@@ -1,21 +1,20 @@
 const db = require('../Database/database.js');
+const d3 = require('d3');
 
 let allStocks = [];
-const firstLetter = ['Y', 'T', 'X', 'A', 'E'];
-const secondLetter = ['N', 'J', 'K', 'L', 'F'];
-const thirdLetter = ['Z', 'U', 'M', 'W'];
+const names = [];
 const symbols = [];
-const names = ['Youtags', 'Mudo', 'Plajo', 'Wikizz', 'Yakijo', 'Rhynyx', 'Photofeed', 'Skyble', 'InnoZ', 'Blogpad', 'Skippad', 'Blogtags', 'Wordware', 'Rhynoodle', 'Zoovu', 'Ntag', 'Demivee', 'Dynava', 'Photofeed', 'Voomm', 'Cogibox', 'Tagopia', 'Demizz', 'Meejo', 'Layo', 'Zoomlounge', 'Meevee', 'Buzzster', 'Twitterbeat', 'Tazz', 'Plambee', 'Ntags', 'Thoughtworks', 'Jaxworks', 'Topicware', 'Gabspot', 'Livetube', 'Tanoodle', 'Quimm', 'Trudoo', 'Camido', 'Kaymbo', 'Jaloo', 'Twitterbridge', 'Topicshots', 'Realmix', 'Leexo', 'Yabox', 'Yodoo', 'Abata', 'Twitterbeat', 'Mydo', 'Wikizz', 'Zoomlounge', 'Realbuzz', 'Kare', 'Jazzbuzz', 'Linkbuzz', 'Katz', 'Skivee', 'Babbleopia', 'Brainlounge', 'Voonder', 'Fadeo', 'Muxo', 'Skivee', 'Realfire', 'Avavee', 'Livepath', 'Mybuzz', 'Jayo', 'Jatri', 'Avamm', 'Browsedrive', 'Jabbertype', 'Devify', 'Yabox', 'Fatz', 'Kwideo', 'Voomm', 'Gigazoom', 'Riffpath', 'Blogtags', 'Shuffledrive', 'Babbleopia', 'Mydo', 'Devpulse', 'Quinu', 'Mydo', 'Oba', 'Buzzshare', 'Voomm', 'Plambee', 'Realcube', 'Yacero', 'Skyvu', 'Skinder', 'Topicware', 'Mydeo', 'Minjago'];
 
 
-const buildSymbols = () => {
-	for (let i = 0; i < firstLetter.length; i++) {
-		for (let j = 0; j < secondLetter.length; j++) {
-			for (let k = 0; k < thirdLetter.length; k++) {
-				symbols.push(`${firstLetter[i]}${secondLetter[j]}${thirdLetter[k]}`);
-			} 
-		} 
-	} 
+const loadNames = () => {
+	d3.csv("./Seeding/Companies.csv", function(data) {
+    for (var i = 0; i < data.length; i++) {
+				console.log(data[i].Symbol);
+				symbols.push(data[i].Symbol);
+        console.log(data[i].Name);
+				names.push(data[i].Name);
+    }
+});
 };
 
 const buildHistoricPrice = (count, deltaVariation, price) => {
@@ -29,7 +28,7 @@ const buildHistoricPrice = (count, deltaVariation, price) => {
 };
 
 const buildStocks = () => {
-	buildSymbols();
+	loadNames();
 	for (let i = 0; i < 100; i++) {
 		let stock = {};
 		const startPrice = Math.random() * 200;

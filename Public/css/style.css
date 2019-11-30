@@ -5,3 +5,11 @@ body {
   background: #0e3040;
   color: #67809f;
 }
+.selectedTab {
+  background: black;
+  color: #52f797;
+}
+.unselectedTab {
+  background: black;
+  color: white;
+}
