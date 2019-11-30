@@ -6,6 +6,11 @@ class App extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			id: null,
+			name: null,
+			symbol: null,
+			analystHold: null,
+			robinhoodOwners: null,
 			historicPrices1D: [],
 			historicPrices1W: [],
 			historicPrices1M: [],
@@ -20,15 +25,18 @@ class App extends React.Component {
 		fetch('/stocks?q=1', {
 			method: 'GET'
 		})
+		.then((response) => {
+			return response.json();
+		})
 		.then((data) => {
-			console.log('data:', data)
-			console.log('success returned');
+			this.setState(data[0]);
 		})
 	}
 
 	render() {
 		return (
 			<div>
+				{this.state.name}
 				<Header state={this.state}/>
 				<Graph state={this.state}/>
 			</div>

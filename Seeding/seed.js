@@ -33,6 +33,7 @@ const buildStocks = () => {
 	for (let i = 0; i < 100; i++) {
 		let stock = {};
 		const startPrice = Math.random() * 200;
+		stock.id = i + 1;
 		stock.name = names.shift();
 		stock.symbol = symbols.shift();
 		stock.analystHold = Math.floor(Math.random() * 100);

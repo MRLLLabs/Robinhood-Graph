@@ -9,6 +9,7 @@ db.once('open', () => {
 });
 
 const stockSchema = new mongoose.Schema({
+  id: Number,
   name: String,
   symbol: String,
   analystHold: Number,
@@ -47,9 +48,9 @@ const save = (data) => {
 const find = (id, endCallback) => {
   console.log(id);
   Stock.find({id: id}, (err, stock) => {
-    if (err) throw err;
-    console.log(stock);
-    endCallback();
+    if (err) {throw err; }
+    console.log('made db search');
+    endCallback(stock);
   })
 }
 
