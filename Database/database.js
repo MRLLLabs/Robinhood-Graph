@@ -44,5 +44,15 @@ const save = (data) => {
 	});
 };
 
+const find = (id, endCallback) => {
+  console.log(id);
+  Stock.find({id: id}, (err, stock) => {
+    if (err) throw err;
+    console.log(stock);
+    endCallback();
+  })
+}
+
 
 module.exports.save = save;
+module.exports.find = find;
