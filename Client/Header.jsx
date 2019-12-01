@@ -7,7 +7,7 @@ var Header = (props) => {
 	let gainLossPercent = gainLoss / currentPriceArray[0];
 	return (
 		<div id="Header">
-			<span>{props.state.name}</span>
+			<span>{`${props.state.name} (${props.state.symbol})`}</span>
 			<div id="ticker">0</div>
 			<div>{`${gainlossSymbol}$${Math.abs(gainLoss).toFixed(2)} (${gainlossSymbol}${Math.abs(gainLossPercent).toFixed(2)}%)`}</div>
 		</div>
