@@ -10,7 +10,8 @@ app.get('/stocks', (req, res) => {
   const callback = (data) => {
     res.end(JSON.stringify(data));
   }
-  db.find(req.query.q, callback);
+  stockId = req.query.q ? req.query.q : '4';
+  db.find(stockId, callback);
 
 })
 
