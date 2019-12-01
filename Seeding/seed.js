@@ -7,7 +7,7 @@ const names = [];
 const symbols = [];
 
 
-const loadNames = () => {
+const loadNames = new Promise((resolve, reject) => {
 	fs.readFile('./Seeding/Companies.csv', 'utf8', function (err, data) {
 		if (err) throw err
 		var dataArray = data.split(/\r?\n/);
@@ -16,8 +16,9 @@ const loadNames = () => {
 			symbols.push(dataArray[i][0]);
 			names.push(dataArray[i][1]);
 		}
+		resolve();
 	});
-};
+});
 
 const buildHistoricPrice = (count, deltaVariation, price) => {
 	let newPrice = price;
@@ -29,26 +30,31 @@ const buildHistoricPrice = (count, deltaVariation, price) => {
 	return priceArray;
 };
 
-const buildStocks = () => {
-	loadNames();
-	for (let i = 0; i < 100; i++) {
-		let stock = {};
-		const startPrice = Math.random() * 200;
-		stock.id = i + 1;
-		stock.name = names.shift();
-		stock.symbol = symbols.shift();
-		stock.analystHold = Math.floor(Math.random() * 100);
-		stock.robinhoodOwners = Math.floor(Math.random() * 200000);
-		stock.historicPrice1D = buildHistoricPrice(108, 6, startPrice);
-		stock.historicPrice1W = buildHistoricPrice(198, 6, startPrice);
-		stock.historicPrice1M = buildHistoricPrice(108, 6, startPrice);
-		stock.historicPrice3M = buildHistoricPrice(108, 6, startPrice);
-		stock.historicPrice1Y = buildHistoricPrice(108, 6, startPrice);
-		stock.historicPrice5Y = buildHistoricPrice(108, 6, startPrice);
-		allStocks.push(stock);
-	}
+const buildStocks = (callback) => {
+	loadNames.then(() => {
+		for (let i = 0; i < 100; i++) {
+			let stock = {};
+			const startPrice = Math.random() * 200;
+			stock.id = i + 1;
+			stock.name = names.shift();
+			stock.symbol = symbols.shift();
+			stock.analystHold = Math.floor(Math.random() * 100);
+			stock.robinhoodOwners = Math.floor(Math.random() * 200000);
+			stock.price = startPrice;
+			stock.historicPrice1D = buildHistoricPrice(108, 6, startPrice);
+			stock.historicPrice1W = buildHistoricPrice(198, 6, startPrice);
+			stock.historicPrice1M = buildHistoricPrice(108, 6, startPrice);
+			stock.historicPrice3M = buildHistoricPrice(108, 6, startPrice);
+			stock.historicPrice1Y = buildHistoricPrice(108, 6, startPrice);
+			stock.historicPrice5Y = buildHistoricPrice(108, 6, startPrice);
+			allStocks.push(stock);
+		}
+		callback();
+	})
 };
 
-buildStocks();
-db.save(allStocks);
+const saveCB = () => {
+	db.save(allStocks);
+}
 
+buildStocks(saveCB);

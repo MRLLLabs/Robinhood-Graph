@@ -14,6 +14,7 @@ const stockSchema = new mongoose.Schema({
   symbol: String,
   analystHold: Number,
   robinhoodOwners: Number,
+  price: Number,
   historicPrice1D: [{
     type: Number,
 	}],
@@ -46,10 +47,8 @@ const save = (data) => {
 };
 
 const find = (id, endCallback) => {
-  console.log(id);
   Stock.find({id: id}, (err, stock) => {
     if (err) {throw err; }
-    console.log('made db search');
     endCallback(stock);
   })
 }

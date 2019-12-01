@@ -3,14 +3,16 @@ body {
   color: white;
 }
 #chart {
-  background: #0e3040;
-  color: #67809f;
+  
 }
 .selectedTab {
   background: black;
-  color: #52f797;
+  color: #21ce99;
 }
 .unselectedTab {
   background: black;
-  color:  #21ce99;
+  color:white;
 }
+/* #f45531 Red Downward Color */
+/* #21ce99 Green Upward Color */
+/* #1b1b1d Background Color */

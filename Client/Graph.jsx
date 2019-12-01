@@ -1,14 +1,11 @@
 import React from 'react';
 import d3 from 'd3';
-import GraphTab from './GraphTab.jsx'
+import ChartTab from './ChartTab.jsx'
+import Expand from './Expand.jsx';
 
 class Graph extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			view: '1D'
-		}
-		this.changeView = this.changeView.bind(this);
 	}
 
 	componentDidMountss() {
@@ -77,20 +74,14 @@ class Graph extends React.Component {
 		});
 	}
 
-	changeView(option) {
-		console.log('changing view');
-		this.setState({
-			view: option
-		})
-	}
-
-
+	
 
 	render() {
 		return (
 			<div>
-				<div id="chart"></div>
-				<GraphTab changeView={this.changeView} view={this.state.view} />
+				<div id="chart">CHART</div>
+				<ChartTab changeView={this.props.changeView} view={this.props.state.view} />
+				<Expand />
 			</div>
 		)
 	}
