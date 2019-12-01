@@ -1,5 +1,6 @@
 const db = require('../Database/database.js');
 const d3 = require('d3');
+const fs = require('fs');
 
 let allStocks = [];
 const names = [];
@@ -7,14 +8,15 @@ const symbols = [];
 
 
 const loadNames = () => {
-	d3.csv("./Seeding/Companies.csv", function(data) {
-    for (var i = 0; i < data.length; i++) {
-				console.log(data[i].Symbol);
-				symbols.push(data[i].Symbol);
-        console.log(data[i].Name);
-				names.push(data[i].Name);
-    }
-});
+	fs.readFile('./Seeding/Companies.csv', 'utf8', function (err, data) {
+		if (err) throw err
+		var dataArray = data.split(/\r?\n/);
+		for (var i = 1; i < dataArray.length; i++) {
+			dataArray[i] = dataArray[i].split(',');
+			symbols.push(dataArray[i][0]);
+			names.push(dataArray[i][1]);
+		}
+	});
 };
 
 const buildHistoricPrice = (count, deltaVariation, price) => {
