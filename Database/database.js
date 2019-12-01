@@ -15,44 +15,28 @@ const stockSchema = new mongoose.Schema({
   analystHold: Number,
   robinhoodOwners: Number,
   price: Number,
-  historicPrice1D: [{
-    type: Number,
-	}],
-  historicPrice1W: [{
-    type: Number,
-	}],
-  historicPrice1M: [{
-    type: Number,
-	}],
-  historicPrice3M: [{
-    type: Number,
-	}],
-  historicPrice1Y: [{
-    type: Number,
-	}],
-  historicPrice5Y: [{
-    type: Number,
-	}],
+  historicPrice1D: [{ type: Number }],
+  historicPrice1W: [{ type: Number }],
+  historicPrice1M: [{ type: Number }],
+  historicPrice3M: [{ type: Number }],
+  historicPrice1Y: [{ type: Number }],
+  historicPrice5Y: [{ type: Number }],
 });
 
 const Stock = mongoose.model('Stock', stockSchema);
 
-const save = (data) => {
-  data.map((stock) => {
-		const newStock = new Stock(stock);
-    newStock.save((err, newStock) => {
+module.exports.save = (stocksArray) => {
+  stocksArray.map((singleStock) => {
+		const newStock = new Stock(singleStock);
+    newStock.save((err, stock) => {
       if (err) throw err;
     });
 	});
 };
 
-const find = (id, endCallback) => {
+module.exports.find = (id, endCallback) => {
   Stock.find({id: id}, (err, stock) => {
     if (err) {throw err; }
     endCallback(stock);
   })
 }
-
-
-module.exports.save = save;
-module.exports.find = find;
