@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon Server/server.js --inspect",
+    "start": "nodemon server/server.js --inspect",
     "build": "webpack -w -d",
-    "seed": "node Seeding/seed.js",
+    "seed": "node seeding/seed.js",
     "test": "jest --coverage",
     "test:watch": "jest --watch --coverage"
   },
@@ -16,6 +16,7 @@
   "dependencies": {
     "countup.js": "^2.0.4",
     "d3": "^5.14.2",
+    "d3fc": "^14.0.59",
     "express": "^4.17.1",
     "jquery": "^3.4.1",
     "mongoose": "^5.7.13",
