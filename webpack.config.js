@@ -14,13 +14,14 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env', '@babel/preset-react']
-          }
-        }
-      }
-    ]
+            presets: ['@babel/preset-env', '@babel/preset-react'],
+            // plugins: ["syntax-class-properties", "transform-class-properties"]
+          },
+        },
+      },
+    ],
   },
   resolve: {
-    extensions: ['.jsx','.js']
-  }
+    extensions: ['.jsx', '.js'],
+  },
 };

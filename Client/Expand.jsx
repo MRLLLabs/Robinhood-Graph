@@ -3,10 +3,8 @@ import React from 'react';
 var Expand = (props) => {
 	return (
 		<div id="Expand">
-			<a>
-				<div>Expand</div>
-				<img ></img>
-			</a>
+			Expand
+			<img src=""></img>
 		</div>
 	)
 }

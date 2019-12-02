@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/test', { useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect('mongodb://localhost/test', { useNewUrlParser: true, useUnifiedTopology: true });
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -27,7 +27,7 @@ const Stock = mongoose.model('Stock', stockSchema);
 
 module.exports.save = (stocksArray) => {
   stocksArray.map((singleStock) => {
-		const newStock = new Stock(singleStock);
+    const newStock = new Stock(singleStock);
     newStock.save((err, stock) => {
       if (err) throw err;
     });
@@ -35,8 +35,8 @@ module.exports.save = (stocksArray) => {
 };
 
 module.exports.find = (id, endCallback) => {
-  Stock.find({id: id}, (err, stock) => {
-    if (err) {throw err; }
+  Stock.find({ id }, (err, stock) => {
+    if (err) { throw err; }
     endCallback(stock);
-  })
-}
+  });
+};
