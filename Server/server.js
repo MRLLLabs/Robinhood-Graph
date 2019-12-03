@@ -1,11 +1,11 @@
-const express = require('express');
+const express = require('../node_modules/express');
 const path = require('path');
-const db = require('../Database/database.js');
+const db = require('../database/database.js');
 
 const port = 3000;
 const app = express();
 
-app.use('/', express.static(path.resolve(__dirname, '../Public')));
+app.use('/', express.static(path.resolve(__dirname, '../public')));
 
 app.get('/stocks', (req, res) => {
   const callback = (data) => {

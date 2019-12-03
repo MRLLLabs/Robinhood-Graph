@@ -1,10 +1,10 @@
 const path = require('path');
 
 module.exports = {
-  entry: './Client/Index.jsx',
+  entry: './client/components/Index.jsx',
   output: {
     filename: 'main.js',
-    path: path.resolve(__dirname, 'Public'),
+    path: path.resolve(__dirname, 'public'),
   },
   module: {
     rules: [

@@ -1,5 +1,5 @@
-const db = require('../Database/database.js');
-const d3 = require('d3');
+const db = require('../database/database.js');
+const d3 = require('./node_modules/d3');
 const fs = require('fs');
 
 let allStocks = [];
