@@ -22,7 +22,7 @@ body {
 
 .headerButton {
   padding: 10px 10px 10px 36px;
-  background: black url() 10px 10px no-repeat;
+  background: black url('../client/Img/analyst-off.png') 10px 10px no-repeat;
   border-radius: 16px;
   border: 1px solid #171718;
   color: white;
