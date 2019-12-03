@@ -1,17 +1,17 @@
 const db = require('../database/database.js');
-const d3 = require('./node_modules/d3');
 const fs = require('fs');
 
 let allStocks = [];
 const names = [];
 const symbols = [];
+const tags = [];
 
 
 const loadNames = new Promise((resolve, reject) => {
 	fs.readFile('./Seeding/Companies.csv', 'utf8', function (err, data) {
 		if (err) throw err
-		var dataArray = data.split(/\r?\n/);
-		for (var i = 1; i < dataArray.length; i++) {
+		let dataArray = data.split(/\r?\n/);
+		for (let i = 1; i < dataArray.length; i++) {
 			dataArray[i] = dataArray[i].split(',');
 			symbols.push(dataArray[i][0]);
 			names.push(dataArray[i][1]);
@@ -26,6 +26,9 @@ const buildHistoricPrice = (count, deltaVariation, price) => {
 	for (let i = 0; i < count; i++) {
 		priceArray.push(newPrice);
 		newPrice += ((Math.random() - 0.5) * deltaVariation * 2);
+		if (newPrice <= 0) {
+			newPrice = -1 * newPrice;
+		}
 	}
 	return priceArray;
 };
@@ -41,11 +44,11 @@ const buildStocks = (callback) => {
 			stock.analystHold = Math.floor(Math.random() * 100);
 			stock.robinhoodOwners = Math.floor(Math.random() * 200000);
 			stock.price = startPrice;
-			stock.historicPrice1D = buildHistoricPrice(108, 6, startPrice);
-			stock.historicPrice1W = buildHistoricPrice(198, 6, startPrice);
-			stock.historicPrice1M = buildHistoricPrice(108, 6, startPrice);
-			stock.historicPrice3M = buildHistoricPrice(108, 6, startPrice);
-			stock.historicPrice1Y = buildHistoricPrice(108, 6, startPrice);
+			stock.historicPrice1D = buildHistoricPrice(108, .2, startPrice);
+			stock.historicPrice1W = buildHistoricPrice(108, .5, startPrice); //198 data points
+			stock.historicPrice1M = buildHistoricPrice(108, 1, startPrice);
+			stock.historicPrice3M = buildHistoricPrice(108, 4, startPrice);
+			stock.historicPrice1Y = buildHistoricPrice(108, 4, startPrice);
 			stock.historicPrice5Y = buildHistoricPrice(108, 6, startPrice);
 			allStocks.push(stock);
 		}
