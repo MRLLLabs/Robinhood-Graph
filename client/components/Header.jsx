@@ -13,7 +13,7 @@ const Header = (props) => {
 				<button className="headerButton" id="robinhoodOwners">{props.state.robinhoodOwners.toLocaleString()}</button>
 			</div>
 			<div class="ticker">$<span id="ticker">0</span></div>
-			<div>{`${gainlossSymbol}$${Math.abs(gainLoss).toFixed(2)} (${gainlossSymbol}${Math.abs(gainLossPercent).toFixed(2)}%)`}</div>
+			<div>{`${gainlossSymbol}$${Math.abs(gainLoss).toFixed(2)} (${gainlossSymbol}${Math.abs(gainLossPercent * 100).toFixed(2)}%)`}</div>
 		</div>
 	);
 };

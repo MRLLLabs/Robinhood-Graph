@@ -49,7 +49,6 @@ class App extends React.Component {
 	}
 
 	initializeTicker() {
-		console.log(this.state.historicPrice1D[this.state.historicPrice1D.length-1].toFixed(2));
 		const tickerEl = document.getElementById('ticker');
 		this.ticker = new Odometer({
 			el: tickerEl,
