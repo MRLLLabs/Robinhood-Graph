@@ -22,18 +22,32 @@ body {
 
 .headerButton {
   padding: 10px 10px 10px 36px;
-  background: black url('../client/Img/analyst-off.png') 10px 10px no-repeat;
   border-radius: 16px;
   border: 1px solid #171718;
   color: white;
+  background-size: 20% 10%;
 }
 
 .headerButton:hover {
-  background-color: #171718;        
+  color: black;        
 }
 
 .headerButton:active{
   border-style: outset;
+}
+
+#analystHold {
+  background: url('/img/analyst-off.png') no-repeat;
+}
+#analystHold:hover {
+  background: white url('/img/analyst-on.png') 10px 10px no-repeat;
+}
+
+#robinhoodOwners {
+  background: url('/img/owners-off.png') 10px 10px no-repeat;
+}
+#robinhoodOwners:hover {
+  background: white url('/img/owners-on.png') 10px 10px no-repeat;
 }
 
 /* #f45531 Red Downward Color */

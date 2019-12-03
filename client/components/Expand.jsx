@@ -4,7 +4,7 @@ var Expand = (props) => {
 	return (
 		<div id="Expand">
 			Expand
-			<img src=""></img>
+			<img src="/img/expand-on.png"></img>
 		</div>
 	)
 }
