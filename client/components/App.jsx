@@ -4,6 +4,7 @@ import path from 'path';
 import { CountUp } from 'countup.js';
 import Header from './Header.jsx';
 import Graph from './Graph.jsx';
+import buildChart from '../methods/buildChart.js';
 
 class App extends React.Component {
 	constructor(props) {
@@ -31,6 +32,7 @@ class App extends React.Component {
 	componentDidMount() {
 		this.populateStocks(() => {
 			this.initializeTicker();
+			buildChart(this.state[`historicPrice${this.state.view}`], this.state.view, this.updateTicker);
 		});
 	}
 
@@ -49,20 +51,22 @@ class App extends React.Component {
 	initializeTicker() {
 		const options = {
 			decimalPlaces: 2,
+			duration: .5,
+			useEasing: true,
 		};
 		this.ticker = new CountUp('ticker', this.state.price, options);
 		this.ticker.start();
 	}
 
 	updateTicker(price) {
-		this.ticker.update(price);
+		this.ticker.update(price.toFixed(2));
 	}
 	
 	render() {
 		return (
 			<div>
 				<Header state={this.state} />
-				<Graph state={this.state} updateTicker={this.updateTicker} changeView={this.changeView} />
+				<Graph state={this.state} changeView={this.changeView} />
 			</div>
 		);
 	}

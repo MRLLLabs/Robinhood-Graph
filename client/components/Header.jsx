@@ -2,9 +2,9 @@ import React from 'react';
 
 const Header = (props) => {
 	let currentPriceArray = props.state[`historicPrice${props.state.view}`];
-	let gainLoss = currentPriceArray[0] - currentPriceArray[currentPriceArray.length - 1];
+	let gainLoss = currentPriceArray[currentPriceArray.length - 1] - currentPriceArray[0];
 	let gainlossSymbol = gainLoss >= 0 ? '+' : '-';
-	let gainLossPercent = gainLoss / currentPriceArray[0];
+	let gainLossPercent = gainLoss / currentPriceArray[currentPriceArray.length - 1];
 	return (
 		<div id="Header">
 			<span>{`${props.state.name} (${props.state.symbol})`}</span>
