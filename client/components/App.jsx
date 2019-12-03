@@ -39,7 +39,7 @@ class App extends React.Component {
 	changeView(option) {
 		this.setState({
 			view: option,
-		});
+		}, () => {buildChart(this.state[`historicPrice${this.state.view}`], this.state.view, this.updateTicker)});
 	}
 	
 	populateStocks(callback) {
@@ -49,13 +49,16 @@ class App extends React.Component {
 	}
 
 	initializeTicker() {
-		const options = {
-			decimalPlaces: 2,
-			duration: .5,
-			useEasing: true,
-		};
-		this.ticker = new CountUp('ticker', this.state.price, options);
-		this.ticker.start();
+		console.log(this.state.historicPrice1D[this.state.historicPrice1D.length-1].toFixed(2));
+		const tickerEl = document.getElementById('ticker');
+		this.ticker = new Odometer({
+			el: tickerEl,
+			value: 100.04,
+			// Any option (other than auto and selector) can be passed in here
+			duration: 400,
+			format: '(,ddd).dd',
+		});
+		// this.ticker.render();
 	}
 
 	updateTicker(price) {
