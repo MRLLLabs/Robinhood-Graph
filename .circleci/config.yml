@@ -5,12 +5,15 @@ jobs:
       - image: debian:stretch
 
     steps:
-      - checkout
-
-      - run:
-          name: Greeting
-          command: echo Hello, world.
-
-      - run:
-          name: Print the Current Time
-          command: date
+      - run: 
+          command: |
+            mkdir -p ~/reports
+            eslint ./client/ --format junit --output-file ~/reports/eslintCli.xml
+            eslint ./server/ --format junit --output-file ~/reports/eslintServ.xml
+            eslint ./database/ --format junit --output-file ~/reports/eslintDb.xml
+            eslint ./seeding/ --format junit --output-file ~/reports/eslintSeed.xml
+          when: always
+      - store_test_results:
+          path: ~/reports
+      - store_artifacts:
+          path: ~/reports
