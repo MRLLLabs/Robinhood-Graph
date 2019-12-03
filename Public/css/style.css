@@ -1,6 +1,7 @@
 body {
   background: #1b1b1d;
   color: white;
+  font-family: "dinpro-bold";
 }
 #chart {
   background: #1b1b1d;
@@ -15,10 +16,13 @@ body {
   color:white;
 }
 
+.ticker {
+  font-family: "dinpro";
+}
+
 .headerButton {
   padding: 10px 10px 10px 36px;
-  font-family: "Trebuchet MS", Arial, Verdana;   
-  background: black url(http://www.famfamfam.com/lab/icons/silk/icons/disk.png) 10px 10px no-repeat;
+  background: black url() 10px 10px no-repeat;
   border-radius: 16px;
   border: 1px solid #171718;
   color: white;

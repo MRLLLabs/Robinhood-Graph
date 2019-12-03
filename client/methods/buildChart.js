@@ -5,6 +5,7 @@ const timeIntervals = [300000, 3600000, 90000000, 90000000, 86400000, 604800000]
 const timeIds = ['1D', '1W', '1M', '3M', '1Y', '5Y'];
 
 const buildChart = (prices, view, updateTicker) => {
+  d3.selectAll("svg").remove();
   let data = [];
   let time = Date.now();
   let timeInterval = timeIntervals[timeIds.indexOf(view)];
@@ -13,8 +14,8 @@ const buildChart = (prices, view, updateTicker) => {
     time -= timeInterval;
   }
   const margin = { top: 50, right: 50, bottom: 50, left: 50 };
-  const width = window.innerWidth - margin.left - margin.right;
-  const height = window.innerHeight - margin.top - margin.bottom;
+  const width = 676;
+  const height = 196;
   // add SVG to the page
   const svg = d3
     .select('#chart')
@@ -123,7 +124,7 @@ const buildChart = (prices, view, updateTicker) => {
     .attr('width', width)
     .attr('height', height)
     .on('mouseover', () => focus.style('display', null))
-    .on('mouseout', () => { updateTicker(prices[0]); focus.style('display', 'none')})
+    .on('mouseout', () => { updateTicker(prices[prices.length-1]); focus.style('display', 'none')})
     .on('mousemove', generateCrosshair);
   d3.select('.overlay').style('fill', 'none');
   d3.select('.overlay').style('pointer-events', 'all');

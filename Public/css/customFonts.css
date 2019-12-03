@@ -1,0 +1,16 @@
+@font-face {
+  font-family: 'dinpro-bold';
+  src: url('dinpro-bold_tr-webfont.woff2') format('woff2'),
+       url('dinpro-bold_tr-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+
+}
+@font-face {
+  font-family: 'dinpro';
+  src: url('dinpro-medium_tr-webfont.woff2') format('woff2'),
+       url('dinpro-medium_tr-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+
+}
