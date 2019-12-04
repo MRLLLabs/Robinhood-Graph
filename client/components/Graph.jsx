@@ -7,7 +7,7 @@ const Graph = (props) => {
 	return (
 		<Wrapper.Graph>
 			<div id="stockPriceHistoryChart"></div>
-			<ChartTab changeView={props.changeView} view={props.state.view} />
+			<ChartTab changeView={props.changeView}/>
 			<Expand />
 		</Wrapper.Graph>
 	);
