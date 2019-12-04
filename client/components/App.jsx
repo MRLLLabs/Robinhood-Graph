@@ -1,7 +1,5 @@
 /* eslint-disable no-undef */
 import React from 'react';
-import path from 'path';
-import { CountUp } from 'countup.js';
 import Header from './Header.jsx';
 import Graph from './Graph.jsx';
 import buildChart from '../methods/buildChart.js';
