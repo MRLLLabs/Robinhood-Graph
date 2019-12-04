@@ -1,4 +1,5 @@
 import React from 'react';
+import Wrapper from '../styled-components/Wrapper';
 
 const Header = (props) => {
 	let currentPriceArray = props.state[`historicPrice${props.state.view}`];
@@ -6,15 +7,21 @@ const Header = (props) => {
 	let gainlossSymbol = gainLoss >= 0 ? '+' : '-';
 	let gainLossPercent = gainLoss / currentPriceArray[currentPriceArray.length - 1];
 	return (
-		<div id="Header">
-			<span>{`${props.state.name} (${props.state.symbol})`}</span>
+		<Wrapper.Header >
+			<Wrapper.Company>{`${props.state.name} (${props.state.symbol})`}</Wrapper.Company>
 			<div>
-				<button className="headerButton" id="analystHold">{props.state.analystHold.toFixed(0)}% Hold</button>
-				<button className="headerButton" id="robinhoodOwners">{props.state.robinhoodOwners.toLocaleString()}</button>
+				<Wrapper.AnalystHold>
+					<Wrapper.AnalystHoldImage></Wrapper.AnalystHoldImage>
+					{props.state.analystHold.toFixed(0)}% Hold
+				</Wrapper.AnalystHold>
+				<Wrapper.RobinhoodOwners>
+					<Wrapper.RobinhoodOwnersImage></Wrapper.RobinhoodOwnersImage>
+					{props.state.robinhoodOwners.toLocaleString()}
+				</Wrapper.RobinhoodOwners>
 			</div>
-			<div class="ticker">$<span id="ticker">0</span></div>
-			<div>{`${gainlossSymbol}$${Math.abs(gainLoss).toFixed(2)} (${gainlossSymbol}${Math.abs(gainLossPercent * 100).toFixed(2)}%)`}</div>
-		</div>
+			<div>$<Wrapper.Ticker>0</Wrapper.Ticker></div>
+			<Wrapper.GainLoss>{`${gainlossSymbol}$${Math.abs(gainLoss).toFixed(2)} (${gainlossSymbol}${Math.abs(gainLossPercent * 100).toFixed(2)}%)`}</Wrapper.GainLoss>
+		</Wrapper.Header>
 	);
 };
 

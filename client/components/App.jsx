@@ -5,6 +5,7 @@ import Header from './Header.jsx';
 import Graph from './Graph.jsx';
 import buildChart from '../methods/buildChart.js';
 import Odometer from 'odometer';
+import Wrapper from '../styled-components/Wrapper';
 
 class App extends React.Component {
 	constructor(props) {
@@ -64,10 +65,10 @@ class App extends React.Component {
 	
 	render() {
 		return (
-			<div>
+			<Wrapper.App>
 				<Header state={this.state} />
 				<Graph changeView={this.changeView} />
-			</div>
+			</Wrapper.App>
 		);
 	}
 }
