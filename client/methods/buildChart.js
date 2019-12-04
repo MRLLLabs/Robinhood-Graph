@@ -1,4 +1,5 @@
 import * as d3 from 'd3';
+import moment from 'moment';
 
 const timeIntervals = [300000, 3600000, 90000000, 90000000, 86400000, 604800000]; //FIX
 const timeIds = ['1D', '1W', '1M', '3M', '1Y', '5Y'];
@@ -12,7 +13,7 @@ const buildChart = (prices, view, updateTicker) => {
     data[i] = { date: time, price: prices[i] };
     time -= timeInterval;
   }
-  const margin = { top: 20, right: 20, bottom: 20, left: 20 };
+  const margin = { top: 50, right: 50, bottom: 20, left: 50 };
   const width = 676;
   const height = 196;
   // add SVG to the page
@@ -78,6 +79,19 @@ const buildChart = (prices, view, updateTicker) => {
 
   const updateLegend = (currentData) => {
     d3.selectAll('.lineLegend').remove();
+    let offset;
+    console.log(currentData);
+    const formatDate = (date) => {
+      switch (view) {
+        case '1D': offset = 41; return (`${moment(date).format('h:mm a')} ET`);
+        case '1W': offset = 65; return (`${moment(date).format('h:mm a, MMM D')} ET`);
+        case '1M': offset = 65; return (`${moment(date).format('h:mm a, MMM D')} ET`);
+        case '3M': offset = 65; return (`${moment(date).format('h:mm a, MMM D')} ET`);
+        case '1Y': offset = 55; return (`${moment(date).format('MMM D, YYYY')} ET`);
+        case '5Y': offset = 55; return (`${moment(date).format('MMM D, YYYY')} ET`);
+      }
+    }
+
     const lineLegend = svg
       .selectAll('.lineLegend')
       .data(['date'])
@@ -91,11 +105,11 @@ const buildChart = (prices, view, updateTicker) => {
       .append('text')
       .text(d => {
         if (d === 'date') {
-          return `${d}: ${currentData[d]}`;
+          return formatDate(currentData[d]);
         }
       })
       .style('fill', 'white')
-      .attr('transform', 'translate(15,9)');
+      .attr('transform', `translate(${prices.indexOf(currentData.price) * 6.3 - offset},-5)`);
   }
 
   function generateCrosshair() {
@@ -132,7 +146,7 @@ const buildChart = (prices, view, updateTicker) => {
     .attr('width', width)
     .attr('height', height)
     .on('mouseover', () => (focus.style('display', null)))
-    .on('mouseout', () => { updateTicker(prices[prices.length - 1]); focus.style('display', 'none') })
+    .on('mouseout', () => { updateTicker(prices[prices.length - 1]); d3.selectAll('.lineLegend').remove(); focus.style('display', 'none') })
     .on('mousemove', generateCrosshair)
   d3.select('.overlay').style('fill', 'none');
   d3.select('.overlay').style('pointer-events', 'all');
