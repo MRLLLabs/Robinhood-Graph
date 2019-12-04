@@ -6,6 +6,7 @@ import App from '../client/components/App';
 import Graph from '../client/components/Graph';
 import Header from '../client/components/Header';
 import ChartTab from '../client/components/ChartTab';
+import Expand from '../client/components/Expand';
 import fetch from 'isomorphic-fetch';
 import Wrapper from '../client/styled-components/Wrapper';
 
@@ -54,7 +55,26 @@ describe('<Graph /> Component', () => {
 		expect(component.find(Expand).length).toEqual(1);
 	});
 	test('Should have sub-component Wrapper.Graph', () => {
-		expect(component.find(<Wrapper.Graph/>).length).toEqual(1);
+		expect(component.find(Wrapper.Graph).length).toEqual(1);
+	});
+
+});
+//TODO
+describe('<Header /> Component', () => {
+	let component;
+	beforeEach(() => component = shallow(<Graph />))
+
+	test('Graph Should Exist', () => {
+		expect(component).toHaveLength(1);
+	});
+	test('Should have sub-component charttab', () => {
+		expect(component.find(ChartTab).length).toEqual(1);
+	});
+	test('Should have sub-component expand', () => {
+		expect(component.find(Expand).length).toEqual(1);
+	});
+	test('Should have sub-component Wrapper.Graph', () => {
+		expect(component.find(Wrapper.Graph).length).toEqual(1);
 	});
 
 });
