@@ -1,11 +1,12 @@
 import React from 'react';
+import Wrapper from '../styled-components/Wrapper'
 
 var Expand = (props) => {
 	return (
-		<div id="Expand">
+		<Wrapper.Expand>
 			Expand
-			<img src="/img/expand-on.png"></img>
-		</div>
+			<Wrapper.Image/>
+		</Wrapper.Expand>
 	)
 }
 

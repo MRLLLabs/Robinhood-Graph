@@ -1,26 +1,15 @@
 import React from 'react';
+import Wrapper from '../styled-components/Wrapper'
 
 var ChartTab = (props) => {
 	return (
 		<div id="graphButtons">
-			<button 
-				className={props.view === '1D' ? 'selectedTab' : 'unselectedTab'} 
-				onClick={()=> {props.changeView('1D')}}>1D</button>
-			<button 
-				className={props.view === '1W' ? 'selectedTab' : 'unselectedTab'} 
-				onClick={()=> {props.changeView('1W')}}>1W</button>
-			<button 
-				className={props.view === '1M' ? 'selectedTab' : 'unselectedTab'} 
-				onClick={()=> {props.changeView('1M')}}>1M</button>
-			<button 
-				className={props.view === '3M' ? 'selectedTab' : 'unselectedTab'} 
-				onClick={()=> {props.changeView('3M')}}>3M</button>
-			<button 
-				className={props.view === '1Y' ? 'selectedTab' : 'unselectedTab'} 
-				onClick={()=> {props.changeView('1Y')}}>1Y</button>
-			<button 
-				className={props.view === '5Y' ? 'selectedTab' : 'unselectedTab'} 
-				onClick={()=> {props.changeView('5Y')}}>5Y</button>
+			<Wrapper.Tab1D onClick={()=> {props.changeView('1D')}}>1D</Wrapper.Tab1D>
+			<Wrapper.Tab1W onClick={()=> {props.changeView('1W')}}>1W</Wrapper.Tab1W>
+			<Wrapper.Tab1M onClick={()=> {props.changeView('1M')}}>1M</Wrapper.Tab1M>
+			<Wrapper.Tab3M onClick={()=> {props.changeView('3M')}}>3M</Wrapper.Tab3M>
+			<Wrapper.Tab1Y onClick={()=> {props.changeView('1Y')}}>1Y</Wrapper.Tab1Y>
+			<Wrapper.Tab5Y onClick={()=> {props.changeView('5Y')}}>5Y</Wrapper.Tab5Y>
 		</div>
 	)
 }
