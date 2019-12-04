@@ -7,9 +7,9 @@ const Header = (props) => {
 	let gainlossSymbol = gainLoss >= 0 ? '+' : '-';
 	let gainLossPercent = gainLoss / currentPriceArray[currentPriceArray.length - 1];
 	return (
-		<Wrapper.Header >
-			<Wrapper.Company>{`${props.state.name} (${props.state.symbol})`}</Wrapper.Company>
-			<div>
+		<Wrapper.Header>
+			<Wrapper.HeaderTopContainer>
+				<Wrapper.Company>{`${props.state.name} (${props.state.symbol})`}</Wrapper.Company>
 				<Wrapper.AnalystHold>
 					<Wrapper.AnalystHoldImage></Wrapper.AnalystHoldImage>
 					{props.state.analystHold.toFixed(0)}% Hold
@@ -18,7 +18,7 @@ const Header = (props) => {
 					<Wrapper.RobinhoodOwnersImage></Wrapper.RobinhoodOwnersImage>
 					{props.state.robinhoodOwners.toLocaleString()}
 				</Wrapper.RobinhoodOwners>
-			</div>
+			</Wrapper.HeaderTopContainer>
 			<div>$<Wrapper.Ticker>0</Wrapper.Ticker></div>
 			<Wrapper.GainLoss>{`${gainlossSymbol}$${Math.abs(gainLoss).toFixed(2)} (${gainlossSymbol}${Math.abs(gainLossPercent * 100).toFixed(2)}%)`}</Wrapper.GainLoss>
 		</Wrapper.Header>

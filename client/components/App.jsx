@@ -40,7 +40,8 @@ class App extends React.Component {
 	changeView(option) {
 		this.setState({
 			view: option,
-		}, () => {buildChart(this.state[`historicPrice${this.state.view}`], this.state.view, this.updateTicker)});
+			}, () => {buildChart(this.state[`historicPrice${this.state.view}`], this.state.view, this.updateTicker)}
+		);
 	}
 	
 	populateStocks(callback) {
