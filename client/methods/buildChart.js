@@ -9,16 +9,16 @@ const buildChart = (prices, view, updateTicker) => {
   let data = [];
   let time = Date.now();
   let timeInterval = timeIntervals[timeIds.indexOf(view)];
-  for (let i = prices.length-1; i >= 0; i--) {
+  for (let i = prices.length - 1; i >= 0; i--) {
     data[i] = { date: time, price: prices[i] };
     time -= timeInterval;
   }
-  const margin = { top: 50, right: 50, bottom: 50, left: 50 };
+  const margin = { top: 20, right: 20, bottom: 20, left: 20 };
   const width = 676;
   const height = 196;
   // add SVG to the page
   const svg = d3
-    .select('#chart')
+    .select('#stockPriceHistoryChart')
     .append('svg')
     .attr('width', width + margin['left'] + margin['right'])
     .attr('height', height + margin['top'] + margin['bottom'])
@@ -45,20 +45,8 @@ const buildChart = (prices, view, updateTicker) => {
     .range([0, width]);
   const yScale = d3
     .scaleLinear()
-    .domain([yMin - 5, yMax])
+    .domain([yMin - 0.2, yMax])
     .range([height, 0]);
-
-
-  // svg
-  //   .append('g')
-  //   .attr('id', 'xAxis')
-  //   .attr('transform', `translate(0, ${height})`)
-  //   .call(d3.axisBottom(xScale));
-  // svg
-  //   .append('g')
-  //   .attr('id', 'yAxis')
-  //   .attr('transform', `translate(${width}, 0)`)
-  //   .call(d3.axisRight(yScale));
 
   const line = d3
     .line()
@@ -81,34 +69,55 @@ const buildChart = (prices, view, updateTicker) => {
 
   //HOVER OVER WITH MOUSE FUNCTUIONALITY
   const bisectDate = (data, matcher) => {
-    for(let i = 0; i < data.length; i++) {
-      if(data[i].date > matcher) {
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].date > matcher) {
         return i;
       }
     }
     return 1;
   }
-  
+
+  const updateLegend = (currentData) => {
+    d3.selectAll('.lineLegend').remove();
+    const lineLegend = svg
+      .selectAll('.lineLegend')
+      .data(['date'])
+      .enter()
+      .append('g')
+      .attr('class', 'lineLegend')
+      .attr('transform', (d, i) => {
+        return `translate(0, ${i * 20})`;
+      });
+    lineLegend
+      .append('text')
+      .text(d => {
+        if (d === 'date') {
+          return `${d}: ${currentData[d]}`;
+        }
+      })
+      .style('fill', 'white')
+      .attr('transform', 'translate(15,9)');
+  }
+
   function generateCrosshair() {
     //returns corresponding value from the domain
     const correspondingDate = xScale.invert(d3.mouse(this)[0]);
     //gets insertion point
     const i = bisectDate(data, correspondingDate.getTime());
     updateTicker(data[i].price);
-    // const d0 = data[20];
-    // const d1 = data[21];
-    const d0 = data[i - 1];
     const d1 = data[i];
-    const currentPoint =  d1;
+    const currentPoint = d1;
 
     focus.attr('transform', `translate(${xScale(currentPoint['date'])},     ${yScale(currentPoint['price'])})`);
-    
+
     focus
       .select('line.y')
       .attr('x1', 0)
       .attr('x2', 0)
       .attr('y1', height - height - yScale(currentPoint['price']))
       .attr('y2', height - yScale(currentPoint['price']));
+    console.log('here');
+    updateLegend(currentPoint);
   }
   const focus = svg
     .append('g')
@@ -123,14 +132,15 @@ const buildChart = (prices, view, updateTicker) => {
     .attr('class', 'overlay')
     .attr('width', width)
     .attr('height', height)
-    .on('mouseover', () => focus.style('display', null))
-    .on('mouseout', () => { updateTicker(prices[prices.length-1]); focus.style('display', 'none')})
-    .on('mousemove', generateCrosshair);
+    .on('mouseover', () => (focus.style('display', null)))
+    .on('mouseout', () => { updateTicker(prices[prices.length - 1]); focus.style('display', 'none') })
+    .on('mousemove', generateCrosshair)
   d3.select('.overlay').style('fill', 'none');
   d3.select('.overlay').style('pointer-events', 'all');
   d3.selectAll('.focus line').style('fill', 'none');
   d3.selectAll('.focus line').style('stroke', '#ababab');
   d3.selectAll('.focus line').style('stroke-width', '1.5px');
+
 }
 
 //Provide mouseover functionality
