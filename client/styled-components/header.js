@@ -8,7 +8,7 @@ const Company = styled.span`
   font-family: dinpro-bold
 `;
 const AnalystHold = styled.button`
-  align-self: center;
+  align-self: flex-end;
   &hover: {
     color: black;
   }
