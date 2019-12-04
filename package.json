@@ -20,6 +20,7 @@
     "express": "^4.17.1",
     "isomorphic-fetch": "^2.2.1",
     "jquery": "^3.4.1",
+    "moment": "^2.24.0",
     "mongoose": "^5.7.13",
     "node": "^13.1.0",
     "odometer": "^0.4.8",
