@@ -1,10 +1,10 @@
 /* eslint-disable no-undef */
 import React from 'react';
 import path from 'path';
-import { CountUp } from 'countup.js';
 import Header from './Header.jsx';
 import Graph from './Graph.jsx';
 import buildChart from '../methods/buildChart.js';
+import Odometer from 'odometer';
 
 class App extends React.Component {
 	constructor(props) {
@@ -53,11 +53,9 @@ class App extends React.Component {
 		this.ticker = new Odometer({
 			el: tickerEl,
 			value: 100.04,
-			// Any option (other than auto and selector) can be passed in here
 			duration: 400,
 			format: '(,ddd).dd',
 		});
-		// this.ticker.render();
 	}
 
 	updateTicker(price) {
@@ -68,7 +66,7 @@ class App extends React.Component {
 		return (
 			<div>
 				<Header state={this.state} />
-				<Graph state={this.state} changeView={this.changeView} />
+				<Graph changeView={this.changeView} />
 			</div>
 		);
 	}

@@ -1,5 +1,4 @@
 import * as d3 from 'd3';
-import * as fc from 'd3fc';
 
 const timeIntervals = [300000, 3600000, 90000000, 90000000, 86400000, 604800000]; //FIX
 const timeIds = ['1D', '1W', '1M', '3M', '1Y', '5Y'];
