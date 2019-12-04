@@ -1,7 +1,7 @@
 import { ChartTab, Tab1D , Tab1W, Tab1M, Tab3M, Tab1Y, Tab5Y } from './ChartTab.js';
 import { App } from './App';
 import { Expand, Image } from './Expand';
-import { Graph, Chart } from './Graph';
+import { Graph, Chart, GraphBottomContainer } from './Graph';
 import { Header, Company, AnalystHold, RobinhoodOwners, AnalystHoldImage, RobinhoodOwnersImage, HeaderTopContainer, Ticker, GainLoss } from './Header';
 
 let Wrapper = {};
@@ -19,6 +19,7 @@ Wrapper.Expand = Expand;
 
 Wrapper.Graph = Graph;
 Wrapper.Chart = Chart;
+Wrapper.GraphBottomContainer = GraphBottomContainer;
 
 Wrapper.Header = Header;
 Wrapper.Company = Company;

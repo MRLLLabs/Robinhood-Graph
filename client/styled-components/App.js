@@ -6,6 +6,7 @@ const App = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  width: 790px;
 `;
 
 export { App };
