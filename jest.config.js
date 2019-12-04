@@ -6,5 +6,5 @@ module.exports = {
   },
   moduleFileExtensions: ["js", "jsx"],
   moduleDirectories: ["node_modules"],
-  // setupFilesAfterEnv: ["<rootDir>/spec/testSetup.js"]
+  setupFilesAfterEnv: ["<rootDir>/enzyme.config.js"]
 }

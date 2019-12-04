@@ -3,6 +3,7 @@ import React from 'react';
 import Header from './Header.jsx';
 import Graph from './Graph.jsx';
 import buildChart from '../methods/buildChart.js';
+import fetch from "isomorphic-fetch";
 
 class App extends React.Component {
 	constructor(props) {
