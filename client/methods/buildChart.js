@@ -6,14 +6,21 @@ const timeIds = ['1D', '1W', '1M', '3M', '1Y', '5Y'];
 
 const setTimeIntervals = (data, timeInterval, view, prices) => {
   let start = new Date(Date.now());
-  let now = new Date(Date.now());
-  // let pastTime;
+  let now = moment(start).add(3,'h').toDate();
+  let mostRecentPrice = prices[prices.length - 1];
+  let mostRecentDate;
   switch (view) {
     case '1D':
       start.setHours(9, 0, 0, 0);
+      let once = false;
       for (let i = 0; i < prices.length; i++) {
         if(start > now) {
           data[i] = { date: start, price: undefined }
+          if (!once) {
+            mostRecentPrice = prices[i-1]; 
+            mostRecentDate = new Date(moment(start).subtract(5, 'm'));
+            once = true;
+          }
         } else {
           data[i] = { date: start, price: prices[i] }
         }
@@ -37,6 +44,7 @@ const setTimeIntervals = (data, timeInterval, view, prices) => {
     //     start.setHours(9, 0, 0, 0);
     //   }
     // }
+      break;
     case '1M':
       start = moment(start).subtract(1, 'm').toDate();
       start.setHours(10, 0, 0, 0);
@@ -44,6 +52,7 @@ const setTimeIntervals = (data, timeInterval, view, prices) => {
         data[i] = { date: start, price: prices[i] }
         start = moment(start).add(1, 'h').toDate();
       }
+      break;
     case '3M':
       start = moment(start).subtract(3, 'm').toDate();
       start.setHours(10, 0, 0, 0);
@@ -51,6 +60,7 @@ const setTimeIntervals = (data, timeInterval, view, prices) => {
         data[i] = { date: start, price: prices[i] }
         start = moment(start).add(1, 'h').toDate();
       }
+      break;
     case '1Y':
       start = moment(start).subtract(1, 'y').toDate();
       start.setHours(10, 0, 0, 0);
@@ -58,6 +68,7 @@ const setTimeIntervals = (data, timeInterval, view, prices) => {
         data[i] = { date: start, price: prices[i] }
         start = moment(start).add(1, 'd').toDate();
       }
+      break;
     case '5Y':
       start = moment(start).subtract(5, 'Y').toDate();
       start.setHours(10, 0, 0, 0);
@@ -65,15 +76,16 @@ const setTimeIntervals = (data, timeInterval, view, prices) => {
         data[i] = { date: start, price: prices[i] }
         start = moment(start).add(1, 'd').toDate();
       }
+      break;
   }
-
+  return [mostRecentDate, mostRecentPrice];
 }
 
 const buildChart = (prices, view, updateTicker) => {
   d3.selectAll("svg").remove();
   let data = [];
   let timeInterval = timeIntervals[timeIds.indexOf(view)];
-  setTimeIntervals(data, timeInterval, view, prices);
+  let [mostRecentDate, mostRecentPrice] = setTimeIntervals(data, timeInterval, view, prices);
   // let time = Date.now();
   // for (let i = prices.length - 1; i >= 0; i--) {
   //   data[i] = { date: time, price: prices[i] };
@@ -132,8 +144,6 @@ const buildChart = (prices, view, updateTicker) => {
     .attr('stroke-width', '1.5')
     .attr('d', line);
 
-
-  //HOVER OVER WITH MOUSE FUNCTUIONALITY
   const bisectDate = (data, matcher) => {
     for (let i = 0; i < data.length; i++) {
       if (data[i].date > matcher) {
@@ -173,7 +183,7 @@ const buildChart = (prices, view, updateTicker) => {
           return formatDate(currentData[d]);
         }
       })
-      .style('fill', 'white')
+      .style('fill', '#cbcbcd')
       .attr('transform', `translate(${prices.indexOf(currentData.price) * xRate - offset},-5)`);
   }
 
@@ -182,9 +192,13 @@ const buildChart = (prices, view, updateTicker) => {
     const correspondingDate = xScale.invert(d3.mouse(this)[0]);
     //gets insertion point
     const i = bisectDate(data, correspondingDate.getTime());
-    updateTicker(data[i].price);
-    const d1 = data[i];
-    const currentPoint = d1;
+    let currentPoint;
+    if (data[i].price) {
+      updateTicker(data[i].price);
+      currentPoint = data[i];
+    } else {
+      currentPoint = {date:mostRecentDate, price:mostRecentPrice};
+    }
 
     focus.attr('transform', `translate(${xScale(currentPoint['date'])},     ${yScale(currentPoint['price'])})`);
 
@@ -210,7 +224,7 @@ const buildChart = (prices, view, updateTicker) => {
     .attr('width', width)
     .attr('height', height)
     .on('mouseover', () => (focus.style('display', null)))
-    .on('mouseout', () => { updateTicker(prices[prices.length - 1]); d3.selectAll('.lineLegend').remove(); focus.style('display', 'none') })
+    .on('mouseout', () => { updateTicker(mostRecentPrice); d3.selectAll('.lineLegend').remove(); focus.style('display', 'none') })
     .on('mousemove', generateCrosshair)
   d3.select('.overlay').style('fill', 'none');
   d3.select('.overlay').style('pointer-events', 'all');
@@ -219,8 +233,5 @@ const buildChart = (prices, view, updateTicker) => {
   d3.selectAll('.focus line').style('stroke-width', '1.5px');
 
 }
-
-//Provide mouseover functionality
-
 
 export default buildChart;
