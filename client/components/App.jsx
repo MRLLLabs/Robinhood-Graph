@@ -4,6 +4,7 @@ import path from 'path';
 import Header from './Header.jsx';
 import Graph from './Graph.jsx';
 import buildChart from '../methods/buildChart.js';
+import buildViewText from '../methods/buildViewText.js';
 import Odometer from 'odometer';
 import Wrapper from '../styled-components/Wrapper';
 
@@ -45,6 +46,7 @@ class App extends React.Component {
 	changeView(option) {
 		this.setState({
 			view: option,
+			viewText: buildViewText(option),
 			price: this.state[`historicPrice${option}`][this.state[`historicPrice${option}`].length - 1]
 			}, () => {
 				buildChart(this.state[`historicPrice${this.state.view}`], this.state.view, this.updateTicker)

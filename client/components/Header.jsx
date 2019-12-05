@@ -2,10 +2,6 @@ import React from 'react';
 import Wrapper from '../styled-components/Wrapper';
 
 const Header = (props) => {
-	let currentPriceArray = props.state[`historicPrice${props.state.view}`];
-	let gainLoss = currentPriceArray[currentPriceArray.length - 1] - currentPriceArray[0];
-	let gainlossSymbol = gainLoss >= 0 ? '+' : '-';
-	let gainLossPercent = gainLoss / currentPriceArray[currentPriceArray.length - 1];
 	return (
 		<Wrapper.Header>
 			<Wrapper.HeaderTopContainer>
