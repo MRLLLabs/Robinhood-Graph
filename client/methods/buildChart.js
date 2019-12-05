@@ -45,7 +45,7 @@ const buildChart = (prices, view, updateTicker) => {
     .range([0, width]);
   const yScale = d3
     .scaleLinear()
-    .domain([yMin - 0.2, yMax])
+    .domain([yMin, yMax])
     .range([height, 0]);
 
   const line = d3

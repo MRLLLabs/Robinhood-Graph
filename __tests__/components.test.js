@@ -10,6 +10,7 @@ import Expand from '../client/components/Expand';
 import fetch from 'isomorphic-fetch';
 import Wrapper from '../client/styled-components/Wrapper';
 import Odometer from 'odometer';
+import { tsExpressionWithTypeArguments } from '@babel/types';
 
 describe('Components', () => {
 	describe('<App /> Component', () => {
@@ -118,30 +119,45 @@ describe('Components', () => {
 			});
 	});
 	
-	
-	
-	
-	
-	
-	
-	
 	//TODO
 	describe('<Header /> Component', () => {
 		let component;
-		beforeEach(() => component = shallow(<Graph />))
-	
+		beforeEach(() => component = shallow(<Header state={{
+			view: '1D', 
+			historicPrice1D: [1,2,3,4],
+			name: tsExpressionWithTypeArguments,
+			analystHold: 99,
+			robinhoodOwners: 50000,
+		}}/>))
+		
 		test('Graph Should Exist', () => {
 			expect(component).toHaveLength(1);
 		});
-		test('Should have sub-component charttab', () => {
-			expect(component.find(ChartTab).length).toEqual(1);
+		test('Should have sub-component header', () => {
+			expect(component.find(Wrapper.Header).length).toEqual(1);
 		});
-		test('Should have sub-component expand', () => {
-			expect(component.find(Expand).length).toEqual(1);
+		test('Should have sub-component headerTopContainer', () => {
+			expect(component.find(Wrapper.HeaderTopContainer).length).toEqual(1);
 		});
-		test('Should have sub-component Wrapper.Graph', () => {
-			expect(component.find(Wrapper.Graph).length).toEqual(1);
+		test('Should have sub-component Company', () => {
+			expect(component.find(Wrapper.Company).length).toEqual(1);
 		});
+		test('Should have sub-component HeaderTopButtons', () => {
+			expect(component.find(Wrapper.HeaderTopButtons).length).toEqual(1);
+		});
+		test('Should have sub-component AnalystHold', () => {
+			expect(component.find(Wrapper.AnalystHold).length).toEqual(1);
+		});
+		test('Should have sub-component RobinhoodOwners', () => {
+			expect(component.find(Wrapper.RobinhoodOwners).length).toEqual(1);
+		});
+		test('Should have sub-component Ticker', () => {
+			expect(component.find(Wrapper.Ticker).length).toEqual(1);
+		});
+
+		// test('Should calculate gain/loss correctly', () => {
+		// 	expect(component.find(Wrapper.AnalystHold)).toBe('&emsp; ');
+		// });
 	
 	});
 })
