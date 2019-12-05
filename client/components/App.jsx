@@ -85,7 +85,7 @@ class App extends React.Component {
 		return (
 			<Wrapper.App>
 				<Header state={this.state} />
-				<Graph changeView={this.changeView} />
+				<Graph changeView={this.changeView} view={this.state.view}/>
 			</Wrapper.App>
 		);
 	}
