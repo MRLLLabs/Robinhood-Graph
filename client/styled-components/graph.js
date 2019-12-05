@@ -4,7 +4,9 @@ const Graph = styled.div`
 
 `;
 
-const Chart = styled.div`
+const Chart = styled.div.attrs((props) => {
+  id: "stockPriceHistoryChart"
+})`
 
 `;
 const GraphBottomContainer = styled.div`

@@ -6,7 +6,7 @@ import Wrapper from '../styled-components/Wrapper';
 const Graph = (props) => {
 	return (
 		<Wrapper.Graph>
-			<div id="stockPriceHistoryChart"></div>
+			<Wrapper.Chart id="stockPriceHistoryChart"/>
 			<Wrapper.GraphBottomContainer>
 				<ChartTab changeView={props.changeView} />
 				<Expand />
