@@ -9,15 +9,15 @@ const Header = (props) => {
 	return (
 		<Wrapper.Header>
 			<Wrapper.HeaderTopContainer>
-				<Wrapper.Company>{`${props.state.name} (${props.state.symbol})`}</Wrapper.Company>
-				<Wrapper.AnalystHold>
-					<Wrapper.AnalystHoldImage></Wrapper.AnalystHoldImage>
-					{props.state.analystHold.toFixed(0)}% Hold
+				<Wrapper.Company>{`${props.state.name}`}</Wrapper.Company>
+				<Wrapper.HeaderTopButtons>
+					<Wrapper.AnalystHold>
+						&emsp; {props.state.analystHold.toFixed(0)}% Hold
 				</Wrapper.AnalystHold>
-				<Wrapper.RobinhoodOwners>
-					<Wrapper.RobinhoodOwnersImage></Wrapper.RobinhoodOwnersImage>
-					{props.state.robinhoodOwners.toLocaleString()}
-				</Wrapper.RobinhoodOwners>
+					<Wrapper.RobinhoodOwners>
+						&emsp; {props.state.robinhoodOwners.toLocaleString()}
+					</Wrapper.RobinhoodOwners>
+				</Wrapper.HeaderTopButtons>
 			</Wrapper.HeaderTopContainer>
 			<div>$<Wrapper.Ticker>0</Wrapper.Ticker></div>
 			<Wrapper.GainLoss>{`${gainlossSymbol}$${Math.abs(gainLoss).toFixed(2)} (${gainlossSymbol}${Math.abs(gainLossPercent * 100).toFixed(2)}%)`}</Wrapper.GainLoss>

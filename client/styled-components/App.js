@@ -7,6 +7,7 @@ const App = styled.div`
   flex-direction: column;
   justify-content: space-between;
   width: 790px;
+  font-size: 13px;
 `;
 
 export { App };

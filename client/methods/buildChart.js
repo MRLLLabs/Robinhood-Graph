@@ -80,7 +80,6 @@ const buildChart = (prices, view, updateTicker) => {
   const updateLegend = (currentData) => {
     d3.selectAll('.lineLegend').remove();
     let offset;
-    console.log(currentData);
     const formatDate = (date) => {
       switch (view) {
         case '1D': offset = 41; return (`${moment(date).format('h:mm a')} ET`);
@@ -129,7 +128,6 @@ const buildChart = (prices, view, updateTicker) => {
       .attr('x2', 0)
       .attr('y1', height - height - yScale(currentPoint['price']))
       .attr('y2', height - yScale(currentPoint['price']));
-    console.log('here');
     updateLegend(currentPoint);
   }
   const focus = svg
