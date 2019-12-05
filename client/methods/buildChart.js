@@ -4,15 +4,30 @@ import moment from 'moment';
 const timeIntervals = [300000, 3600000, 90000000, 90000000, 86400000, 604800000]; //FIX
 const timeIds = ['1D', '1W', '1M', '3M', '1Y', '5Y'];
 
+const setTimeIntervals = (data, timeInterval, view, prices) => {
+  let start = new Date(Date.now());
+  switch(view) {
+    case '1D':
+      start.setHours(9, 0, 0, 0);
+      break;
+    case '':
+  }
+  for (let i = 0; i < prices.length; i++) {
+    data[i] = {date: start, price: prices[i]}
+    start = moment(start).add(5, 'm').toDate();
+  }
+}
+
 const buildChart = (prices, view, updateTicker) => {
   d3.selectAll("svg").remove();
   let data = [];
-  let time = Date.now();
   let timeInterval = timeIntervals[timeIds.indexOf(view)];
-  for (let i = prices.length - 1; i >= 0; i--) {
-    data[i] = { date: time, price: prices[i] };
-    time -= timeInterval;
-  }
+  setTimeIntervals(data, timeInterval, view, prices);
+  // let time = Date.now();
+  // for (let i = prices.length - 1; i >= 0; i--) {
+  //   data[i] = { date: time, price: prices[i] };
+  //   time -= timeInterval;
+  // }
   const margin = { top: 50, right: 50, bottom: 20, left: 50 };
   const width = 676;
   const height = 196;
@@ -45,7 +60,7 @@ const buildChart = (prices, view, updateTicker) => {
     .range([0, width]);
   const yScale = d3
     .scaleLinear()
-    .domain([yMin - 0.2, yMax])
+    .domain([yMin, yMax])
     .range([height, 0]);
 
   const line = d3
