@@ -51,14 +51,19 @@ const HeaderTopContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-`;
-const HeaderTopButtons = styled.div`
+  `;
+  const HeaderTopButtons = styled.div`
+  vertical-align: bottom;
   font-size: 16px;
 `;
 const Ticker = styled.div.attrs((/* props */) => ({ id: "ticker" }))`
+  margin-bottom: 10px;
 `;
 const GainLoss = styled.div`
   font-size: 13px;
 `;
+const ViewText = styled.span`
+  color: #cbcbcd;
+`;
 
-export { Header, Company, AnalystHold, RobinhoodOwners, HeaderTopContainer, HeaderTopButtons, Ticker, GainLoss };
+export { Header, Company, AnalystHold, RobinhoodOwners, HeaderTopContainer, HeaderTopButtons, Ticker, GainLoss, ViewText };

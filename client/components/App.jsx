@@ -12,6 +12,7 @@ class App extends React.Component {
 		super(props);
 		this.state = {
 			view: '1D',
+			viewText: 'Last Day',
 			id: null,
 			name: null,
 			symbol: null,
