@@ -7,6 +7,7 @@ const HeaderButton = styled.button`
   color: white;
   border-radius: 15px
   border: none;
+  height: 28px;
 `;
 
 const Header = styled.div`

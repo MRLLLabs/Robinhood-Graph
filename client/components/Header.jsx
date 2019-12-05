@@ -14,6 +14,7 @@ const Header = (props) => {
 					<Wrapper.AnalystHold>
 						&emsp; {props.state.analystHold.toFixed(0)}% Hold
 				</Wrapper.AnalystHold>
+						&ensp;
 					<Wrapper.RobinhoodOwners>
 						&emsp; {props.state.robinhoodOwners.toLocaleString()}
 					</Wrapper.RobinhoodOwners>
