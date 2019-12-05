@@ -44,12 +44,12 @@ const buildStocks = (callback) => {
 			stock.analystHold = Math.floor(Math.random() * 100);
 			stock.robinhoodOwners = Math.floor(Math.random() * 200000);
 			stock.price = startPrice;
-			stock.historicPrice1D = buildHistoricPrice(108, .2, startPrice);
-			stock.historicPrice1W = buildHistoricPrice(108, .5, startPrice); //198 data points
-			stock.historicPrice1M = buildHistoricPrice(108, 1, startPrice);
-			stock.historicPrice3M = buildHistoricPrice(108, 4, startPrice);
-			stock.historicPrice1Y = buildHistoricPrice(108, 4, startPrice);
-			stock.historicPrice5Y = buildHistoricPrice(108, 6, startPrice);
+			stock.historicPrice1D = buildHistoricPrice(109, .2, startPrice);
+			stock.historicPrice1W = buildHistoricPrice(155, .5, startPrice);
+			stock.historicPrice1M = buildHistoricPrice(120, 1, startPrice);
+			stock.historicPrice3M = buildHistoricPrice(360, 4, startPrice);
+			stock.historicPrice1Y = buildHistoricPrice(251, 4, startPrice);
+			stock.historicPrice5Y = buildHistoricPrice(260, 6, startPrice);
 			allStocks.push(stock);
 		}
 		callback();
