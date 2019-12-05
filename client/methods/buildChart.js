@@ -6,16 +6,62 @@ const timeIds = ['1D', '1W', '1M', '3M', '1Y', '5Y'];
 
 const setTimeIntervals = (data, timeInterval, view, prices) => {
   let start = new Date(Date.now());
-  switch(view) {
+  let pastTime;
+  switch (view) {
     case '1D':
       start.setHours(9, 0, 0, 0);
+      for (let i = 0; i < prices.length; i++) {
+        data[i] = { date: start, price: prices[i] }
+        start = moment(start).add(5, 'm').toDate();
+      }
       break;
-    case '':
+    case '1W':
+      start = moment(start).subtract(5, 'd').toDate();
+      start.setHours(9, 30, 0, 0);
+      for (let i = 0; i < prices.length; i++) {
+        data[i] = { date: start, price: prices[i] }
+        start = moment(start).add(10, 'm').toDate();
+      }
+    // pastTime = 16;
+    // for (let i = 0; i < prices.length; i++) {
+    //   data[i] = {date: start, price: prices[i]}
+    //   start = moment(start).add(5, 'm').toDate();
+    //   if(pastTime <= start.getHours()) {
+    //     console.log(start.getHours());
+    //     start = moment(start).add(1, 'd').toDate();
+    //     start.setHours(9, 0, 0, 0);
+    //   }
+    // }
+    case '1M':
+      start = moment(start).subtract(1, 'm').toDate();
+      start.setHours(10, 0, 0, 0);
+      for (let i = 0; i < prices.length; i++) {
+        data[i] = { date: start, price: prices[i] }
+        start = moment(start).add(1, 'h').toDate();
+      }
+    case '3M':
+      start = moment(start).subtract(3, 'm').toDate();
+      start.setHours(10, 0, 0, 0);
+      for (let i = 0; i < prices.length; i++) {
+        data[i] = { date: start, price: prices[i] }
+        start = moment(start).add(1, 'h').toDate();
+      }
+    case '1Y':
+      start = moment(start).subtract(1, 'y').toDate();
+      start.setHours(10, 0, 0, 0);
+      for (let i = 0; i < prices.length; i++) {
+        data[i] = { date: start, price: prices[i] }
+        start = moment(start).add(1, 'd').toDate();
+      }
+    case '5Y':
+      start = moment(start).subtract(5, 'Y').toDate();
+      start.setHours(10, 0, 0, 0);
+      for (let i = 0; i < prices.length; i++) {
+        data[i] = { date: start, price: prices[i] }
+        start = moment(start).add(1, 'd').toDate();
+      }
   }
-  for (let i = 0; i < prices.length; i++) {
-    data[i] = {date: start, price: prices[i]}
-    start = moment(start).add(5, 'm').toDate();
-  }
+
 }
 
 const buildChart = (prices, view, updateTicker) => {
@@ -94,7 +140,7 @@ const buildChart = (prices, view, updateTicker) => {
 
   const updateLegend = (currentData) => {
     d3.selectAll('.lineLegend').remove();
-    let offset;
+    let offset, xRate;
     const formatDate = (date) => {
       switch (view) {
         case '1D': offset = 41; return (`${moment(date).format('h:mm a')} ET`);
