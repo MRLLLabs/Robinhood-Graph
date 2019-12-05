@@ -6,12 +6,17 @@ const timeIds = ['1D', '1W', '1M', '3M', '1Y', '5Y'];
 
 const setTimeIntervals = (data, timeInterval, view, prices) => {
   let start = new Date(Date.now());
-  let pastTime;
+  let now = new Date(Date.now());
+  // let pastTime;
   switch (view) {
     case '1D':
       start.setHours(9, 0, 0, 0);
       for (let i = 0; i < prices.length; i++) {
-        data[i] = { date: start, price: prices[i] }
+        if(start > now) {
+          data[i] = { date: start, price: undefined }
+        } else {
+          data[i] = { date: start, price: prices[i] }
+        }
         start = moment(start).add(5, 'm').toDate();
       }
       break;
@@ -143,12 +148,12 @@ const buildChart = (prices, view, updateTicker) => {
     let offset, xRate;
     const formatDate = (date) => {
       switch (view) {
-        case '1D': offset = 41; xRate = 6.315; return (`${moment(date).format('h:mm a')} ET`);
-        case '1W': offset = 65; return (`${moment(date).format('h:mm a, MMM D')} ET`);
-        case '1M': offset = 65; return (`${moment(date).format('h:mm a, MMM D')} ET`);
-        case '3M': offset = 65; return (`${moment(date).format('h:mm a, MMM D')} ET`);
-        case '1Y': offset = 55; return (`${moment(date).format('MMM D, YYYY')} ET`);
-        case '5Y': offset = 55; return (`${moment(date).format('MMM D, YYYY')} ET`);
+        case '1D': offset = 33; xRate = 6.315; return (`${moment(date).format('h:mm a')} ET`);
+        case '1W': offset = 56; xRate = 4.38; return (`${moment(date).format('h:mm a, MMM D')} ET`);
+        case '1M': offset = 56; xRate = 5.68; return (`${moment(date).format('h:mm a, MMM D')} ET`);
+        case '3M': offset = 56; xRate = 1.88; return (`${moment(date).format('h:mm a, MMM D')} ET`);
+        case '1Y': offset = 47; xRate = 2.71; return (`${moment(date).format('MMM D, YYYY')} ET`);
+        case '5Y': offset = 47; xRate = 2.605; return (`${moment(date).format('MMM D, YYYY')} ET`);
       }
     }
 
