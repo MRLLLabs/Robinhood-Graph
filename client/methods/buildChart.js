@@ -143,7 +143,7 @@ const buildChart = (prices, view, updateTicker) => {
     let offset, xRate;
     const formatDate = (date) => {
       switch (view) {
-        case '1D': offset = 41; return (`${moment(date).format('h:mm a')} ET`);
+        case '1D': offset = 41; xRate = 6.315; return (`${moment(date).format('h:mm a')} ET`);
         case '1W': offset = 65; return (`${moment(date).format('h:mm a, MMM D')} ET`);
         case '1M': offset = 65; return (`${moment(date).format('h:mm a, MMM D')} ET`);
         case '3M': offset = 65; return (`${moment(date).format('h:mm a, MMM D')} ET`);
@@ -169,7 +169,7 @@ const buildChart = (prices, view, updateTicker) => {
         }
       })
       .style('fill', 'white')
-      .attr('transform', `translate(${prices.indexOf(currentData.price) * 6.3 - offset},-5)`);
+      .attr('transform', `translate(${prices.indexOf(currentData.price) * xRate - offset},-5)`);
   }
 
   function generateCrosshair() {
