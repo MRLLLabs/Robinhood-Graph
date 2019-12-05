@@ -8,6 +8,8 @@ const App = styled.div`
   justify-content: space-between;
   width: 790px;
   font-size: 13px;
+  margin: auto;
+  margin-top: 50px;
 `;
 
 export { App };

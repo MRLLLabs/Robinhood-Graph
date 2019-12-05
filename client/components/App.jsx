@@ -24,6 +24,9 @@ class App extends React.Component {
 			historicPrice3M: [],
 			historicPrice1Y: [],
 			historicPrice5Y: [],
+			gainLoss: 0,
+			gainLossPercent: 0,
+			gainlossSymbol: '',
 		};
 		this.updateTicker = this.updateTicker.bind(this);
 		this.changeView = this.changeView.bind(this);
@@ -33,17 +36,22 @@ class App extends React.Component {
 	componentDidMount() {
 		this.populateStocks(() => {
 			this.initializeTicker();
-			buildChart(this.state[`historicPrice${this.state.view}`], this.state.view, this.updateTicker);
+			let {mostRecentDate, mostRecentPrice} = buildChart(this.state[`historicPrice${this.state.view}`], this.state.view, this.updateTicker);
+			this.updateTicker(mostRecentPrice);
 		});
 	}
 
 	changeView(option) {
 		this.setState({
 			view: option,
-			}, () => {buildChart(this.state[`historicPrice${this.state.view}`], this.state.view, this.updateTicker)}
+			price: this.state[`historicPrice${option}`][this.state[`historicPrice${option}`].length - 1]
+			}, () => {
+				buildChart(this.state[`historicPrice${this.state.view}`], this.state.view, this.updateTicker)
+				this.updateTicker(this.state.price);
+			}
 		);
 	}
-	
+
 	populateStocks(callback) {
 		fetch(`/stocks${window.location.search}`, { method: 'GET' })
 		.then((response) => response.json() )
@@ -62,6 +70,15 @@ class App extends React.Component {
 
 	updateTicker(price) {
 		this.ticker.update(price.toFixed(2));
+		let currentPriceArray = this.state[`historicPrice${this.state.view}`];
+		let gainLoss = price - currentPriceArray[0];
+		let gainlossSymbol = gainLoss >= 0 ? '+' : '-';
+		let gainLossPercent = gainLoss / currentPriceArray[currentPriceArray.length - 1];
+		this.setState({
+			gainLoss: gainLoss,
+			gainLossPercent: gainLossPercent,
+			gainlossSymbol: gainlossSymbol,
+		})
 	}
 	
 	render() {

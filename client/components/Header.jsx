@@ -13,14 +13,19 @@ const Header = (props) => {
 				<Wrapper.HeaderTopButtons>
 					<Wrapper.AnalystHold>
 						&emsp; {props.state.analystHold.toFixed(0)}% Hold
+<<<<<<< HEAD
+				</Wrapper.AnalystHold>
+						&ensp;
+=======
 					</Wrapper.AnalystHold>
+>>>>>>> master
 					<Wrapper.RobinhoodOwners>
 						&emsp; {props.state.robinhoodOwners.toLocaleString()}
 					</Wrapper.RobinhoodOwners>
 				</Wrapper.HeaderTopButtons>
 			</Wrapper.HeaderTopContainer>
 			<div>$<Wrapper.Ticker>0</Wrapper.Ticker></div>
-			<Wrapper.GainLoss>{`${gainlossSymbol}$${Math.abs(gainLoss).toFixed(2)} (${gainlossSymbol}${Math.abs(gainLossPercent * 100).toFixed(2)}%)`}</Wrapper.GainLoss>
+			<Wrapper.GainLoss>{`${props.state.gainlossSymbol}$${Math.abs(props.state.gainLoss).toFixed(2)} (${props.state.gainlossSymbol}${Math.abs(props.state.gainLossPercent * 100).toFixed(2)}%)`}</Wrapper.GainLoss>
 		</Wrapper.Header>
 	);
 };

@@ -4,15 +4,93 @@ import moment from 'moment';
 const timeIntervals = [300000, 3600000, 90000000, 90000000, 86400000, 604800000]; //FIX
 const timeIds = ['1D', '1W', '1M', '3M', '1Y', '5Y'];
 
+const setTimeIntervals = (data, timeInterval, view, prices) => {
+  let start = new Date(Date.now());
+  let now = moment(start).add(3,'h').toDate();
+  let mostRecentPrice = prices[prices.length - 1];
+  let mostRecentDate;
+  switch (view) {
+    case '1D':
+      start.setHours(9, 0, 0, 0);
+      let once = false;
+      for (let i = 0; i < prices.length; i++) {
+        if(start > now) {
+          data[i] = { date: start, price: undefined }
+          if (!once) {
+            mostRecentPrice = prices[i-1]; 
+            mostRecentDate = new Date(moment(start).subtract(5, 'm'));
+            once = true;
+          }
+        } else {
+          data[i] = { date: start, price: prices[i] }
+        }
+        start = moment(start).add(5, 'm').toDate();
+      }
+      break;
+    case '1W':
+      start = moment(start).subtract(5, 'd').toDate();
+      start.setHours(9, 30, 0, 0);
+      for (let i = 0; i < prices.length; i++) {
+        data[i] = { date: start, price: prices[i] }
+        start = moment(start).add(10, 'm').toDate();
+      }
+    // pastTime = 16;
+    // for (let i = 0; i < prices.length; i++) {
+    //   data[i] = {date: start, price: prices[i]}
+    //   start = moment(start).add(5, 'm').toDate();
+    //   if(pastTime <= start.getHours()) {
+    //     console.log(start.getHours());
+    //     start = moment(start).add(1, 'd').toDate();
+    //     start.setHours(9, 0, 0, 0);
+    //   }
+    // }
+      break;
+    case '1M':
+      start = moment(start).subtract(1, 'm').toDate();
+      start.setHours(10, 0, 0, 0);
+      for (let i = 0; i < prices.length; i++) {
+        data[i] = { date: start, price: prices[i] }
+        start = moment(start).add(1, 'h').toDate();
+      }
+      break;
+    case '3M':
+      start = moment(start).subtract(3, 'm').toDate();
+      start.setHours(10, 0, 0, 0);
+      for (let i = 0; i < prices.length; i++) {
+        data[i] = { date: start, price: prices[i] }
+        start = moment(start).add(1, 'h').toDate();
+      }
+      break;
+    case '1Y':
+      start = moment(start).subtract(1, 'y').toDate();
+      start.setHours(10, 0, 0, 0);
+      for (let i = 0; i < prices.length; i++) {
+        data[i] = { date: start, price: prices[i] }
+        start = moment(start).add(1, 'd').toDate();
+      }
+      break;
+    case '5Y':
+      start = moment(start).subtract(5, 'Y').toDate();
+      start.setHours(10, 0, 0, 0);
+      for (let i = 0; i < prices.length; i++) {
+        data[i] = { date: start, price: prices[i] }
+        start = moment(start).add(1, 'd').toDate();
+      }
+      break;
+  }
+  return [mostRecentDate, mostRecentPrice];
+}
+
 const buildChart = (prices, view, updateTicker) => {
   d3.selectAll("svg").remove();
   let data = [];
-  let time = Date.now();
   let timeInterval = timeIntervals[timeIds.indexOf(view)];
-  for (let i = prices.length - 1; i >= 0; i--) {
-    data[i] = { date: time, price: prices[i] };
-    time -= timeInterval;
-  }
+  let [mostRecentDate, mostRecentPrice] = setTimeIntervals(data, timeInterval, view, prices);
+  // let time = Date.now();
+  // for (let i = prices.length - 1; i >= 0; i--) {
+  //   data[i] = { date: time, price: prices[i] };
+  //   time -= timeInterval;
+  // }
   const margin = { top: 50, right: 50, bottom: 20, left: 50 };
   const width = 676;
   const height = 196;
@@ -66,8 +144,6 @@ const buildChart = (prices, view, updateTicker) => {
     .attr('stroke-width', '1.5')
     .attr('d', line);
 
-
-  //HOVER OVER WITH MOUSE FUNCTUIONALITY
   const bisectDate = (data, matcher) => {
     for (let i = 0; i < data.length; i++) {
       if (data[i].date > matcher) {
@@ -79,15 +155,15 @@ const buildChart = (prices, view, updateTicker) => {
 
   const updateLegend = (currentData) => {
     d3.selectAll('.lineLegend').remove();
-    let offset;
+    let offset, xRate;
     const formatDate = (date) => {
       switch (view) {
-        case '1D': offset = 41; return (`${moment(date).format('h:mm a')} ET`);
-        case '1W': offset = 65; return (`${moment(date).format('h:mm a, MMM D')} ET`);
-        case '1M': offset = 65; return (`${moment(date).format('h:mm a, MMM D')} ET`);
-        case '3M': offset = 65; return (`${moment(date).format('h:mm a, MMM D')} ET`);
-        case '1Y': offset = 55; return (`${moment(date).format('MMM D, YYYY')} ET`);
-        case '5Y': offset = 55; return (`${moment(date).format('MMM D, YYYY')} ET`);
+        case '1D': offset = 33; xRate = 6.315; return (`${moment(date).format('h:mm a')} ET`);
+        case '1W': offset = 56; xRate = 4.38; return (`${moment(date).format('h:mm a, MMM D')} ET`);
+        case '1M': offset = 56; xRate = 5.68; return (`${moment(date).format('h:mm a, MMM D')} ET`);
+        case '3M': offset = 56; xRate = 1.88; return (`${moment(date).format('h:mm a, MMM D')} ET`);
+        case '1Y': offset = 47; xRate = 2.71; return (`${moment(date).format('MMM D, YYYY')} ET`);
+        case '5Y': offset = 47; xRate = 2.605; return (`${moment(date).format('MMM D, YYYY')} ET`);
       }
     }
 
@@ -107,8 +183,8 @@ const buildChart = (prices, view, updateTicker) => {
           return formatDate(currentData[d]);
         }
       })
-      .style('fill', 'white')
-      .attr('transform', `translate(${prices.indexOf(currentData.price) * 6.3 - offset},-5)`);
+      .style('fill', '#cbcbcd')
+      .attr('transform', `translate(${prices.indexOf(currentData.price) * xRate - offset},-5)`);
   }
 
   function generateCrosshair() {
@@ -116,9 +192,13 @@ const buildChart = (prices, view, updateTicker) => {
     const correspondingDate = xScale.invert(d3.mouse(this)[0]);
     //gets insertion point
     const i = bisectDate(data, correspondingDate.getTime());
-    updateTicker(data[i].price);
-    const d1 = data[i];
-    const currentPoint = d1;
+    let currentPoint;
+    if (data[i].price) {
+      updateTicker(data[i].price);
+      currentPoint = data[i];
+    } else {
+      currentPoint = {date:mostRecentDate, price:mostRecentPrice};
+    }
 
     focus.attr('transform', `translate(${xScale(currentPoint['date'])},     ${yScale(currentPoint['price'])})`);
 
@@ -144,17 +224,14 @@ const buildChart = (prices, view, updateTicker) => {
     .attr('width', width)
     .attr('height', height)
     .on('mouseover', () => (focus.style('display', null)))
-    .on('mouseout', () => { updateTicker(prices[prices.length - 1]); d3.selectAll('.lineLegend').remove(); focus.style('display', 'none') })
+    .on('mouseout', () => { updateTicker(mostRecentPrice); d3.selectAll('.lineLegend').remove(); focus.style('display', 'none') })
     .on('mousemove', generateCrosshair)
   d3.select('.overlay').style('fill', 'none');
   d3.select('.overlay').style('pointer-events', 'all');
   d3.selectAll('.focus line').style('fill', 'none');
   d3.selectAll('.focus line').style('stroke', '#ababab');
   d3.selectAll('.focus line').style('stroke-width', '1.5px');
-
+  return {mostRecentDate, mostRecentPrice};
 }
-
-//Provide mouseover functionality
-
 
 export default buildChart;
