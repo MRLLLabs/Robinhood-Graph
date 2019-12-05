@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 const Tab = styled.button`
-  background: black;
   color: white;
   border: none;
   background: none;

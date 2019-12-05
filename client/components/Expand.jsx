@@ -4,7 +4,7 @@ import Wrapper from '../styled-components/Wrapper'
 var Expand = (props) => {
 	return (
 		<Wrapper.Expand>
-			Expand &emsp;
+			<div>Expand &emsp; &emsp;</div>
 		</Wrapper.Expand>
 	)
 }
