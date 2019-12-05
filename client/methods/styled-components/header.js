@@ -8,7 +8,6 @@ const Company = styled.span`
   font-family: dinpro-bold
 `;
 const AnalystHold = styled.button`
-  align-self: flex-end;
   &hover: {
     color: black;
   }
@@ -21,7 +20,6 @@ const AnalystHoldImage = styled.img`
   }
 `;
 const RobinhoodOwners = styled.button`
-  align-self: flex-end;
 `;
 const RobinhoodOwnersImage = styled.img`
   background: url('/img/owners-off.png') 10px 10px no-repeat;
@@ -33,7 +31,9 @@ const RobinhoodOwnersImage = styled.img`
 const HeaderTopContainer = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: space-between;
+`;
+const HeaderTopButtons = styled.div`
 `;
 const Ticker = styled.div.attrs((/* props */) => ({ id: "ticker" }))`
 
@@ -41,4 +41,4 @@ const Ticker = styled.div.attrs((/* props */) => ({ id: "ticker" }))`
 const GainLoss = styled.div`
 `;
 
-export { Header, Company, AnalystHold, RobinhoodOwners, AnalystHoldImage, RobinhoodOwnersImage, HeaderTopContainer, Ticker, GainLoss };
+export { Header, Company, AnalystHold, RobinhoodOwners, AnalystHoldImage, RobinhoodOwnersImage, HeaderTopContainer, HeaderTopButtons, Ticker, GainLoss };
