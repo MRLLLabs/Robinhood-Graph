@@ -231,7 +231,7 @@ const buildChart = (prices, view, updateTicker) => {
   d3.selectAll('.focus line').style('fill', 'none');
   d3.selectAll('.focus line').style('stroke', '#ababab');
   d3.selectAll('.focus line').style('stroke-width', '1.5px');
-
+  return {mostRecentDate, mostRecentPrice};
 }
 
 export default buildChart;
