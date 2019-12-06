@@ -2,11 +2,11 @@ import styled from 'styled-components';
 
 
 const App = styled.div`
-  font-family: dinpro;
+  font-family: "DINPro";
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 790px;
+  width: 795px;
   font-size: 13px;
   margin: auto;
   margin-top: 50px;

@@ -6,6 +6,7 @@ import Graph from './Graph.jsx';
 import buildChart from '../methods/buildChart.js';
 import buildViewText from '../methods/buildViewText.js';
 import Odometer from 'odometer';
+import 'odometer/themes/odometer-theme-minimal.css';
 import Wrapper from '../styled-components/Wrapper';
 
 class App extends React.Component {
@@ -14,6 +15,7 @@ class App extends React.Component {
 		this.state = {
 			view: '1D',
 			viewText: 'Last Day',
+			timeOfDay: 'Pre-Market',
 			id: null,
 			name: null,
 			symbol: null,
@@ -38,7 +40,7 @@ class App extends React.Component {
 	componentDidMount() {
 		this.populateStocks(() => {
 			this.initializeTicker();
-			let {mostRecentDate, mostRecentPrice} = buildChart(this.state[`historicPrice${this.state.view}`], this.state.view, this.updateTicker);
+			let {mostRecentDate, mostRecentPrice} = buildChart(this.state[`historicPrice${this.state.view}`], this.state.view, this.updateTicker, this.state.name);
 			this.updateTicker(mostRecentPrice);
 		});
 	}
@@ -49,7 +51,7 @@ class App extends React.Component {
 			viewText: buildViewText(option),
 			price: this.state[`historicPrice${option}`][this.state[`historicPrice${option}`].length - 1]
 			}, () => {
-				buildChart(this.state[`historicPrice${this.state.view}`], this.state.view, this.updateTicker)
+				buildChart(this.state[`historicPrice${this.state.view}`], this.state.view, this.updateTicker, this.state.name)
 				this.updateTicker(this.state.price);
 			}
 		);
@@ -65,15 +67,14 @@ class App extends React.Component {
 		const tickerEl = document.getElementById('ticker');
 		this.ticker = new Odometer({
 			el: tickerEl,
-			value: 100.04,
+			value: 12.34,
 			duration: 400,
+			theme: 'minimal',
 			format: '(,ddd).dd',
 		});
 	}
 
-	updateTicker(price, text = this.state.viewText) {
-		console.log(price);
-		console.log(text);
+	updateTicker(price, text = buildViewText(this.state.view)) {
 		this.ticker.update(price.toFixed(2));
 		let currentPriceArray = this.state[`historicPrice${this.state.view}`];
 		let gainLoss = price - currentPriceArray[0];

@@ -12,6 +12,7 @@ background-image: url('/img/expand-off.png');
   height: 35px;
   margin-bottom: -2px;
   line-height: 35px;
+  font-family: "DINPro";
   :hover {
     color: #21ce99;
     background-image: url('/img/expand-on.png');
