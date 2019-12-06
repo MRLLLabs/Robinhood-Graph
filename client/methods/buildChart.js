@@ -1,82 +1,7 @@
 import * as d3 from 'd3';
 import moment from 'moment';
-
-const setTimeIntervals = (data, view, prices) => {
-  let start = new Date();
-  let now = moment(start).add(3, 'h').toDate();
-  let mostRecentPrice = prices[prices.length - 1];
-  let mostRecentDate;
-  switch (view) {
-    case '1D':
-      start.setHours(9, 0, 0, 0);
-      let once = false;
-      for (let i = 0; i < prices.length; i++) {
-        if (start > now) {
-          data[i] = { date: start, price: undefined }
-          if (!once) {
-            mostRecentPrice = prices[i - 1];
-            mostRecentDate = new Date(moment(start).subtract(5, 'm'));
-            once = true;
-          }
-        } else {
-          data[i] = { date: start, price: prices[i] }
-        }
-        start = moment(start).add(5, 'm').toDate();
-      }
-      break;
-    case '1W':
-      start = moment(start).subtract(5, 'd').toDate();
-      start.setHours(9, 30, 0, 0);
-      for (let i = 0; i < prices.length; i++) {
-        data[i] = { date: start, price: prices[i] }
-        start = moment(start).add(10, 'm').toDate();
-      }
-      // pastTime = 16;
-      // for (let i = 0; i < prices.length; i++) {
-      //   data[i] = {date: start, price: prices[i]}
-      //   start = moment(start).add(5, 'm').toDate();
-      //   if(pastTime <= start.getHours()) {
-      //     console.log(start.getHours());
-      //     start = moment(start).add(1, 'd').toDate();
-      //     start.setHours(9, 0, 0, 0);
-      //   }
-      // }
-      break;
-    case '1M':
-      start = moment(start).subtract(1, 'm').toDate();
-      start.setHours(10, 0, 0, 0);
-      for (let i = 0; i < prices.length; i++) {
-        data[i] = { date: start, price: prices[i] }
-        start = moment(start).add(1, 'h').toDate();
-      }
-      break;
-    case '3M':
-      start = moment(start).subtract(3, 'm').toDate();
-      start.setHours(10, 0, 0, 0);
-      for (let i = 0; i < prices.length; i++) {
-        data[i] = { date: start, price: prices[i] }
-        start = moment(start).add(1, 'h').toDate();
-      }
-      break;
-    case '1Y':
-      start = moment(start).subtract(1, 'y').toDate();
-      start.setHours(10, 0, 0, 0);
-      for (let i = 0; i < prices.length; i++) {
-        data[i] = { date: start, price: prices[i] }
-        start = moment(start).add(1, 'd').toDate();
-      }
-      break;
-    case '5Y':
-      start = moment(start).subtract(5, 'Y').toDate();
-      start.setHours(10, 0, 0, 0);
-      for (let i = 0; i < prices.length; i++) {
-        data[i] = { date: start, price: prices[i] }
-        start = moment(start).add(1, 'd').toDate();
-      }
-      break;
-  }
-  return [mostRecentDate, mostRecentPrice];
-}
+import buildLine from './buildLine';
+import setTimeIntervals from './setTimeIntervals'
 
 const bisectDate = (data, matcher) => {
   for (let i = 0; i < data.length; i++) {
@@ -121,46 +46,22 @@ const updateLegend = (currentData, prices, svg, view) => {
     .attr('transform', `translate(${prices.indexOf(currentData.price) * xRate - offset},-5)`);
 }
 
-const buildLine = (data, view, svg, line) => {
+const buildGreyLine = (data, view, svg, xScale, yScale) => {
   if (view === '1D') {
-    let preMarket = new Date().setHours(9, 30, 0, 0);
-    let afterMarket = new Date().setHours(16, 0, 0, 0);
-    svg.append('path')
-      .attr('d', line(data.filter(function (d) {
-        return d.date <= preMarket;
-      })))
-      .attr('id', 'pre-market')
-      .attr('stroke', '#21ce99')
-      .attr('stroke-width', 2)
-      .attr('fill', 'none')
-      .attr('stroke-opacity', '.5');
-      svg.append('path')
-      .attr('d', line(data.filter((d) => {
-        return d.date >= preMarket && d.date <= afterMarket;
-      })))
-      .attr('id', 'market')
-      .attr('stroke', '#21ce99')
-      .attr('stroke-width', 2)
-      .attr('fill', 'none')
-      .attr('stroke-opacity', '1');
-      svg.append('path')
-      .attr('d', line(data.filter((d) => {
-        return d.date >= afterMarket;
-      })))
-      .attr('id', 'after-market')
-      .attr('stroke', '#21ce99')
-      .attr('stroke-width', 2)
-      .attr('fill', 'none')
-      .attr('stroke-opacity', '.5');
+    let ticks = [];
+    for (let i = 0; i < data.length; i++) { ticks.push({date: data[i].date, price: data[0].price }); }
+    svg.selectAll('circle')
+      .data(ticks)
+      .enter()
+      .append('circle')
+        // .attr('color', ()=> {debugger})
+        .attr('cx', (d) => { return xScale(d['date']); })
+        .attr('cy', (d) => { return yScale(d['price']); })
+        .attr('r', '0.7')
+        .attr('fill', 'grey')
+        .attr('z-index', '10');
   } else {
-    svg
-      .append('path')
-      .data([data])
-      .style('fill', 'none')
-      .attr('id', 'priceChart')
-      .attr('stroke', '#21ce99')
-      .attr('stroke-width', '1.5')
-      .attr('d', line);
+    d3.selectAll('circle').remove();
   }
 }
 
@@ -237,26 +138,7 @@ const buildChart = (prices, view, updateTicker, name) => {
   buildLine(data, view, svg, line);
 
   //Append grey axis overlay
-  if (view === '1D') {
-    let ticks = [];
-    for (let i = 0; i < data.length; i++) { ticks.push(data[i].date); }
-    svg.append('g')
-      .attr('class', 'x axis')
-      .attr('fill', 'none')
-      .attr('stroke', '#cbcbcd')
-      .attr('opacity', '50%')
-      .attr('z-index', '-1')
-      // .attr('shape-rendering', 'crispEdges')
-      .attr('stroke-width', '1px')
-      .attr('transform', 'translate(0,' + (height + 100 - (260 * name.charCodeAt(0) / 90)) + ')')
-      .call(d3.axisBottom(xScale)
-        .tickValues(ticks)
-        .tickSize(2)
-        .tickFormat('')
-      )
-  } else {
-    d3.selectAll('x axis').remove();
-  }
+  buildGreyLine(data, view, svg, xScale, yScale);
 
   function generateCrosshair() {
     const correspondingDate = xScale.invert(d3.mouse(this)[0]);
@@ -276,17 +158,19 @@ const buildChart = (prices, view, updateTicker, name) => {
       .attr('x1', 0)
       .attr('x2', 0)
       .attr('y1', height - height - yScale(currentPoint['price']))
-      .attr('y2', height - yScale(currentPoint['price']));
-    updateLegend(currentPoint, prices, svg, view);
-  }
-  const focus = svg
+      .attr('y2', height - yScale(currentPoint['price']))
+      updateLegend(currentPoint, prices, svg, view);
+    }
+    const focus = svg
     .append('g')
     .attr('class', 'focus')
     .attr('fill', '#21ce99')
+    .attr('stroke', '#1b1b1d')
+    .attr('stroke-width', '2')
     .style('display', 'none');
-  focus.append('circle').attr('r', 4.5);
-  focus.append('line').classed('x', true);
-  focus.append('line').classed('y', true);
+    focus.append('line').classed('y', true);
+    focus.append('circle').attr('r', 4.5);
+  //legend of date
   svg
     .append('rect')
     .attr('class', 'overlay')
@@ -300,11 +184,14 @@ const buildChart = (prices, view, updateTicker, name) => {
       focus.style('display', 'none')
     })
     .on('mousemove', generateCrosshair)
-  d3.select('.overlay').style('fill', 'none');
-  d3.select('.overlay').style('pointer-events', 'all');
-  d3.selectAll('.focus line').style('fill', 'none');
-  d3.selectAll('.focus line').style('stroke', '#ababab');
-  d3.selectAll('.focus line').style('stroke-width', '1.5px');
+  d3.select('.overlay')
+    .style('fill', 'none')
+    .style('pointer-events', 'all');
+  d3.selectAll('.focus line')
+    .style('z-index', '-1')
+    .style('fill', 'none')
+    .style('stroke', '#ababab')
+    .style('stroke-width', '1.5px');
   return { mostRecentDate, mostRecentPrice };
 }
 
