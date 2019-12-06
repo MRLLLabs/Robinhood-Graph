@@ -9,13 +9,13 @@ const Header = (props) => {
 				<Wrapper.HeaderTopButtons>
 					<Wrapper.AnalystHold>
 						&emsp; &ensp; {props.state.analystHold.toFixed(0)}% Hold
-						<Wrapper.AnalystHoldTooltip>{props.state.analystHold}% of analyst rate<br />{props.state.symbol} as a hold.</Wrapper.AnalystHoldTooltip>
+						<Wrapper.AnalystHoldTooltip>{props.state.analystHold}% of analysts rate<br />{props.state.symbol} as a hold.</Wrapper.AnalystHoldTooltip>
 						&ensp;
 					</Wrapper.AnalystHold>
 					&ensp;
 					<Wrapper.RobinhoodOwners>
 						&emsp; &ensp; {props.state.robinhoodOwners.toLocaleString()}
-	<Wrapper.RobinhoodOwnersTooltip>{props.state.robinhoodOwners.toLocaleString()} people own<br/>{props.state.symbol} on Robinhood</Wrapper.RobinhoodOwnersTooltip>
+	<Wrapper.RobinhoodOwnersTooltip>{props.state.robinhoodOwners.toLocaleString()} people own<br/>{props.state.symbol} on Robinhood.</Wrapper.RobinhoodOwnersTooltip>
 						&ensp;
 						</Wrapper.RobinhoodOwners>
 				</Wrapper.HeaderTopButtons>
