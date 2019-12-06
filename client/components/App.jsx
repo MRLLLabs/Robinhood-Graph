@@ -66,7 +66,7 @@ class App extends React.Component {
 		const tickerEl = document.getElementById('ticker');
 		this.ticker = new Odometer({
 			el: tickerEl,
-			value: 100.04,
+			value: 75.00,
 			duration: 400,
 			format: '(,ddd).dd',
 		});

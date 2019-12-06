@@ -121,75 +121,7 @@ const updateLegend = (currentData, prices, svg, view) => {
     .attr('transform', `translate(${prices.indexOf(currentData.price) * xRate - offset},-5)`);
 }
 
-const buildChart = (prices, view, updateTicker, name) => {
-  //do setup
-  d3.selectAll('svg').remove();
-  let data = [];
-  let [mostRecentDate, mostRecentPrice] = setTimeIntervals(data, view, prices);
-  const margin = { top: 50, right: 60, bottom: 20, left: 60 };
-  const width = 676;
-  const height = 196;
-  const xMin = d3.min(data, d => { return d['date']; });
-  const xMax = d3.max(data, d => { return d['date']; });
-  const yMin = d3.min(data, d => { return d['price']; });
-  const yMax = d3.max(data, d => { return d['price']; });
-  const xScale = d3
-    .scaleTime()
-    .domain([xMin, xMax])
-    .range([0, width]);
-  const yScale = d3
-    .scaleLinear()
-    .domain([yMin, yMax])
-    .range([height, 0]);
-  //build line chart
-  const svg = d3
-    .select('#stockPriceHistoryChart')
-    .append('svg')
-    .attr('width', width + margin['left'] + margin['right'])
-    .attr('height', height + margin['top'] + margin['bottom'])
-    .append('g')
-    .attr('transform', `translate(${margin['left']},  ${margin['top']})`);
-  const line = d3
-    .line()
-    .x(d => { return xScale(d['date']); })
-    .y(d => { return yScale(d['price']); });
-  // Append the path and bind data
-  // svg
-  //   .append('path')
-  //   .data([data])
-  //   .style('fill', 'none')
-  //   .attr('id', 'priceChart')
-  //   .attr('stroke', '#21ce99')
-  //   .attr('stroke-width', '1.5')
-  //   .attr('d', line);
-
-  d3.select('#priceChart')
-    .call((chart) => {
-      console.log(chart);
-      console.log(d3.selectAll(chart.childNodes));
-    })
-  //Append grey axis overlay
-  if (view === '1D') {
-    let ticks = [];
-    for (let i = 0; i < data.length; i++) { ticks.push(data[i].date); }
-    svg.append('g')
-      .attr('class', 'x axis')
-      .attr('fill', 'none')
-      .attr('stroke', '#cbcbcd')
-      .attr('opacity', '50%')
-      .attr('z-index', '-1')
-      // .attr('shape-rendering', 'crispEdges')
-      .attr('stroke-width', '1px')
-      .attr('transform', 'translate(0,' + (height + 100 - (260 * name.charCodeAt(0) / 90)) + ')')
-      .call(d3.axisBottom(xScale)
-        .tickValues(ticks)
-        .tickSize(2)
-        .tickFormat('')
-      )
-  } else {
-    d3.selectAll('x axis').remove();
-  }
-  //Divide into sections
+const buildLine = (data, view, svg, line) => {
   if (view === '1D') {
     let preMarket = new Date().setHours(9, 30, 0, 0);
     let afterMarket = new Date().setHours(16, 0, 0, 0);
@@ -214,11 +146,100 @@ const buildChart = (prices, view, updateTicker, name) => {
         return d.date >= afterMarket;
       })))
       .attr('id', 'after-market')
-      .attr('stroke', 'red')
+      .attr('stroke', 'blue')
       .attr('stroke-width', 2)
       .attr('fill', 'none');
+  } else {
+    svg
+    .append('path')
+    .data([data])
+    .style('fill', 'none')
+    .attr('id', 'priceChart')
+    .attr('stroke', '#21ce99')
+    .attr('stroke-width', '1.5')
+    .attr('d', line);
   }
+}
 
+const updateHover = (date, view) => {
+  if (view === '1D') {
+    let preMarket = new Date().setHours(9, 30, 0, 0);
+    let afterMarket = new Date().setHours(16, 0, 0, 0);
+      d3.selectAll('path')
+        .attr('stroke', '#7beac9');
+    if (date <= preMarket) {
+      d3.select('#pre-market')
+      .attr('stroke', '#21ce99')
+    }
+    if (date >= preMarket && date <= afterMarket) {
+      d3.select('#market')
+      .attr('stroke', '#21ce99')
+    }
+    if (date >= afterMarket) {
+      d3.select('#after-market')
+      .attr('stroke', '#21ce99')
+    }
+  }
+}
+
+const buildChart = (prices, view, updateTicker, name) => {
+  //do setup
+  d3.selectAll('svg').remove();
+  let data = [];
+  let [mostRecentDate, mostRecentPrice] = setTimeIntervals(data, view, prices);
+  const margin = { top: 50, right: 60, bottom: 20, left: 60 };
+  const width = 676;
+  const height = 196;
+  const xMin = d3.min(data, d => { return d['date']; });
+  const xMax = d3.max(data, d => { return d['date']; });
+  const yMin = d3.min(data, d => { return d['price']; });
+  const yMax = d3.max(data, d => { return d['price']; });
+  const xScale = d3
+    .scaleTime()
+    .domain([xMin, xMax])
+    .range([0, width]);
+  const yScale = d3
+    .scaleLinear()
+    .domain([yMin, yMax])
+    .range([height, 0]);
+  //append svg to page and set attributes
+  const svg = d3
+    .select('#stockPriceHistoryChart')
+    .append('svg')
+    .attr('width', width + margin['left'] + margin['right'])
+    .attr('height', height + margin['top'] + margin['bottom'])
+    .append('g')
+    .attr('transform', `translate(${margin['left']},  ${margin['top']})`);
+  const line = d3
+    .line()
+    .x(d => { return xScale(d['date']); })
+    .y(d => { return yScale(d['price']); });
+  
+  //Divide into sections and build line
+  buildLine(data, view, svg, line);
+
+  //Append grey axis overlay
+  if (view === '1D') {
+    let ticks = [];
+    for (let i = 0; i < data.length; i++) { ticks.push(data[i].date); }
+    svg.append('g')
+      .attr('class', 'x axis')
+      .attr('fill', 'none')
+      .attr('stroke', '#cbcbcd')
+      .attr('opacity', '50%')
+      .attr('z-index', '-1')
+      // .attr('shape-rendering', 'crispEdges')
+      .attr('stroke-width', '1px')
+      .attr('transform', 'translate(0,' + (height + 100 - (260 * name.charCodeAt(0) / 90)) + ')')
+      .call(d3.axisBottom(xScale)
+        .tickValues(ticks)
+        .tickSize(2)
+        .tickFormat('')
+      )
+  } else {
+    d3.selectAll('x axis').remove();
+  }
+  
   function generateCrosshair() {
     const correspondingDate = xScale.invert(d3.mouse(this)[0]);
     const i = bisectDate(data, correspondingDate.getTime());
@@ -229,7 +250,7 @@ const buildChart = (prices, view, updateTicker, name) => {
     } else {
       currentPoint = { date: mostRecentDate, price: mostRecentPrice };
     }
-
+    updateHover(currentPoint['date'], view)
     focus.attr('transform', `translate(${xScale(currentPoint['date'])},${yScale(currentPoint['price'])})`);
 
     focus
@@ -254,7 +275,12 @@ const buildChart = (prices, view, updateTicker, name) => {
     .attr('width', width)
     .attr('height', height)
     .on('mouseover', () => (focus.style('display', null)))
-    .on('mouseout', () => { updateTicker(mostRecentPrice); d3.selectAll('.lineLegend').remove(); focus.style('display', 'none') })
+    .on('mouseout', () => { 
+      updateTicker(mostRecentPrice); 
+      d3.selectAll('path')
+        .attr('stroke', '#21ce99');
+      d3.selectAll('.lineLegend').remove(); 
+      focus.style('display', 'none') })
     .on('mousemove', generateCrosshair)
   d3.select('.overlay').style('fill', 'none');
   d3.select('.overlay').style('pointer-events', 'all');
