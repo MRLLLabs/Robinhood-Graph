@@ -121,7 +121,7 @@ const updateLegend = (currentData, prices, svg, view) => {
     .attr('transform', `translate(${prices.indexOf(currentData.price) * xRate - offset},-5)`);
 }
 
-const buildChart = (prices, view, updateTicker) => {
+const buildChart = (prices, view, updateTicker, name) => {
   d3.selectAll("svg").remove();
   let data = [];
   let [mostRecentDate, mostRecentPrice] = setTimeIntervals(data, view, prices);
@@ -166,7 +166,6 @@ const buildChart = (prices, view, updateTicker) => {
   if (view === '1D') {
     let ticks = [];
     for (let i = 0; i < data.length; i++) { ticks.push(data[i].date); }
-  
     svg.append("g")
       .attr("class", "x axis")
       .attr('fill', 'none')
@@ -175,7 +174,7 @@ const buildChart = (prices, view, updateTicker) => {
       .attr('z-index', '-1')
       // .attr('shape-rendering', 'crispEdges')
       .attr('stroke-width', '1px')
-      .attr("transform", "translate(0," + (height - (400 * Math.random(view))) + ")")
+      .attr("transform", "translate(0," + (height + 100 - (260 * name.charCodeAt(0)/90)) + ")")
       .call(d3.axisBottom(xScale)
         .tickValues(ticks)
         .tickSize(2)

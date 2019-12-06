@@ -39,7 +39,7 @@ class App extends React.Component {
 	componentDidMount() {
 		this.populateStocks(() => {
 			this.initializeTicker();
-			let {mostRecentDate, mostRecentPrice} = buildChart(this.state[`historicPrice${this.state.view}`], this.state.view, this.updateTicker);
+			let {mostRecentDate, mostRecentPrice} = buildChart(this.state[`historicPrice${this.state.view}`], this.state.view, this.updateTicker, this.state.name);
 			this.updateTicker(mostRecentPrice);
 		});
 	}
