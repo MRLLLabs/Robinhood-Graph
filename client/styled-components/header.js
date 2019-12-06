@@ -2,8 +2,8 @@ import styled from 'styled-components';
 
 const HeaderButton = styled.button`
   background: #0e0d0d;
-  font-family: "dinpro-bold";
   font-size: 13px;
+  font-family: "DINPro";
   color: white;
   border-radius: 15px
   border: none;
@@ -13,10 +13,8 @@ const Header = styled.div`
   margin-left: 60px;
   margin-right: 60px;
   font-size: 36px;
-  font-family: "dinpro";
 `;
 const Company = styled.span`
-  font-family: din-2014 sans-serif;
 `;
 const AnalystHoldTooltip = styled.span`
   visibility: hidden;
@@ -93,18 +91,23 @@ const HeaderTopContainer = styled.div`
   flex-direction: row;
   justify-content: space-between;
   `;
-  const HeaderTopButtons = styled.div`
+const HeaderTopButtons = styled.div`
   vertical-align: bottom;
   font-size: 16px;
 `;
 const Ticker = styled.div.attrs((/* props */) => ({ id: "ticker" }))`
   margin-bottom: 10px;
+  font-family: "DINPro-Light";
+  font-weight: 650;
 `;
 const GainLoss = styled.div`
   font-size: 13px;
-`;
+  font-family: "DINPro"
+  `;
 const ViewText = styled.span`
-  color: #cbcbcd;
+  font-size: 13px;
+  color: #8c8c8e;
+  font-family: "DINPro-Light"
 `;
 
 export { Header, Company, AnalystHold, AnalystHoldTooltip, RobinhoodOwners, RobinhoodOwnersTooltip, HeaderTopContainer, HeaderTopButtons, Ticker, GainLoss, ViewText };

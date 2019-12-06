@@ -1,7 +1,7 @@
 const buildViewText = (view) => {
   switch (view) {
     case '1D':
-      return 'Past Day';
+      return 'Today';
     case '1W':
       return 'Past Week';
     case '1M':

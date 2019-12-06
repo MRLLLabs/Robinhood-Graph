@@ -6,6 +6,7 @@ import Graph from './Graph.jsx';
 import buildChart from '../methods/buildChart.js';
 import buildViewText from '../methods/buildViewText.js';
 import Odometer from 'odometer';
+import 'odometer/themes/odometer-theme-minimal.css';
 import Wrapper from '../styled-components/Wrapper';
 
 class App extends React.Component {
@@ -66,8 +67,9 @@ class App extends React.Component {
 		const tickerEl = document.getElementById('ticker');
 		this.ticker = new Odometer({
 			el: tickerEl,
-			value: 75.00,
+			value: 12.34,
 			duration: 400,
+			theme: 'minimal',
 			format: '(,ddd).dd',
 		});
 	}

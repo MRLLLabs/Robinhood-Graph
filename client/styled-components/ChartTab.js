@@ -5,6 +5,7 @@ const Tab = styled.button`
   border: none;
   background: none;
   font-size: 13px;
+  font-family: "DINPro";
   width: 18px;
   height: 35px;
   align-text: left;
