@@ -15,7 +15,9 @@ const loadNames = new Promise((resolve, reject) => {
 			dataArray[i] = dataArray[i].split(',');
 			symbols.push(dataArray[i][0]);
 			names.push(dataArray[i][1]);
+			tags.push(dataArray[i][2].split('.'));
 		}
+		console.log(tags);
 		resolve();
 	});
 });
