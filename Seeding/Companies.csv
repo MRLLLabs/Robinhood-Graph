@@ -46,7 +46,7 @@ DWDP,DowDuPont,Top 100.Technology.Materials
 DPS,Dr Pepper Snapple Group,Top 100.Technology.Food
 EBAY,eBay Inc.,Top 100.Technology.Shopping
 EA,Electronic Arts,Top 100.Technology.Shopping
-FB,"Facebook, Inc.",Top 100.Technology.Media.Advertising
+FB,Facebook Inc.,Top 100.Technology.Media.Advertising
 F,Ford Motor,Top 100.Technology.Automotive
 GPS,Gap Inc.,Top 100.Technology.Clothing
 GD,General Dynamics,Top 100.Technology.Materials
@@ -98,4 +98,4 @@ V,Visa Inc.,Top 100.Technology.Banking
 WMT,Wal-Mart Stores,Top 100.Technology.Shopping
 WFC,Wells Fargo,Top 100.Technology.Banking
 WDC,Western Digital,Top 100.Technology.Materials
-MMM,3M Company, Chemistry.,Top 100.Technology.Materials
+MMM,3M Company,Chemistry.Top 100.Technology.Materials
