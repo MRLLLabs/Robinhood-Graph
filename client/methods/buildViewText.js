@@ -13,6 +13,7 @@ const buildViewText = (view) => {
     case '5Y':
       return 'Past 5 Years';
   }
+  throw new Error('View Passed in wrong');
 }
 
 export default buildViewText;

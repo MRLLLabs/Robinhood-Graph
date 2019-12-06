@@ -7,9 +7,9 @@ const Header = (props) => {
 			<Wrapper.HeaderTopContainer>
 				<Wrapper.Company>{`${props.state.name}`}</Wrapper.Company>
 				<Wrapper.HeaderTopButtons>
-					<Wrapper.AnalystHold>&emsp; {props.state.analystHold.toFixed(0)}% Hold</Wrapper.AnalystHold>
+					<Wrapper.AnalystHold>&emsp; &ensp; {props.state.analystHold.toFixed(0)}% Hold</Wrapper.AnalystHold>
 					&ensp;
-					<Wrapper.RobinhoodOwners> &emsp; {props.state.robinhoodOwners.toLocaleString()}</Wrapper.RobinhoodOwners>
+					<Wrapper.RobinhoodOwners> &emsp; &ensp; {props.state.robinhoodOwners.toLocaleString()}</Wrapper.RobinhoodOwners>
 				</Wrapper.HeaderTopButtons>
 			</Wrapper.HeaderTopContainer>
 			<div>$<Wrapper.Ticker>0</Wrapper.Ticker></div>

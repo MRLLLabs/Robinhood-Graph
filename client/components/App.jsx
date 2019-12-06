@@ -71,13 +71,16 @@ class App extends React.Component {
 		});
 	}
 
-	updateTicker(price) {
+	updateTicker(price, text = this.state.viewText) {
+		console.log(price);
+		console.log(text);
 		this.ticker.update(price.toFixed(2));
 		let currentPriceArray = this.state[`historicPrice${this.state.view}`];
 		let gainLoss = price - currentPriceArray[0];
 		let gainlossSymbol = gainLoss >= 0 ? '+' : '-';
 		let gainLossPercent = gainLoss / currentPriceArray[currentPriceArray.length - 1];
 		this.setState({
+			viewText: text,
 			gainLoss: gainLoss,
 			gainLossPercent: gainLossPercent,
 			gainlossSymbol: gainlossSymbol,
