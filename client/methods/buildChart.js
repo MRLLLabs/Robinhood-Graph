@@ -132,32 +132,35 @@ const buildLine = (data, view, svg, line) => {
       .attr('id', 'pre-market')
       .attr('stroke', '#21ce99')
       .attr('stroke-width', 2)
-      .attr('fill', 'none');
-    svg.append('path')
+      .attr('fill', 'none')
+      .attr('stroke-opacity', '.5');
+      svg.append('path')
       .attr('d', line(data.filter((d) => {
         return d.date >= preMarket && d.date <= afterMarket;
       })))
       .attr('id', 'market')
-      .attr('stroke', 'red')
+      .attr('stroke', '#21ce99')
       .attr('stroke-width', 2)
-      .attr('fill', 'none');
-    svg.append('path')
+      .attr('fill', 'none')
+      .attr('stroke-opacity', '1');
+      svg.append('path')
       .attr('d', line(data.filter((d) => {
         return d.date >= afterMarket;
       })))
       .attr('id', 'after-market')
-      .attr('stroke', 'blue')
+      .attr('stroke', '#21ce99')
       .attr('stroke-width', 2)
-      .attr('fill', 'none');
+      .attr('fill', 'none')
+      .attr('stroke-opacity', '.5');
   } else {
     svg
-    .append('path')
-    .data([data])
-    .style('fill', 'none')
-    .attr('id', 'priceChart')
-    .attr('stroke', '#21ce99')
-    .attr('stroke-width', '1.5')
-    .attr('d', line);
+      .append('path')
+      .data([data])
+      .style('fill', 'none')
+      .attr('id', 'priceChart')
+      .attr('stroke', '#21ce99')
+      .attr('stroke-width', '1.5')
+      .attr('d', line);
   }
 }
 
@@ -165,20 +168,35 @@ const updateHover = (date, view) => {
   if (view === '1D') {
     let preMarket = new Date().setHours(9, 30, 0, 0);
     let afterMarket = new Date().setHours(16, 0, 0, 0);
-      d3.selectAll('path')
-        .attr('stroke', '#7beac9');
+    d3.select('#pre-market')
+      .attr('stroke-opacity', '.5');
+    d3.select('#market')
+      .attr('stroke-opacity', '.5');
+    d3.select('#after-market')
+      .attr('stroke-opacity', '.5');
     if (date <= preMarket) {
       d3.select('#pre-market')
-      .attr('stroke', '#21ce99')
+        .attr('stroke-opacity', '1');
     }
     if (date >= preMarket && date <= afterMarket) {
       d3.select('#market')
-      .attr('stroke', '#21ce99')
+        .attr('stroke-opacity', '1');
     }
     if (date >= afterMarket) {
       d3.select('#after-market')
-      .attr('stroke', '#21ce99')
+        .attr('stroke-opacity', '1');
     }
+  }
+}
+
+const hoverOutShade = (view) => {
+  if (view === '1D') {
+    d3.select('#pre-market')
+      .attr('stroke-opacity', '.5');
+    d3.select('#market')
+      .attr('stroke-opacity', '1');
+    d3.select('#after-market')
+      .attr('stroke-opacity', '.5');
   }
 }
 
@@ -214,7 +232,7 @@ const buildChart = (prices, view, updateTicker, name) => {
     .line()
     .x(d => { return xScale(d['date']); })
     .y(d => { return yScale(d['price']); });
-  
+
   //Divide into sections and build line
   buildLine(data, view, svg, line);
 
@@ -239,7 +257,7 @@ const buildChart = (prices, view, updateTicker, name) => {
   } else {
     d3.selectAll('x axis').remove();
   }
-  
+
   function generateCrosshair() {
     const correspondingDate = xScale.invert(d3.mouse(this)[0]);
     const i = bisectDate(data, correspondingDate.getTime());
@@ -275,12 +293,12 @@ const buildChart = (prices, view, updateTicker, name) => {
     .attr('width', width)
     .attr('height', height)
     .on('mouseover', () => (focus.style('display', null)))
-    .on('mouseout', () => { 
-      updateTicker(mostRecentPrice); 
-      d3.selectAll('path')
-        .attr('stroke', '#21ce99');
-      d3.selectAll('.lineLegend').remove(); 
-      focus.style('display', 'none') })
+    .on('mouseout', () => {
+      updateTicker(mostRecentPrice);
+      hoverOutShade(view);
+      d3.selectAll('.lineLegend').remove();
+      focus.style('display', 'none')
+    })
     .on('mousemove', generateCrosshair)
   d3.select('.overlay').style('fill', 'none');
   d3.select('.overlay').style('pointer-events', 'all');
