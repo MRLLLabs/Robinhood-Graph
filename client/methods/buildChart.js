@@ -194,7 +194,7 @@ const buildChart = (prices, view, updateTicker) => {
     const i = bisectDate(data, correspondingDate.getTime());
     let currentPoint;
     if (data[i].price) {
-      updateTicker(data[i].price);
+      updateTicker(data[i].price, '');
       currentPoint = data[i];
     } else {
       currentPoint = {date:mostRecentDate, price:mostRecentPrice};

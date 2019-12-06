@@ -4,6 +4,7 @@ import path from 'path';
 import Header from './Header.jsx';
 import Graph from './Graph.jsx';
 import buildChart from '../methods/buildChart.js';
+import buildViewText from '../methods/buildViewText.js';
 import Odometer from 'odometer';
 import Wrapper from '../styled-components/Wrapper';
 
@@ -12,6 +13,7 @@ class App extends React.Component {
 		super(props);
 		this.state = {
 			view: '1D',
+			viewText: 'Last Day',
 			id: null,
 			name: null,
 			symbol: null,
@@ -44,6 +46,7 @@ class App extends React.Component {
 	changeView(option) {
 		this.setState({
 			view: option,
+			viewText: buildViewText(option),
 			price: this.state[`historicPrice${option}`][this.state[`historicPrice${option}`].length - 1]
 			}, () => {
 				buildChart(this.state[`historicPrice${this.state.view}`], this.state.view, this.updateTicker)
@@ -68,13 +71,16 @@ class App extends React.Component {
 		});
 	}
 
-	updateTicker(price) {
+	updateTicker(price, text = this.state.viewText) {
+		console.log(price);
+		console.log(text);
 		this.ticker.update(price.toFixed(2));
 		let currentPriceArray = this.state[`historicPrice${this.state.view}`];
 		let gainLoss = price - currentPriceArray[0];
 		let gainlossSymbol = gainLoss >= 0 ? '+' : '-';
 		let gainLossPercent = gainLoss / currentPriceArray[currentPriceArray.length - 1];
 		this.setState({
+			viewText: text,
 			gainLoss: gainLoss,
 			gainLossPercent: gainLossPercent,
 			gainlossSymbol: gainlossSymbol,
@@ -85,7 +91,7 @@ class App extends React.Component {
 		return (
 			<Wrapper.App>
 				<Header state={this.state} />
-				<Graph changeView={this.changeView} />
+				<Graph changeView={this.changeView} view={this.state.view}/>
 			</Wrapper.App>
 		);
 	}
