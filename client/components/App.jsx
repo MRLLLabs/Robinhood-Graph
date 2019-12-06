@@ -14,6 +14,7 @@ class App extends React.Component {
 		this.state = {
 			view: '1D',
 			viewText: 'Last Day',
+			timeOfDay: 'Pre-Market',
 			id: null,
 			name: null,
 			symbol: null,
@@ -71,9 +72,7 @@ class App extends React.Component {
 		});
 	}
 
-	updateTicker(price, text = this.state.viewText) {
-		console.log(price);
-		console.log(text);
+	updateTicker(price, text = buildViewText(this.state.view)) {
 		this.ticker.update(price.toFixed(2));
 		let currentPriceArray = this.state[`historicPrice${this.state.view}`];
 		let gainLoss = price - currentPriceArray[0];

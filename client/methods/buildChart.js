@@ -1,12 +1,9 @@
 import * as d3 from 'd3';
 import moment from 'moment';
 
-const timeIntervals = [300000, 3600000, 90000000, 90000000, 86400000, 604800000]; //FIX
-const timeIds = ['1D', '1W', '1M', '3M', '1Y', '5Y'];
-
-const setTimeIntervals = (data, timeInterval, view, prices) => {
+const setTimeIntervals = (data, view, prices) => {
   let start = new Date(Date.now());
-  let now = moment(start).add(3,'h').toDate();
+  let now = moment(start).add(3, 'h').toDate();
   let mostRecentPrice = prices[prices.length - 1];
   let mostRecentDate;
   switch (view) {
@@ -14,10 +11,10 @@ const setTimeIntervals = (data, timeInterval, view, prices) => {
       start.setHours(9, 0, 0, 0);
       let once = false;
       for (let i = 0; i < prices.length; i++) {
-        if(start > now) {
+        if (start > now) {
           data[i] = { date: start, price: undefined }
           if (!once) {
-            mostRecentPrice = prices[i-1]; 
+            mostRecentPrice = prices[i - 1];
             mostRecentDate = new Date(moment(start).subtract(5, 'm'));
             once = true;
           }
@@ -34,16 +31,16 @@ const setTimeIntervals = (data, timeInterval, view, prices) => {
         data[i] = { date: start, price: prices[i] }
         start = moment(start).add(10, 'm').toDate();
       }
-    // pastTime = 16;
-    // for (let i = 0; i < prices.length; i++) {
-    //   data[i] = {date: start, price: prices[i]}
-    //   start = moment(start).add(5, 'm').toDate();
-    //   if(pastTime <= start.getHours()) {
-    //     console.log(start.getHours());
-    //     start = moment(start).add(1, 'd').toDate();
-    //     start.setHours(9, 0, 0, 0);
-    //   }
-    // }
+      // pastTime = 16;
+      // for (let i = 0; i < prices.length; i++) {
+      //   data[i] = {date: start, price: prices[i]}
+      //   start = moment(start).add(5, 'm').toDate();
+      //   if(pastTime <= start.getHours()) {
+      //     console.log(start.getHours());
+      //     start = moment(start).add(1, 'd').toDate();
+      //     start.setHours(9, 0, 0, 0);
+      //   }
+      // }
       break;
     case '1M':
       start = moment(start).subtract(1, 'm').toDate();
@@ -81,42 +78,60 @@ const setTimeIntervals = (data, timeInterval, view, prices) => {
   return [mostRecentDate, mostRecentPrice];
 }
 
+const bisectDate = (data, matcher) => {
+  for (let i = 0; i < data.length; i++) {
+    if (data[i].date > matcher) {
+      return i;
+    }
+  }
+  return 1;
+}
+
+const updateLegend = (currentData, prices, svg, view) => {
+  d3.selectAll('.lineLegend').remove();
+  let offset, xRate;
+  const formatDate = (date) => {
+    switch (view) {
+      case '1D': offset = 33; xRate = 6.315; return (`${moment(date).format('h:mm a')} ET`);
+      case '1W': offset = 56; xRate = 4.38; return (`${moment(date).format('h:mm a, MMM D')} ET`);
+      case '1M': offset = 56; xRate = 5.68; return (`${moment(date).format('h:mm a, MMM D')} ET`);
+      case '3M': offset = 56; xRate = 1.88; return (`${moment(date).format('h:mm a, MMM D')} ET`);
+      case '1Y': offset = 47; xRate = 2.71; return (`${moment(date).format('MMM D, YYYY')} ET`);
+      case '5Y': offset = 47; xRate = 2.605; return (`${moment(date).format('MMM D, YYYY')} ET`);
+    }
+  }
+
+  const lineLegend = svg
+    .selectAll('.lineLegend')
+    .data(['date'])
+    .enter()
+    .append('g')
+    .attr('class', 'lineLegend')
+    .attr('transform', (d, i) => {
+      return `translate(0, ${i * 20})`;
+    });
+  lineLegend
+    .append('text')
+    .text(d => {
+      if (d === 'date') {
+        return formatDate(currentData[d]);
+      }
+    })
+    .style('fill', '#cbcbcd')
+    .attr('transform', `translate(${prices.indexOf(currentData.price) * xRate - offset},-5)`);
+}
+
 const buildChart = (prices, view, updateTicker) => {
   d3.selectAll("svg").remove();
   let data = [];
-  let timeInterval = timeIntervals[timeIds.indexOf(view)];
-  let [mostRecentDate, mostRecentPrice] = setTimeIntervals(data, timeInterval, view, prices);
-  // let time = Date.now();
-  // for (let i = prices.length - 1; i >= 0; i--) {
-  //   data[i] = { date: time, price: prices[i] };
-  //   time -= timeInterval;
-  // }
-  const margin = { top: 50, right: 50, bottom: 20, left: 50 };
+  let [mostRecentDate, mostRecentPrice] = setTimeIntervals(data, view, prices);
+  const margin = { top: 50, right: 60, bottom: 20, left: 60 };
   const width = 676;
   const height = 196;
-  // add SVG to the page
-  const svg = d3
-    .select('#stockPriceHistoryChart')
-    .append('svg')
-    .attr('width', width + margin['left'] + margin['right'])
-    .attr('height', height + margin['top'] + margin['bottom'])
-    .append('g')
-    .attr('transform', `translate(${margin['left']},  ${margin['top']})`);
-
-  // find data range
-  const xMin = d3.min(data, d => {
-    return d['date'];
-  });
-  const xMax = d3.max(data, d => {
-    return d['date'];
-  });
-  const yMin = d3.min(data, d => {
-    return d['price'];
-  });
-  const yMax = d3.max(data, d => {
-    return d['price'];
-  });
-  // scales for the charts
+  const xMin = d3.min(data, d => { return d['date']; });
+  const xMax = d3.max(data, d => { return d['date']; });
+  const yMin = d3.min(data, d => { return d['price']; });
+  const yMax = d3.max(data, d => { return d['price']; });
   const xScale = d3
     .scaleTime()
     .domain([xMin, xMax])
@@ -126,14 +141,17 @@ const buildChart = (prices, view, updateTicker) => {
     .domain([yMin, yMax])
     .range([height, 0]);
 
+  const svg = d3
+    .select('#stockPriceHistoryChart')
+    .append('svg')
+    .attr('width', width + margin['left'] + margin['right'])
+    .attr('height', height + margin['top'] + margin['bottom'])
+    .append('g')
+    .attr('transform', `translate(${margin['left']},  ${margin['top']})`);
   const line = d3
     .line()
-    .x(d => {
-      return xScale(d['date']);
-    })
-    .y(d => {
-      return yScale(d['price']);
-    });
+    .x(d => { return xScale(d['date']); })
+    .y(d => { return yScale(d['price']); });
   // Append the path and bind data
   svg
     .append('path')
@@ -144,63 +162,41 @@ const buildChart = (prices, view, updateTicker) => {
     .attr('stroke-width', '1.5')
     .attr('d', line);
 
-  const bisectDate = (data, matcher) => {
-    for (let i = 0; i < data.length; i++) {
-      if (data[i].date > matcher) {
-        return i;
-      }
-    }
-    return 1;
-  }
-
-  const updateLegend = (currentData) => {
-    d3.selectAll('.lineLegend').remove();
-    let offset, xRate;
-    const formatDate = (date) => {
-      switch (view) {
-        case '1D': offset = 33; xRate = 6.315; return (`${moment(date).format('h:mm a')} ET`);
-        case '1W': offset = 56; xRate = 4.38; return (`${moment(date).format('h:mm a, MMM D')} ET`);
-        case '1M': offset = 56; xRate = 5.68; return (`${moment(date).format('h:mm a, MMM D')} ET`);
-        case '3M': offset = 56; xRate = 1.88; return (`${moment(date).format('h:mm a, MMM D')} ET`);
-        case '1Y': offset = 47; xRate = 2.71; return (`${moment(date).format('MMM D, YYYY')} ET`);
-        case '5Y': offset = 47; xRate = 2.605; return (`${moment(date).format('MMM D, YYYY')} ET`);
-      }
-    }
-
-    const lineLegend = svg
-      .selectAll('.lineLegend')
-      .data(['date'])
-      .enter()
-      .append('g')
-      .attr('class', 'lineLegend')
-      .attr('transform', (d, i) => {
-        return `translate(0, ${i * 20})`;
-      });
-    lineLegend
-      .append('text')
-      .text(d => {
-        if (d === 'date') {
-          return formatDate(currentData[d]);
-        }
-      })
-      .style('fill', '#cbcbcd')
-      .attr('transform', `translate(${prices.indexOf(currentData.price) * xRate - offset},-5)`);
+    //fadsfadf
+  if (view === '1D') {
+    let ticks = [];
+    for (let i = 0; i < data.length; i++) { ticks.push(data[i].date); }
+  
+    svg.append("g")
+      .attr("class", "x axis")
+      .attr('fill', 'none')
+      .attr('stroke', '#cbcbcd')
+      .attr('opacity', '50%')
+      .attr('z-index', '-1')
+      // .attr('shape-rendering', 'crispEdges')
+      .attr('stroke-width', '1px')
+      .attr("transform", "translate(0," + (height - (400 * Math.random(view))) + ")")
+      .call(d3.axisBottom(xScale)
+        .tickValues(ticks)
+        .tickSize(2)
+        .tickFormat("")
+      )
+  } else {
+    d3.selectAll("x axis").remove();
   }
 
   function generateCrosshair() {
-    //returns corresponding value from the domain
     const correspondingDate = xScale.invert(d3.mouse(this)[0]);
-    //gets insertion point
     const i = bisectDate(data, correspondingDate.getTime());
     let currentPoint;
     if (data[i].price) {
       updateTicker(data[i].price, '');
       currentPoint = data[i];
     } else {
-      currentPoint = {date:mostRecentDate, price:mostRecentPrice};
+      currentPoint = { date: mostRecentDate, price: mostRecentPrice };
     }
 
-    focus.attr('transform', `translate(${xScale(currentPoint['date'])},     ${yScale(currentPoint['price'])})`);
+    focus.attr('transform', `translate(${xScale(currentPoint['date'])},${yScale(currentPoint['price'])})`);
 
     focus
       .select('line.y')
@@ -208,7 +204,7 @@ const buildChart = (prices, view, updateTicker) => {
       .attr('x2', 0)
       .attr('y1', height - height - yScale(currentPoint['price']))
       .attr('y2', height - yScale(currentPoint['price']));
-    updateLegend(currentPoint);
+    updateLegend(currentPoint, prices, svg, view);
   }
   const focus = svg
     .append('g')
@@ -231,7 +227,7 @@ const buildChart = (prices, view, updateTicker) => {
   d3.selectAll('.focus line').style('fill', 'none');
   d3.selectAll('.focus line').style('stroke', '#ababab');
   d3.selectAll('.focus line').style('stroke-width', '1.5px');
-  return {mostRecentDate, mostRecentPrice};
+  return { mostRecentDate, mostRecentPrice };
 }
 
 export default buildChart;

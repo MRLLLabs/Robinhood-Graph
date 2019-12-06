@@ -10,8 +10,8 @@ const HeaderButton = styled.button`
   height: 28px;
 `;
 const Header = styled.div`
-  margin-left: 50px;
-  margin-right: 50px;
+  margin-left: 60px;
+  margin-right: 60px;
   font-size: 36px;
   font-family: "dinpro";
 `;
