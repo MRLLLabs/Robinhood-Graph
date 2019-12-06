@@ -191,22 +191,29 @@ const buildChart = (prices, view, updateTicker, name) => {
   }
   //Divide into sections
   if (view === '1D') {
-    let preMarket = new Date().setHours(9, 0, 0, 0);
-    preMarket = moment(preMarket).add(30, 'm').toDate();
-    svg
-      .append('path')
+    let preMarket = new Date().setHours(9, 30, 0, 0);
+    let afterMarket = new Date().setHours(16, 0, 0, 0);
+    svg.append('path')
       .attr('d', line(data.filter(function (d) {
-        
         return d.date <= preMarket;
       })))
       .attr('id', 'pre-market')
       .attr('stroke', '#21ce99')
       .attr('stroke-width', 2)
       .attr('fill', 'none');
-    var lineGraph2 = svg.append('path')
+    svg.append('path')
       .attr('d', line(data.filter((d) => {
-        return d.date >= preMarket;
+        return d.date >= preMarket && d.date <= afterMarket;
       })))
+      .attr('id', 'market')
+      .attr('stroke', 'red')
+      .attr('stroke-width', 2)
+      .attr('fill', 'none');
+    svg.append('path')
+      .attr('d', line(data.filter((d) => {
+        return d.date >= afterMarket;
+      })))
+      .attr('id', 'after-market')
       .attr('stroke', 'red')
       .attr('stroke-width', 2)
       .attr('fill', 'none');
