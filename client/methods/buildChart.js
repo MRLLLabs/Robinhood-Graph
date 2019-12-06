@@ -2,6 +2,7 @@ import * as d3 from 'd3';
 import moment from 'moment';
 import buildLine from './buildLine';
 import setTimeIntervals from './setTimeIntervals'
+import updateHover from './updateHover';
 
 const bisectDate = (data, matcher) => {
   for (let i = 0; i < data.length; i++) {
@@ -49,44 +50,19 @@ const updateLegend = (currentData, prices, svg, view) => {
 const buildGreyLine = (data, view, svg, xScale, yScale) => {
   if (view === '1D') {
     let ticks = [];
-    for (let i = 0; i < data.length; i++) { ticks.push({date: data[i].date, price: data[0].price }); }
+    for (let i = 0; i < data.length; i++) { ticks.push({ date: data[i].date, price: data[0].price }); }
     svg.selectAll('circle')
       .data(ticks)
       .enter()
       .append('circle')
-        // .attr('color', ()=> {debugger})
-        .attr('cx', (d) => { return xScale(d['date']); })
-        .attr('cy', (d) => { return yScale(d['price']); })
-        .attr('r', '0.7')
-        .attr('fill', 'grey')
-        .attr('z-index', '10');
+      // .attr('color', ()=> {debugger})
+      .attr('cx', (d) => { return xScale(d['date']); })
+      .attr('cy', (d) => { return yScale(d['price']); })
+      .attr('r', '0.7')
+      .attr('fill', 'grey')
+      .attr('z-index', '10');
   } else {
     d3.selectAll('circle').remove();
-  }
-}
-
-const updateHover = (date, view) => {
-  if (view === '1D') {
-    let preMarket = new Date().setHours(9, 30, 0, 0);
-    let afterMarket = new Date().setHours(16, 0, 0, 0);
-    d3.select('#pre-market')
-      .attr('stroke-opacity', '.5');
-    d3.select('#market')
-      .attr('stroke-opacity', '.5');
-    d3.select('#after-market')
-      .attr('stroke-opacity', '.5');
-    if (date <= preMarket) {
-      d3.select('#pre-market')
-        .attr('stroke-opacity', '1');
-    }
-    if (date >= preMarket && date <= afterMarket) {
-      d3.select('#market')
-        .attr('stroke-opacity', '1');
-    }
-    if (date >= afterMarket) {
-      d3.select('#after-market')
-        .attr('stroke-opacity', '1');
-    }
   }
 }
 
@@ -98,6 +74,9 @@ const hoverOutShade = (view) => {
       .attr('stroke-opacity', '1');
     d3.select('#after-market')
       .attr('stroke-opacity', '.5');
+  } else if (view === '1W') {
+    d3.selectAll('.weekLine')
+      .attr('stroke-opacity', '1');
   }
 }
 
@@ -159,17 +138,17 @@ const buildChart = (prices, view, updateTicker, name) => {
       .attr('x2', 0)
       .attr('y1', height - height - yScale(currentPoint['price']))
       .attr('y2', height - yScale(currentPoint['price']))
-      updateLegend(currentPoint, prices, svg, view);
-    }
-    const focus = svg
+    updateLegend(currentPoint, prices, svg, view);
+  }
+  const focus = svg
     .append('g')
     .attr('class', 'focus')
     .attr('fill', '#21ce99')
     .attr('stroke', '#1b1b1d')
     .attr('stroke-width', '2')
     .style('display', 'none');
-    focus.append('line').classed('y', true);
-    focus.append('circle').attr('r', 4.5);
+  focus.append('line').classed('y', true);
+  focus.append('circle').attr('r', 4.5);
   //legend of date
   svg
     .append('rect')

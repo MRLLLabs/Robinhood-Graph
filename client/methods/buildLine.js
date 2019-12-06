@@ -35,44 +35,48 @@ const buildLine = (data, view, svg, line) => {
       .attr('d', line(data.filter(function (d, i) {
         return i <= breakPoints[0];
       })))
-      .attr('id', 'W1D1')
+      .attr('id', 'WD1')
+      .attr('class', 'weekLine')
       .attr('stroke', '#21ce99')
       .attr('stroke-width', 2)
       .attr('fill', 'none')
-    svg.append('path')
+      svg.append('path')
       .attr('d', line(data.filter(function (d, i) {
         return i >= breakPoints[0] && i <= breakPoints[1];
       })))
-      .attr('id', 'W1D2')
+      .attr('id', 'WD2')
+      .attr('class', 'weekLine')
       .attr('stroke', '#21ce99')
       .attr('stroke-width', 2)
       .attr('fill', 'none')
-    svg.append('path')
+      svg.append('path')
       .attr('d', line(data.filter(function (d, i) {
         return i >= breakPoints[1] && i <= breakPoints[2];
       })))
-      .attr('id', 'W1D3')
+      .attr('id', 'WD3')
+      .attr('class', 'weekLine')
       .attr('stroke', '#21ce99')
       .attr('stroke-width', 2)
       .attr('fill', 'none')
-    svg.append('path')
+      svg.append('path')
       .attr('d', line(data.filter(function (d, i) {
         return i >= breakPoints[2] && i <= breakPoints[3];
       })))
-      .attr('id', 'W1D4')
+      .attr('id', 'WD4')
+      .attr('class', 'weekLine')
       .attr('stroke', '#21ce99')
       .attr('stroke-width', 2)
       .attr('fill', 'none')
-    svg.append('path')
+      svg.append('path')
       .attr('d', line(data.filter(function (d, i) {
         return i >= breakPoints[3];
       })))
-      .attr('id', 'W1D5')
+      .attr('id', 'WD5')
+      .attr('class', 'weekLine')
       .attr('stroke', '#21ce99')
       .attr('stroke-width', 2)
       .attr('fill', 'none')
-
-  } else {
+    } else {
     svg
       .append('path')
       .data([data])
