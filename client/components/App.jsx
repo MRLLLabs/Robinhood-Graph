@@ -50,7 +50,7 @@ class App extends React.Component {
 			viewText: buildViewText(option),
 			price: this.state[`historicPrice${option}`][this.state[`historicPrice${option}`].length - 1]
 			}, () => {
-				buildChart(this.state[`historicPrice${this.state.view}`], this.state.view, this.updateTicker)
+				buildChart(this.state[`historicPrice${this.state.view}`], this.state.view, this.updateTicker, this.state.name)
 				this.updateTicker(this.state.price);
 			}
 		);

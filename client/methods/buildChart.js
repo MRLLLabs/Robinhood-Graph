@@ -2,7 +2,7 @@ import * as d3 from 'd3';
 import moment from 'moment';
 
 const setTimeIntervals = (data, view, prices) => {
-  let start = new Date(Date.now());
+  let start = new Date();
   let now = moment(start).add(3, 'h').toDate();
   let mostRecentPrice = prices[prices.length - 1];
   let mostRecentDate;
@@ -122,7 +122,8 @@ const updateLegend = (currentData, prices, svg, view) => {
 }
 
 const buildChart = (prices, view, updateTicker, name) => {
-  d3.selectAll("svg").remove();
+  //do setup
+  d3.selectAll('svg').remove();
   let data = [];
   let [mostRecentDate, mostRecentPrice] = setTimeIntervals(data, view, prices);
   const margin = { top: 50, right: 60, bottom: 20, left: 60 };
@@ -140,7 +141,7 @@ const buildChart = (prices, view, updateTicker, name) => {
     .scaleLinear()
     .domain([yMin, yMax])
     .range([height, 0]);
-
+  //build line chart
   const svg = d3
     .select('#stockPriceHistoryChart')
     .append('svg')
@@ -153,35 +154,62 @@ const buildChart = (prices, view, updateTicker, name) => {
     .x(d => { return xScale(d['date']); })
     .y(d => { return yScale(d['price']); });
   // Append the path and bind data
-  svg
-    .append('path')
-    .data([data])
-    .style('fill', 'none')
-    .attr('id', 'priceChart')
-    .attr('stroke', '#21ce99')
-    .attr('stroke-width', '1.5')
-    .attr('d', line);
+  // svg
+  //   .append('path')
+  //   .data([data])
+  //   .style('fill', 'none')
+  //   .attr('id', 'priceChart')
+  //   .attr('stroke', '#21ce99')
+  //   .attr('stroke-width', '1.5')
+  //   .attr('d', line);
 
-    //fadsfadf
+  d3.select('#priceChart')
+    .call((chart) => {
+      console.log(chart);
+      console.log(d3.selectAll(chart.childNodes));
+    })
+  //Append grey axis overlay
   if (view === '1D') {
     let ticks = [];
     for (let i = 0; i < data.length; i++) { ticks.push(data[i].date); }
-    svg.append("g")
-      .attr("class", "x axis")
+    svg.append('g')
+      .attr('class', 'x axis')
       .attr('fill', 'none')
       .attr('stroke', '#cbcbcd')
       .attr('opacity', '50%')
       .attr('z-index', '-1')
       // .attr('shape-rendering', 'crispEdges')
       .attr('stroke-width', '1px')
-      .attr("transform", "translate(0," + (height + 100 - (260 * name.charCodeAt(0)/90)) + ")")
+      .attr('transform', 'translate(0,' + (height + 100 - (260 * name.charCodeAt(0) / 90)) + ')')
       .call(d3.axisBottom(xScale)
         .tickValues(ticks)
         .tickSize(2)
-        .tickFormat("")
+        .tickFormat('')
       )
   } else {
-    d3.selectAll("x axis").remove();
+    d3.selectAll('x axis').remove();
+  }
+  //Divide into sections
+  if (view === '1D') {
+    let preMarket = new Date().setHours(9, 0, 0, 0);
+    preMarket = moment(preMarket).add(30, 'm').toDate();
+    svg
+      .append('path')
+      .attr('d', line(data.filter(function (d) {
+        
+        return d.date <= preMarket;
+      })))
+      .attr('id', 'pre-market')
+      .attr('stroke', '#21ce99')
+      .attr('stroke-width', 2)
+      .attr('fill', 'none');
+    var lineGraph2 = svg.append('path')
+      .attr('d', line(data.filter((d) => {
+        return d.date >= preMarket;
+      })))
+      .attr('stroke', 'red')
+      .attr('stroke-width', 2)
+      .attr('fill', 'none');
   }
 
   function generateCrosshair() {
