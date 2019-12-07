@@ -2,7 +2,7 @@ import { ChartTab, Tab1D , Tab1W, Tab1M, Tab3M, Tab1Y, Tab5Y } from './ChartTab.
 import { App } from './App';
 import { Expand, Image } from './Expand';
 import { Graph, Chart, GraphBottomContainer } from './Graph';
-import { Header, Company, AnalystHold, AnalystHoldTooltip, RobinhoodOwners, RobinhoodOwnersTooltip, HeaderTopContainer, HeaderTopButtons, Ticker, GainLoss, ViewText } from './Header';
+import { Header, Company, Tags, TagsContainer, AnalystHold, AnalystHoldTooltip, RobinhoodOwners, RobinhoodOwnersTooltip, HeaderTopContainer, HeaderTopButtons, Ticker, GainLoss, ViewText } from './Header';
 
 let Wrapper = {};
 Wrapper.App = App;
@@ -23,6 +23,8 @@ Wrapper.GraphBottomContainer = GraphBottomContainer;
 
 Wrapper.Header = Header;
 Wrapper.Company = Company;
+Wrapper.Tags = Tags;
+Wrapper.TagsContainer = TagsContainer;
 Wrapper.AnalystHold = AnalystHold;
 Wrapper.AnalystHoldTooltip = AnalystHoldTooltip;
 Wrapper.RobinhoodOwners = RobinhoodOwners;

@@ -22,6 +22,7 @@ class App extends React.Component {
 			analystHold: 0,
 			robinhoodOwners: 0,
 			price: 0,
+			tags: [],
 			historicPrice1D: [],
 			historicPrice1W: [],
 			historicPrice1M: [],

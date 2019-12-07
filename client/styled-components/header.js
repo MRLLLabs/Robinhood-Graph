@@ -16,6 +16,26 @@ const Header = styled.div`
 `;
 const Company = styled.span`
 `;
+const TagsContainer = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 20px;
+`;
+const Tags = styled.button`
+  font-family: "DINPro";
+  font-size: 13px;
+  background: #182b27;
+  color: #21ce99;
+  border-radius: 13px;
+  border-color: #182b27;
+  height: 28px;
+  vertical-align: middle;
+  margin-right: 20px;
+  :hover {
+    color: #1b1b1d;
+    background: #21ce99;
+  }    
+`;
 const AnalystHoldTooltip = styled.span`
   visibility: hidden;
   width: 149px;
@@ -110,4 +130,4 @@ const ViewText = styled.span`
   font-family: "DINPro-Light"
 `;
 
-export { Header, Company, AnalystHold, AnalystHoldTooltip, RobinhoodOwners, RobinhoodOwnersTooltip, HeaderTopContainer, HeaderTopButtons, Ticker, GainLoss, ViewText };
+export { Header, Company, Tags, TagsContainer, AnalystHold, AnalystHoldTooltip, RobinhoodOwners, RobinhoodOwnersTooltip, HeaderTopContainer, HeaderTopButtons, Ticker, GainLoss, ViewText };
