@@ -15,6 +15,7 @@ const loadNames = new Promise((resolve, reject) => {
 			dataArray[i] = dataArray[i].split(',');
 			symbols.push(dataArray[i][0]);
 			names.push(dataArray[i][1]);
+			tags.push(dataArray[i][2].split('.'));
 		}
 		resolve();
 	});
@@ -44,6 +45,7 @@ const buildStocks = (callback) => {
 			stock.analystHold = Math.floor(Math.random() * 100);
 			stock.robinhoodOwners = Math.floor(Math.random() * 200000);
 			stock.price = startPrice;
+			stock.tags = tags.shift();
 			stock.historicPrice1D = buildHistoricPrice(109, .2, startPrice);
 			stock.historicPrice1W = buildHistoricPrice(155, .5, startPrice);
 			stock.historicPrice1M = buildHistoricPrice(120, 1, startPrice);

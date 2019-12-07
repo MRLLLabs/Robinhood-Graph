@@ -16,6 +16,26 @@ const Header = styled.div`
 `;
 const Company = styled.span`
 `;
+const TagsContainer = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 18px;
+`;
+const Tags = styled.button`
+  font-family: "DINPro";
+  font-size: 13px;
+  background: #182b27;
+  color: #21ce99;
+  border-radius: 13px;
+  border-color: #182b27;
+  height: 28px;
+  vertical-align: middle;
+  margin-right: 20px;
+  :hover {
+    color: #1b1b1d;
+    background: #21ce99;
+  }    
+`;
 const AnalystHoldTooltip = styled.span`
   visibility: hidden;
   width: 149px;
@@ -26,30 +46,27 @@ const AnalystHoldTooltip = styled.span`
   text-align: center;
   padding: 5px 5px;
   border-radius: 6px;
- 
-  // top: 100%;
-  // left: 50%;
   margin-top: 30px;
   margin-left: -118px;
   position: absolute;
   z-index: 1;
 `;
 const AnalystHold = styled(HeaderButton)`
-background-image: url('/img/analyst-off.png');
-background-size: 13px 13px;
-background-repeat: no-repeat;
-background-position: 15% center;
-:hover {
-  background: white;
-  color: #1b1b1d;
-  background-image: url('/img/analyst-on.png');
+  background-image: url('/img/analyst-off.png');
   background-size: 13px 13px;
   background-repeat: no-repeat;
   background-position: 15% center;
-}
-:hover ${AnalystHoldTooltip} {
-  visibility: visible;
-}
+  :hover {
+    background: white;
+    color: #1b1b1d;
+    background-image: url('/img/analyst-on.png');
+    background-size: 13px 13px;
+    background-repeat: no-repeat;
+    background-position: 15% center;
+  }
+  :hover ${AnalystHoldTooltip} {
+    visibility: visible;
+  }
 `;
 const RobinhoodOwnersTooltip = styled.span`
   visibility: hidden;
@@ -61,30 +78,27 @@ const RobinhoodOwnersTooltip = styled.span`
   text-align: center;
   padding: 5px 5px;
   border-radius: 6px;
- 
-  // top: 100%;
-  // left: 50%;
   margin-top: 30px;
   margin-left: -110px;
   position: absolute;
   z-index: 1;
 `;
 const RobinhoodOwners = styled(HeaderButton)`
-background-image: url('/img/owners-off.png');
-background-size: 13px 13px;
-background-repeat: no-repeat;
-background-position: 17% center;
-:hover {
-  background: white;
-  color: #1b1b1d;
-  background-image: url('/img/owners-on.png');
+  background-image: url('/img/owners-off.png');
   background-size: 13px 13px;
   background-repeat: no-repeat;
   background-position: 17% center;
-}
-:hover ${RobinhoodOwnersTooltip} {
-  visibility: visible;
-}
+  :hover {
+    background: white;
+    color: #1b1b1d;
+    background-image: url('/img/owners-on.png');
+    background-size: 13px 13px;
+    background-repeat: no-repeat;
+    background-position: 17% center;
+  }
+  :hover ${RobinhoodOwnersTooltip} {
+    visibility: visible;
+  }
 `;
 const HeaderTopContainer = styled.div`
   display: flex;
@@ -110,4 +124,4 @@ const ViewText = styled.span`
   font-family: "DINPro-Light"
 `;
 
-export { Header, Company, AnalystHold, AnalystHoldTooltip, RobinhoodOwners, RobinhoodOwnersTooltip, HeaderTopContainer, HeaderTopButtons, Ticker, GainLoss, ViewText };
+export { Header, Company, Tags, TagsContainer, AnalystHold, AnalystHoldTooltip, RobinhoodOwners, RobinhoodOwnersTooltip, HeaderTopContainer, HeaderTopButtons, Ticker, GainLoss, ViewText };

@@ -4,6 +4,11 @@ import Wrapper from '../styled-components/Wrapper';
 const Header = (props) => {
 	return (
 		<Wrapper.Header>
+			<Wrapper.TagsContainer>
+				{props.state.tags.map((tag, idx) => {
+					return <Wrapper.Tags key={idx}>&ensp;{tag}&ensp;</Wrapper.Tags>;
+				})}
+			</Wrapper.TagsContainer>
 			<Wrapper.HeaderTopContainer>
 				<Wrapper.Company>{`${props.state.name}`}</Wrapper.Company>
 				<Wrapper.HeaderTopButtons>
@@ -15,9 +20,9 @@ const Header = (props) => {
 					&ensp;
 					<Wrapper.RobinhoodOwners>
 						&emsp; &ensp; {props.state.robinhoodOwners.toLocaleString()}
-	<Wrapper.RobinhoodOwnersTooltip>{props.state.robinhoodOwners.toLocaleString()} people own<br/>{props.state.symbol} on Robinhood.</Wrapper.RobinhoodOwnersTooltip>
+						<Wrapper.RobinhoodOwnersTooltip>{props.state.robinhoodOwners.toLocaleString()} people own<br />{props.state.symbol} on Robinhood.</Wrapper.RobinhoodOwnersTooltip>
 						&ensp;
-						</Wrapper.RobinhoodOwners>
+					</Wrapper.RobinhoodOwners>
 				</Wrapper.HeaderTopButtons>
 			</Wrapper.HeaderTopContainer>
 			<div>$<Wrapper.Ticker>0</Wrapper.Ticker></div>

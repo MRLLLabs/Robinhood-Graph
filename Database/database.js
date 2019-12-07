@@ -15,6 +15,7 @@ const stockSchema = new mongoose.Schema({
   analystHold: Number,
   robinhoodOwners: Number,
   price: Number,
+  tags: [{ type: String }],
   historicPrice1D: [{ type: Number }],
   historicPrice1W: [{ type: Number }],
   historicPrice1M: [{ type: Number }],
