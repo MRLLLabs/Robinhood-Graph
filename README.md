@@ -1,6 +1,6 @@
 How to start application:
 
-#Step 1
+##Step 1
 
 In Terminal, run 
 ```
@@ -8,7 +8,7 @@ npm install
 ``` 
 to install all relevent packages /n
 
-#Step 2
+##Step 2
 
 In Terminal, run 
 ```
@@ -16,7 +16,7 @@ npm run seed
 ```
 to setup and populate database
 
-#Step 3
+##Step 3
 
 In Terminal, run
 ```
@@ -24,7 +24,7 @@ npm start
 ```
 to open server
 
-#Step 4
+##Step 4
 
 In different Terminal, run 
 ```
