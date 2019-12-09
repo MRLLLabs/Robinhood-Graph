@@ -10,7 +10,7 @@ const buildLine = (data, view, svg, line) => {
       .attr('stroke', '#21ce99')
       .attr('stroke-width', 2)
       .attr('fill', 'none')
-      .attr('stroke-opacity', '.5');
+      .attr('stroke-opacity', '1');
     svg.append('path')
       .attr('d', line(data.filter((d) => {
         return d.date >= preMarket && d.date <= afterMarket;
@@ -28,7 +28,7 @@ const buildLine = (data, view, svg, line) => {
       .attr('stroke', '#21ce99')
       .attr('stroke-width', 2)
       .attr('fill', 'none')
-      .attr('stroke-opacity', '.5');
+      .attr('stroke-opacity', '1');
   } else if (view === '1W') {
     const breakPoints = [31, 62, 93, 124];
     svg.append('path')

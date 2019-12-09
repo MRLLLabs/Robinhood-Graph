@@ -10,7 +10,7 @@ const setTimeIntervals = (data, view, prices) => {
       start.setHours(9, 0, 0, 0);
       let once = false;
       for (let i = 0; i < prices.length; i++) {
-        if (start > now) {
+        if (start > now && Date.now < start) {
           data[i] = { date: start, price: undefined }
           if (!once) {
             mostRecentPrice = prices[i - 1];
@@ -70,7 +70,7 @@ const setTimeIntervals = (data, view, prices) => {
       start.setHours(10, 0, 0, 0);
       for (let i = 0; i < prices.length; i++) {
         data[i] = { date: start, price: prices[i] }
-        start = moment(start).add(1, 'd').toDate();
+        start = moment(start).add(7, 'd').toDate();
       }
       break;
   }

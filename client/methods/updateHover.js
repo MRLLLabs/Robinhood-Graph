@@ -61,6 +61,7 @@ const updateHover = ({date, price}, view, updateTicker, mostRecentPrice) => {
       d3.select('#WD5')
         .attr('stroke-opacity', '1');
     }
+    updateTicker(price, '');
   } else {
     updateTicker(price, '');
   }
