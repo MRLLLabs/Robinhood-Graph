@@ -117,11 +117,14 @@ const Ticker = styled.div.attrs((/* props */) => ({ id: "ticker" }))`
 const GainLoss = styled.div`
   font-size: 13px;
   font-family: "DINPro"
+  padding-top: 30px;
+  width: 180px;
   `;
 const ViewText = styled.span`
   font-size: 13px;
   color: #8c8c8e;
   font-family: "DINPro-Light"
+  height: 15px;
 `;
 
 export { Header, Company, Tags, TagsContainer, AnalystHold, AnalystHoldTooltip, RobinhoodOwners, RobinhoodOwnersTooltip, HeaderTopContainer, HeaderTopButtons, Ticker, GainLoss, ViewText };
