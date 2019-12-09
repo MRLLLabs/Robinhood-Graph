@@ -61,7 +61,7 @@ class App extends React.Component {
 	populateStocks(callback) {
 		fetch(`/stocks${window.location.search}`, { method: 'GET' })
 		.then((response) => response.json() )
-		.then((data) => { this.setState(data[0], callback); });
+		.then((data) => { console.log(data); this.setState(data[0], callback); });
 	}
 
 	initializeTicker() {
@@ -76,7 +76,7 @@ class App extends React.Component {
 	}
 
 	updateTicker(price, text = buildViewText(this.state.view)) {
-		this.ticker.update(price.toFixed(2));
+		if (price !== undefined) this.ticker.update(price.toFixed(2));
 		let currentPriceArray = this.state[`historicPrice${this.state.view}`];
 		let gainLoss = price - currentPriceArray[0];
 		let gainlossSymbol = gainLoss >= 0 ? '+' : '-';

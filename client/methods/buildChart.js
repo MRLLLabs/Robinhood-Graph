@@ -117,6 +117,7 @@ const buildChart = (prices, view, updateTicker, name) => {
     .y(d => { return yScale(d['price']); });
 
   //Divide into sections and build line
+  console.log(data);
   buildLine(data, view, svg, line);
 
   //Append grey axis overlay
