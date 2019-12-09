@@ -70,7 +70,7 @@ const setTimeIntervals = (data, view, prices) => {
       start.setHours(10, 0, 0, 0);
       for (let i = 0; i < prices.length; i++) {
         data[i] = { date: start, price: prices[i] }
-        start = moment(start).add(1, 'd').toDate();
+        start = moment(start).add(7, 'd').toDate();
       }
       break;
   }

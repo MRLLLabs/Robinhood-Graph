@@ -70,13 +70,12 @@ const hoverOutShade = (view) => {
   if (view === '1D') {
     let afterHours = new Date()
     afterHours.setHours(16);
-    const defaultOpacity = Date.now <= afterHours ? ['1','.5'] : ['.5','1'];
     d3.select('#pre-market')
-      .attr('stroke-opacity', '.5');
+      .attr('stroke-opacity', '1');
     d3.select('#market')
-      .attr('stroke-opacity', defaultOpacity[0]);
+      .attr('stroke-opacity', '1');
     d3.select('#after-market')
-      .attr('stroke-opacity', defaultOpacity[1]);
+      .attr('stroke-opacity', '1');
   } else if (view === '1W') {
     d3.selectAll('.weekLine')
       .attr('stroke-opacity', '1');
