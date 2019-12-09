@@ -12,4 +12,4 @@ Step 3 - In Terminal, run "npm start" to open server
 
 Step 4 - In different Terminal, run "npm run build" to comile with webpack and babel
 
-Open browser to localhost:3000
+Open browser to localhost:3001
