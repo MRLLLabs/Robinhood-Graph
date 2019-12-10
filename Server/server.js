@@ -1,19 +1,17 @@
 const express = require('../node_modules/express');
 const path = require('path');
 const db = require('../database/database.js');
+const cors = require('cors');
 
 const port = 3001;
 const app = express();
 
+app.use(cors());
 app.use('/', express.static(path.resolve(__dirname, '../public')));
 
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "http://localhost:3000"); // update to match the domain you will make the request from
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
 
-app.get('/stocks', (req, res) => {
+app.get('/graph/getStocks', (req, res) => {
+  console.log('request to graph get stocks made');
   const callback = (data) => {
     res.end(JSON.stringify(data));
   };
