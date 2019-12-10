@@ -10,7 +10,6 @@ app.use(cors());
 app.use('/', express.static(path.resolve(__dirname, '../public')));
 
 app.get('/graph/getStocks', (req, res) => {
-  console.log('request to graph get stocks made');
   const callback = (data) => {
     res.end(JSON.stringify(data));
   };
