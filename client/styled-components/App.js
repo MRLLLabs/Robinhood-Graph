@@ -10,6 +10,9 @@ const App = styled.div`
   font-size: 13px;
   margin: auto;
   margin-top: 50px;
+  background:  #1b1b1d;
+  font-family: "DINPro";
+  color: white;
 `;
 
 export { App };

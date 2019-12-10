@@ -61,7 +61,7 @@ class App extends React.Component {
 	populateStocks(callback) {
 		fetch(`/stocks${window.location.search}`, { method: 'GET' })
 		.then((response) => response.json() )
-		.then((data) => { console.log(data); this.setState(data[0], callback); });
+		.then((data) => { this.setState(data[0], callback); });
 	}
 
 	initializeTicker() {
