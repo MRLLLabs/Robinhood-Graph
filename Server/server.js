@@ -1,13 +1,15 @@
 const express = require('../node_modules/express');
 const path = require('path');
 const db = require('../database/database.js');
+const cors = require('cors');
 
 const port = 3001;
 const app = express();
 
+app.use(cors())
 app.use('/', express.static(path.resolve(__dirname, '../public')));
 
-app.get('/stocks', (req, res) => {
+app.get('/graph/getStocks', (req, res) => {
   const callback = (data) => {
     res.end(JSON.stringify(data));
   };
