@@ -9,13 +9,12 @@ const app = express();
 app.use(cors());
 app.use('/', express.static(path.resolve(__dirname, '../public')));
 
-
 app.get('/graph/getStocks', (req, res) => {
   console.log('request to graph get stocks made');
   const callback = (data) => {
     res.end(JSON.stringify(data));
   };
-  let stockId = req.query.q ? req.query.q : '4';
+  let stockId = req.query.id ? req.query.id : '4';
   db.find(stockId, callback);
 
 });
