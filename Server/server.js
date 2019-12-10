@@ -13,7 +13,7 @@ app.get('/graph/getStocks', (req, res) => {
   const callback = (data) => {
     res.end(JSON.stringify(data));
   };
-  let stockId = req.query.q ? req.query.q : '4';
+  let stockId = req.query.id ? req.query.id : '4';
   db.find(stockId, callback);
 
 });
