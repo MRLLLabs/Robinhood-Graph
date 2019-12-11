@@ -52,14 +52,14 @@ const AnalystHoldTooltip = styled.span`
   z-index: 1;
 `;
 const AnalystHold = styled(HeaderButton)`
-  background-image: url('/img/analyst-off.png');
+  background-image: url('/graph/img/analyst-off.png');
   background-size: 13px 13px;
   background-repeat: no-repeat;
   background-position: 15% center;
   :hover {
     background: white;
     color: #1b1b1d;
-    background-image: url('/img/analyst-on.png');
+    background-image: url('/graph/img/analyst-on.png');
     background-size: 13px 13px;
     background-repeat: no-repeat;
     background-position: 15% center;
@@ -84,14 +84,14 @@ const RobinhoodOwnersTooltip = styled.span`
   z-index: 1;
 `;
 const RobinhoodOwners = styled(HeaderButton)`
-  background-image: url('/img/owners-off.png');
+  background-image: url('/graph/img/owners-off.png');
   background-size: 13px 13px;
   background-repeat: no-repeat;
   background-position: 17% center;
   :hover {
     background: white;
     color: #1b1b1d;
-    background-image: url('/img/owners-on.png');
+    background-image: url('/graph/img/owners-on.png');
     background-size: 13px 13px;
     background-repeat: no-repeat;
     background-position: 17% center;

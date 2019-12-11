@@ -5,7 +5,7 @@ const Image = styled.div`
 `;
 
 const Expand = styled.div`
-background-image: url('/img/expand-off.png');
+background-image: url('/graph/img/expand-off.png');
   background-size: 13px 13px;
   background-repeat: no-repeat;
   background-position: 90% center;
@@ -15,7 +15,7 @@ background-image: url('/img/expand-off.png');
   font-family: "DINPro";
   :hover {
     color: #21ce99;
-    background-image: url('/img/expand-on.png');
+    background-image: url('/graph/img/expand-on.png');
     background-size: 13px 13px;
     background-repeat: no-repeat;
     background-position: 90% center;
