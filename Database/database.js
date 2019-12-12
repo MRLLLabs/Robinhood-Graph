@@ -27,16 +27,14 @@ const stockSchema = new mongoose.Schema({
 const Stock = mongoose.model('Stock', stockSchema);
 
 module.exports.save = (stocksArray) => {
-  console.log('saving to database step 1');
   // Stock.deleteMany({}, (err) => {
   //   if (err) { throw err; }
   //   console.log('deleted step 2')
     stocksArray.map((singleStock) => {
       const newStock = new Stock(singleStock);
-      console.log(`Creating Data Entry Company ${singleStock.id}/100`);
       newStock.save((err, stock) => {
+        console.log(`Creating Data Entry Company ${stock.id}/100`);
         if (err) throw err;
-        console.log('success', stock.id)
         if (stock.id === 100) {
           mongoose.disconnect();
         }
