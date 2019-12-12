@@ -1,5 +1,6 @@
 const db = require('../database/database.js');
 const fs = require('fs');
+const path = require('path');
 
 let allStocks = [];
 const names = [];
@@ -8,7 +9,7 @@ const tags = [];
 
 
 const loadNames = new Promise((resolve, reject) => {
-	fs.readFile('./Seeding/Companies.csv', 'utf8', function (err, data) {
+	fs.readFile(path.resolve(__dirname, 'Companies.csv'), 'utf8', function (err, data) {
 		if (err) throw err
 		let dataArray = data.split(/\r?\n/);
 		for (let i = 1; i < dataArray.length; i++) {
@@ -17,6 +18,7 @@ const loadNames = new Promise((resolve, reject) => {
 			names.push(dataArray[i][1]);
 			tags.push(dataArray[i][2].split('.'));
 		}
+		console.log(symbols);
 		resolve();
 	});
 });

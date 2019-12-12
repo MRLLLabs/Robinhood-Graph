@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/test', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb://database:27017/test', { useNewUrlParser: true, useUnifiedTopology: true });
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -27,19 +27,22 @@ const stockSchema = new mongoose.Schema({
 const Stock = mongoose.model('Stock', stockSchema);
 
 module.exports.save = (stocksArray) => {
-  Stock.deleteMany({}, (err) => {
-    if (err) { throw err; }
+  console.log('saving to database step 1');
+  // Stock.deleteMany({}, (err) => {
+  //   if (err) { throw err; }
+  //   console.log('deleted step 2')
     stocksArray.map((singleStock) => {
       const newStock = new Stock(singleStock);
       console.log(`Creating Data Entry Company ${singleStock.id}/100`);
       newStock.save((err, stock) => {
         if (err) throw err;
+        console.log('success', stock.id)
         if (stock.id === 100) {
           mongoose.disconnect();
         }
       });
     });
-  })
+  // })
 };
 
 module.exports.find = (id, endCallback) => {

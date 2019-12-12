@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  database:
+    image: mongo:latest
+  populatedb:
+    build: .
+    command: npm run seed
+  graph:
+    build: .
+    depends_on:
+      - 'database'
+    ports: 
+      - '3001:3001'

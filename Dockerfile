@@ -1,4 +1,4 @@
-FROM node:10.17-alpine
+FROM node:10.17
 
 RUN mkdir -p /src/app
 
@@ -6,10 +6,9 @@ WORKDIR /src/app
 
 COPY . /src/app
 
+COPY package.json /src/app/
 RUN npm install
 
-RUN npm run seed
+EXPOSE 3001
 
-EXPOSE 3003
-
-CMD [ "npm", "run", "start" ]
+CMD [ "npm", "run", "start:docker" ]

@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server/server.js --inspect",
+    "start": "nodemon server/server.js",
+    "start:docker": "node server/server.js",
     "build": "webpack -w -d --mode=production",
     "seed": "node seeding/seed.js",
     "test": "jest --coverage --colors",
