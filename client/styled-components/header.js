@@ -10,8 +10,6 @@ const HeaderButton = styled.button`
   height: 28px;
 `;
 const Header = styled.div`
-  margin-left: 60px;
-  margin-right: 60px;
   font-size: 36px;
 `;
 const Company = styled.span`

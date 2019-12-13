@@ -9,9 +9,7 @@ const GraphBottomContainer = styled.span`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin-left: 60px;
-  margin-right: 60px;
-  border-bottom: 1px solid grey;
+  border-bottom: 1px solid black;
   z-index: -1;
 `;
 

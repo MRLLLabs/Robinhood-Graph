@@ -87,7 +87,7 @@ const buildChart = (prices, view, updateTicker, name) => {
   d3.selectAll('svg').remove();
   let data = [];
   let [mostRecentDate, mostRecentPrice] = setTimeIntervals(data, view, prices);
-  const margin = { top: 50, right: 60, bottom: 20, left: 60 };
+  const margin = { top: 50, right: 0, bottom: 20, left: 0 };
   const width = 676;
   const height = 196;
   const xMin = d3.min(data, d => { return d['date']; });
@@ -106,6 +106,7 @@ const buildChart = (prices, view, updateTicker, name) => {
   const svg = d3
     .select('#stockPriceHistoryChart')
     .append('svg')
+    .attr('overflow', 'visible')
     .attr('width', width + margin['left'] + margin['right'])
     .attr('height', height + margin['top'] + margin['bottom'])
     .append('g')
