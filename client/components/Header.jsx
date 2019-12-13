@@ -25,7 +25,7 @@ const Header = (props) => {
 					</Wrapper.RobinhoodOwners>
 				</Wrapper.HeaderTopButtons>
 			</Wrapper.HeaderTopContainer>
-			<div>$<Wrapper.Ticker>0</Wrapper.Ticker></div>
+			<Wrapper.FullTicker>$<Wrapper.Ticker>0</Wrapper.Ticker></Wrapper.FullTicker>
 			<Wrapper.GainLoss>
 				{`${props.state.gainlossSymbol}$${Math.abs(props.state.gainLoss).toFixed(2)} 
 				(${props.state.gainlossSymbol}${Math.abs(props.state.gainLossPercent * 100).toFixed(2)}%) `}

@@ -16,6 +16,7 @@ class App extends React.Component {
 			view: '1D',
 			viewText: 'Last Day',
 			timeOfDay: 'Pre-Market',
+			lineColor: '#1b1b1d',
 			id: null,
 			name: null,
 			symbol: null,
@@ -43,6 +44,7 @@ class App extends React.Component {
 			this.initializeTicker();
 			let {mostRecentDate, mostRecentPrice} = buildChart(this.state[`historicPrice${this.state.view}`], this.state.view, this.updateTicker, this.state.name);
 			this.updateTicker(mostRecentPrice);
+			this.updateGlobalColor();
 		});
 	}
 
@@ -76,6 +78,16 @@ class App extends React.Component {
 		});
 	}
 
+	updateGlobalColor() {
+		fetch(`/updateLineColors`, { 
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({color: this.state.lineColor})
+		})
+	}
+
 	updateTicker(price, text = buildViewText(this.state.view)) {
 		if (price !== undefined) this.ticker.update(price.toFixed(2));
 		let currentPriceArray = this.state[`historicPrice${this.state.view}`];
@@ -87,6 +99,7 @@ class App extends React.Component {
 			gainLoss: gainLoss,
 			gainLossPercent: gainLossPercent,
 			gainlossSymbol: gainlossSymbol,
+			lineColor: gainlossSymbol === '-' ? '#f45531' : '#1b1b1d',
 		})
 	}
 	

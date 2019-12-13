@@ -3,7 +3,6 @@ import styled from 'styled-components';
 const HeaderButton = styled.button`
   background: #0e0d0d;
   font-size: 13px;
-  font-family: "DINPro";
   color: white;
   border-radius: 15px
   border: none;
@@ -20,7 +19,6 @@ const TagsContainer = styled.div`
   margin-bottom: 18px;
 `;
 const Tags = styled.button`
-  font-family: "DINPro";
   font-size: 13px;
   background: #182b27;
   color: #21ce99;
@@ -35,6 +33,7 @@ const Tags = styled.button`
   }    
 `;
 const AnalystHoldTooltip = styled.span`
+  font-family: "DINPro";
   visibility: hidden;
   width: 149px;
   height: 38px;
@@ -67,6 +66,7 @@ const AnalystHold = styled(HeaderButton)`
   }
 `;
 const RobinhoodOwnersTooltip = styled.span`
+  font-family: "DINPro";
   visibility: hidden;
   width: 149px;
   height: 38px;
@@ -104,24 +104,27 @@ const HeaderTopContainer = styled.div`
   justify-content: space-between;
   `;
 const HeaderTopButtons = styled.div`
+  font-family: "DINPro";
   vertical-align: bottom;
   font-size: 16px;
   focus: {
     outline:none !important;
   }
 `;
+const FullTicker = styled.div`
+  font-family: "DINPro-Light";
+  font-size: 30px;
+`;
 const Ticker = styled.div.attrs((/* props */) => ({ id: "odometer" }))`
   font-family: "DINPro-Light";
   line-height: 26px;
   margin-bottom: none;
   font-weight: 650;
-  height: 40px !important;
   font-size: 30px;
 `;
 const GainLoss = styled.div`
   font-size: 13px;
-  font-family: "DINPro"
-  padding-top: 30px;
+  padding-top: 10px;
   width: 280px;
   `;
 const ViewText = styled.span`
@@ -131,4 +134,4 @@ const ViewText = styled.span`
   height: 15px;
 `;
 
-export { Header, Company, Tags, TagsContainer, AnalystHold, AnalystHoldTooltip, RobinhoodOwners, RobinhoodOwnersTooltip, HeaderTopContainer, HeaderTopButtons, Ticker, GainLoss, ViewText };
+export { Header, Company, Tags, TagsContainer, AnalystHold, AnalystHoldTooltip, RobinhoodOwners, RobinhoodOwnersTooltip, HeaderTopContainer, HeaderTopButtons, Ticker, FullTicker, GainLoss, ViewText };
