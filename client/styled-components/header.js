@@ -108,17 +108,23 @@ const HeaderTopContainer = styled.div`
 const HeaderTopButtons = styled.div`
   vertical-align: bottom;
   font-size: 16px;
+  focus: {
+    outline:none !important;
+  }
 `;
-const Ticker = styled.div.attrs((/* props */) => ({ id: "ticker" }))`
-  margin-bottom: 10px;
+const Ticker = styled.div.attrs((/* props */) => ({ id: "odometer" }))`
   font-family: "DINPro-Light";
+  line-height: 26px;
+  margin-bottom: none;
   font-weight: 650;
+  height: 40px !important;
+  font-size: 30px;
 `;
 const GainLoss = styled.div`
   font-size: 13px;
   font-family: "DINPro"
   padding-top: 30px;
-  width: 180px;
+  width: 280px;
   `;
 const ViewText = styled.span`
   font-size: 13px;

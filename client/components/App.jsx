@@ -66,7 +66,7 @@ class App extends React.Component {
 	}
 
 	initializeTicker() {
-		const tickerEl = document.getElementById('ticker');
+		const tickerEl = document.getElementById('odometer');
 		this.ticker = new Odometer({
 			el: tickerEl,
 			value: 12.34,

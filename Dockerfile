@@ -7,6 +7,7 @@ WORKDIR /src/app
 COPY . /src/app
 
 COPY package.json /src/app/
+
 RUN npm install
 
 EXPOSE 3001
