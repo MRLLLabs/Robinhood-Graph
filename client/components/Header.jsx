@@ -3,22 +3,22 @@ import Wrapper from '../styled-components/Wrapper';
 
 const Header = (props) => {
 	return (
-		<Wrapper.Header>
+		<Wrapper.Header backgroundColor={props.state.backgroundColor}>
 			<Wrapper.TagsContainer>
 				{props.state.tags.map((tag, idx) => {
-					return <Wrapper.Tags key={idx}>&ensp;{tag}&ensp;</Wrapper.Tags>;
+					return <Wrapper.Tags key={idx} lineColor={props.state.lineColor} backgroundColor={props.state.backgroundColor}>&ensp;{tag}&ensp;</Wrapper.Tags>;
 				})}
 			</Wrapper.TagsContainer>
 			<Wrapper.HeaderTopContainer>
 				<Wrapper.Company>{`${props.state.name}`}</Wrapper.Company>
 				<Wrapper.HeaderTopButtons>
-					<Wrapper.AnalystHold>
+					<Wrapper.AnalystHold backgroundColor={props.state.backgroundColor}>
 						&emsp; &ensp; {props.state.analystHold.toFixed(0)}% Hold
 						<Wrapper.AnalystHoldTooltip>{props.state.analystHold}% of analysts rate<br />{props.state.symbol} as a hold.</Wrapper.AnalystHoldTooltip>
 						&ensp;
 					</Wrapper.AnalystHold>
 					&ensp;
-					<Wrapper.RobinhoodOwners>
+					<Wrapper.RobinhoodOwners backgroundColor={props.state.backgroundColor}>
 						&emsp; &ensp; {props.state.robinhoodOwners.toLocaleString()}
 						<Wrapper.RobinhoodOwnersTooltip>{props.state.robinhoodOwners.toLocaleString()} people own<br />{props.state.symbol} on Robinhood.</Wrapper.RobinhoodOwnersTooltip>
 						&ensp;

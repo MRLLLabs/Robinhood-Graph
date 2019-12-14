@@ -16,7 +16,8 @@ class App extends React.Component {
 			view: '1D',
 			viewText: 'Last Day',
 			timeOfDay: 'Pre-Market',
-			lineColor: '#1b1b1d',
+			lineColor: '#21ce99',
+			backgroundColor: '#1b1b1d',
 			id: null,
 			name: null,
 			symbol: null,
@@ -42,7 +43,8 @@ class App extends React.Component {
 	componentDidMount() {
 		this.populateStocks(() => {
 			this.initializeTicker();
-			let {mostRecentDate, mostRecentPrice} = buildChart(this.state[`historicPrice${this.state.view}`], this.state.view, this.updateTicker, this.state.name);
+			this.updateBackgroundColor();
+			let { mostRecentDate, mostRecentPrice } = buildChart(this.state[`historicPrice${this.state.view}`], this.state.view, this.updateTicker, this.state.lineColor, this.state.backgroundColor);
 			this.updateTicker(mostRecentPrice);
 			this.updateGlobalColor();
 		});
@@ -53,18 +55,17 @@ class App extends React.Component {
 			view: option,
 			viewText: buildViewText(option),
 			price: this.state[`historicPrice${option}`][this.state[`historicPrice${option}`].length - 1]
-			}, () => {
-				buildChart(this.state[`historicPrice${this.state.view}`], this.state.view, this.updateTicker, this.state.name)
-				this.updateTicker(this.state.price);
-			}
+		}, () => {
+			buildChart(this.state[`historicPrice${this.state.view}`], this.state.view, this.updateTicker, this.state.lineColor, this.state.backgroundColor)
+			this.updateTicker(this.state.price);
+		}
 		);
 	}
 
 	populateStocks(callback) {
-		console.log('making request');
 		fetch(`/graph/getStocks${window.location.search}`, { method: 'GET' })
-		.then((response) => response.json() )
-		.then((data) => { this.setState(data[0], callback); });
+			.then((response) => response.json())
+			.then((data) => { this.setState(data[0], callback); });
 	}
 
 	initializeTicker() {
@@ -78,13 +79,28 @@ class App extends React.Component {
 		});
 	}
 
+	updateBackgroundColor() {
+		const d = new Date();
+		const totalMinutes = (d.getHours() * 60) + d.getMinutes();
+		let background = '';
+		if (totalMinutes < 360 || totalMinutes >= 900) {
+			background = '#1B1B1D';
+		} else {
+			background = 'white';
+		}
+		console.log(background);
+		this.setState({
+			backgroundColor: background,
+		})
+	}
+
 	updateGlobalColor() {
-		fetch(`/updateLineColors`, { 
+		fetch(`/updateLineColors`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify({color: this.state.lineColor})
+			body: JSON.stringify({ color: this.state.lineColor })
 		})
 	}
 
@@ -99,15 +115,15 @@ class App extends React.Component {
 			gainLoss: gainLoss,
 			gainLossPercent: gainLossPercent,
 			gainlossSymbol: gainlossSymbol,
-			lineColor: gainlossSymbol === '-' ? '#f45531' : '#1b1b1d',
+			// lineColor: currentPriceArray[0]-currentPriceArray[currentPriceArray.length-1] > 0 ? '#f45531' : '#21ce99',
 		})
 	}
-	
+
 	render() {
 		return (
-			<Wrapper.App>
+			<Wrapper.App backgroundColor={this.state.backgroundColor}>
 				<Header state={this.state} />
-				<Graph changeView={this.changeView} view={this.state.view}/>
+				<Graph changeView={this.changeView} view={this.state.view} state={this.state}/>
 			</Wrapper.App>
 		);
 	}

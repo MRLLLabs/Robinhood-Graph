@@ -1,4 +1,4 @@
-const buildLine = (data, view, svg, line) => {
+const buildLine = (data, view, svg, line, lineColor) => {
   if (view === '1D') {
     let preMarket = new Date().setHours(9, 30, 0, 0);
     let afterMarket = new Date().setHours(16, 0, 0, 0);
@@ -7,7 +7,7 @@ const buildLine = (data, view, svg, line) => {
         return d.date <= preMarket;
       })))
       .attr('id', 'pre-market')
-      .attr('stroke', '#21ce99')
+      .attr('stroke', lineColor)
       .attr('stroke-width', 2)
       .attr('fill', 'none')
       .attr('stroke-opacity', '1');
@@ -16,7 +16,7 @@ const buildLine = (data, view, svg, line) => {
         return d.date >= preMarket && d.date <= afterMarket;
       })))
       .attr('id', 'market')
-      .attr('stroke', '#21ce99')
+      .attr('stroke', lineColor)
       .attr('stroke-width', 2)
       .attr('fill', 'none')
       .attr('stroke-opacity', '1');
@@ -25,7 +25,7 @@ const buildLine = (data, view, svg, line) => {
         return d.date >= afterMarket;
       })))
       .attr('id', 'after-market')
-      .attr('stroke', '#21ce99')
+      .attr('stroke', lineColor)
       .attr('stroke-width', 2)
       .attr('fill', 'none')
       .attr('stroke-opacity', '1');
@@ -37,7 +37,7 @@ const buildLine = (data, view, svg, line) => {
       })))
       .attr('id', 'WD1')
       .attr('class', 'weekLine')
-      .attr('stroke', '#21ce99')
+      .attr('stroke', lineColor)
       .attr('stroke-width', 2)
       .attr('fill', 'none')
       svg.append('path')
@@ -46,7 +46,7 @@ const buildLine = (data, view, svg, line) => {
       })))
       .attr('id', 'WD2')
       .attr('class', 'weekLine')
-      .attr('stroke', '#21ce99')
+      .attr('stroke', lineColor)
       .attr('stroke-width', 2)
       .attr('fill', 'none')
       svg.append('path')
@@ -55,7 +55,7 @@ const buildLine = (data, view, svg, line) => {
       })))
       .attr('id', 'WD3')
       .attr('class', 'weekLine')
-      .attr('stroke', '#21ce99')
+      .attr('stroke', lineColor)
       .attr('stroke-width', 2)
       .attr('fill', 'none')
       svg.append('path')
@@ -64,7 +64,7 @@ const buildLine = (data, view, svg, line) => {
       })))
       .attr('id', 'WD4')
       .attr('class', 'weekLine')
-      .attr('stroke', '#21ce99')
+      .attr('stroke', lineColor)
       .attr('stroke-width', 2)
       .attr('fill', 'none')
       svg.append('path')
@@ -73,7 +73,7 @@ const buildLine = (data, view, svg, line) => {
       })))
       .attr('id', 'WD5')
       .attr('class', 'weekLine')
-      .attr('stroke', '#21ce99')
+      .attr('stroke', lineColor)
       .attr('stroke-width', 2)
       .attr('fill', 'none')
     } else {
@@ -82,7 +82,7 @@ const buildLine = (data, view, svg, line) => {
       .data([data])
       .style('fill', 'none')
       .attr('id', 'priceChart')
-      .attr('stroke', '#21ce99')
+      .attr('stroke', lineColor)
       .attr('stroke-width', '1.5')
       .attr('d', line);
   }

@@ -82,7 +82,7 @@ const hoverOutShade = (view) => {
   }
 }
 
-const buildChart = (prices, view, updateTicker, name) => {
+const buildChart = (prices, view, updateTicker, lineColor, backgroundColor) => {
   //do setup
   d3.selectAll('svg').remove();
   let data = [];
@@ -117,8 +117,7 @@ const buildChart = (prices, view, updateTicker, name) => {
     .y(d => { return yScale(d['price']); });
 
   //Divide into sections and build line
-  console.log(data);
-  buildLine(data, view, svg, line);
+  buildLine(data, view, svg, line, lineColor);
 
   //Append grey axis overlay
   buildGreyLine(data, view, svg, xScale, yScale);
@@ -143,11 +142,12 @@ const buildChart = (prices, view, updateTicker, name) => {
       .attr('y2', height - yScale(currentPoint['price']))
     updateLegend(currentPoint, prices, svg, view);
   }
+  console.log('here',backgroundColor);
   const focus = svg
     .append('g')
     .attr('class', 'focus')
-    .attr('fill', '#21ce99')
-    .attr('stroke', '#1b1b1d')
+    .attr('fill', lineColor)
+    .attr('stroke', backgroundColor)
     .attr('stroke-width', '2')
     .style('display', 'none');
   focus.append('line').classed('y', true);
