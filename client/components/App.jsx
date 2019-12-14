@@ -17,7 +17,7 @@ class App extends React.Component {
 			viewText: 'Last Day',
 			timeOfDay: 'Pre-Market',
 			lineColor: '#21ce99',
-			backgroundColor: '#1b1b1d',
+			backgroundColor: 'white',
 			id: null,
 			name: null,
 			symbol: null,
@@ -88,7 +88,6 @@ class App extends React.Component {
 		} else {
 			background = 'white';
 		}
-		console.log(background);
 		this.setState({
 			backgroundColor: background,
 		})
