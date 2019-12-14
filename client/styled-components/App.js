@@ -2,7 +2,9 @@ import styled from 'styled-components';
 
 
 const App = styled.div`
-  font-family: "DINPro";
+  background: ${props => props.backgroundColor}
+  font-family: "DINPro-regular";
+  font-weight: bold;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

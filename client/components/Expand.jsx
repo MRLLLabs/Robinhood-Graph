@@ -3,7 +3,7 @@ import Wrapper from '../styled-components/Wrapper'
 
 var Expand = (props) => {
 	return (
-		<Wrapper.Expand>
+		<Wrapper.Expand lineColor={props.state.lineColor} backgroundColor={props.state.backgroundColor}>
 			Expand &emsp; &emsp;
 		</Wrapper.Expand>
 	)

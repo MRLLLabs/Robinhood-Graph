@@ -5,7 +5,12 @@ const Image = styled.div`
 `;
 
 const Expand = styled.div`
-background-image: url('/graph/img/expand-off.png');
+  background-image: ${props => {
+    return props.backgroundColor === 'white' ? `url('/graph/img/expand-black.png')` : `url('/graph/img/expand-white.png')`;
+  }};
+  color: ${props => {
+    return props.backgroundColor === 'white' ? 'black' : 'white';
+  }};
   background-size: 13px 13px;
   background-repeat: no-repeat;
   background-position: 90% center;
@@ -14,8 +19,10 @@ background-image: url('/graph/img/expand-off.png');
   line-height: 35px;
   font-family: "DINPro";
   :hover {
-    color: #21ce99;
-    background-image: url('/graph/img/expand-on.png');
+    color: ${props => props.lineColor};
+    background-image: ${props => {
+      return props.lineColor === '#21ce99' ? 'url("/graph/img/expand-on-gain.png")' : 'url("/graph/img/expand-on-loss.png")'
+    }};
     background-size: 13px 13px;
     background-repeat: no-repeat;
     background-position: 90% center;

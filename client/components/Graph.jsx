@@ -8,8 +8,8 @@ const Graph = (props) => {
 		<Wrapper.Graph>
 			<Wrapper.Chart id="stockPriceHistoryChart"/>
 			<Wrapper.GraphBottomContainer>
-				<ChartTab changeView={props.changeView} view={props.view}/>
-				<Expand />
+				<ChartTab changeView={props.changeView} view={props.view} state={props.state}/>
+				<Expand state={props.state}/>
 			</Wrapper.GraphBottomContainer>
 		</Wrapper.Graph>
 	);
