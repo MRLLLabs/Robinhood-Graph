@@ -31,8 +31,8 @@ const Tags = styled.button`
   font-size: 13px;
   font-family: "DINPro-regular";
   background: ${props => {
-    let background = '#e6f9f3'
-    return props.lineColor === '#21ce99' ? background : '#2d201f';
+    console.log(props.backgroundColor)
+    return props.backgroundColor === 'white' ? '#e6f9f3' : '#182b27';
   }};
   color: ${props => {
     return props.lineColor === '#21ce99' ? '#21ce99' : '#f45531';
@@ -161,6 +161,7 @@ const HeaderTopButtons = styled.div`
 const FullTicker = styled.div`
   font-family: "DINPro-Light";
   font-size: 30px;
+  z-index: 45;
 `;
 const Ticker = styled.div.attrs((/* props */) => ({ id: "odometer" }))`
   font-family: "DINPro-Light";
@@ -168,6 +169,7 @@ const Ticker = styled.div.attrs((/* props */) => ({ id: "odometer" }))`
   margin-top: -10px;
   font-weight: 650;
   font-size: 30px;
+  z-index: 50;
 `;
 const GainLoss = styled.div`
   font-size: 13px;
