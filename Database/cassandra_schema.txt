@@ -1,0 +1,10 @@
+CREATE TABLE symbols ( id uuid PRIMARY KEY, name text, symbol text, analystHold int, robinhoodOwners int, price decimal, tags list<text>)
+
+CREATE TABLE prices_all ( symbol text PRIMARY KEY, prices_1D list<decimal>, prices_1W list<decimal>, prices_1M list<decimal>, prices_3M list<decimal>, prices_1Y list<decimal>, prices_5Y list<decimal> )
+
+CREATE TABLE prices_1D ( symbol text PRIMARY KEY, prices list<decimal> )
+CREATE TABLE prices_1W ( symbol text PRIMARY KEY, prices list<decimal> )
+CREATE TABLE prices_1M ( symbol text PRIMARY KEY, prices list<decimal> )
+CREATE TABLE prices_3M ( symbol text PRIMARY KEY, prices list<decimal> )
+CREATE TABLE prices_1Y ( symbol text PRIMARY KEY, prices list<decimal> )
+CREATE TABLE prices_5Y ( symbol text PRIMARY KEY, prices list<decimal> )

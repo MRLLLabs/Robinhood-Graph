@@ -16,12 +16,12 @@ app.get('/graph/:symbol', (req, res) => {
 }); //if query time length specified, return sp. time else return all
 app.post('/graph/:symbol', (req, res) => {
   controller.addOnePoint(req, res);
-});//use query to sp. time length
+}); //use query to sp. time length
 app.put('/graph/:symbol', (req, res) => {
   controller.updatePrice(req, res);
 });
 app.delete('/graph/:symbol', (req, res) => {
   controller.deleteOnePoint(req, res);
-});//use query to sp. time length
+}); //use query to sp. time length
 
 app.listen(port, () => { console.log(`Graph server now running on ${port}`); });
