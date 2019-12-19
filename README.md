@@ -1,4 +1,4 @@
-How to start application:
+# How to start application:
 
 ## Step 1
 
@@ -33,3 +33,14 @@ npm run build
 to compile with webpack and babel
 
 Open browser to localhost:3001
+
+# API Endpoints
+
+## Create
+Query timeframe in search: `?timeframe=1M`.<br />POST to `/graph/:symbol`
+## Read
+Query timeframe in search: `?timeframe=1M`.<br />GET to `/graph/:symbol`
+## Update
+Query timeframe in search: `?timeframe=1M`.<br />PUT to `/graph/:symbol`
+## Delete
+Query timeframe in search: `?timeframe=1M`.<br />DELETE to `/graph/:symbol`
