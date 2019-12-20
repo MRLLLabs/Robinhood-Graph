@@ -9,12 +9,14 @@
     "build": "webpack -w -d --mode=production",
     "seed": "node seeding/seed.js",
     "test": "jest --coverage --colors",
-    "test:watch": "jest --watch --coverage"
+    "test:watch": "jest --watch --coverage",
+    "seedCassandra": "node Database/cassandradatabase.js"
   },
   "keywords": [],
   "author": "Aston Khor <khoraston@gmail.com> (NA)",
   "license": "Aston",
   "dependencies": {
+    "cassandra-driver": "^4.3.1",
     "cors": "^2.8.5",
     "css-loader": "^3.2.1",
     "d3": "^5.14.2",

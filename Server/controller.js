@@ -1,9 +1,9 @@
-const db = require('../database/database.js');
+const db = require('../database/cassandradatabase.js');
 
 module.exports.getPoints = (req, res) => {
   if (req.query.timeframe){
     debugger;
-    // db.getTimePoints((err, data) => {
+    // db.getTimeFrame((err, data) => {
     //   if (err) {
     //     console.log('Getting timeframe points data err: ', err);
     //     res.status(400).send();
@@ -12,15 +12,7 @@ module.exports.getPoints = (req, res) => {
     //   }
     // });
   } else {
-    debugger;
-    // db.getAllPoints((err, data) => {
-    //   if (err) {
-    //     console.log('Getting all points data err: ', err);
-    //     res.status(400).send();
-    //   } else {
-    //     res.status(200).send(JSON.stringify(data));
-    //   }
-    // });
+    res.status(400).send();
   }
 }
 
