@@ -13,7 +13,7 @@ app.use('/:symbol', express.static(path.join(__dirname, '../public')));
 
 app.get('/graph/:symbol', (req, res) => {
   controller.getPoints(req, res);
-}); //if query time length specified, return sp. time else return all
+});
 app.post('/graph/:symbol', (req, res) => {
   controller.addOnePoint(req, res);
 }); //use query to sp. time length
