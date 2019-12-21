@@ -1,6 +1,12 @@
 const express = require('express');
 const path = require('path');
-const controller = require('./controller.js');
+const dbchoice = process.argv[2];
+let controller;
+if(dbchoice === 'cassandra'){
+  controller = require('./controller_cassandra.js');
+} else if (dbchoice === 'postgresql'){
+  controller = require('./controller_postgresql.js');
+}
 const cors = require('cors');
 const compression = require('compression');
 const port = 3001;
@@ -12,15 +18,27 @@ app.use('/', express.static(path.resolve(__dirname, '../public')));
 app.use('/:symbol', express.static(path.join(__dirname, '../public')));
 
 app.get('/graph/:symbol', (req, res) => {
+  if(req.query.timeframe === undefined){
+    req.query.timeframe = '1d';
+  }
   controller.getPoints(req, res);
 });
 app.post('/graph/:symbol', (req, res) => {
+  if(req.query.timeframe === undefined){
+    req.query.timeframe = '1d';
+  }
   controller.addOnePoint(req, res);
 }); //use query to sp. time length
 app.put('/graph/:symbol', (req, res) => {
+  if(req.query.timeframe === undefined){
+    req.query.timeframe = '1d';
+  }
   controller.updatePrice(req, res);
 });
 app.delete('/graph/:symbol', (req, res) => {
+  if(req.query.timeframe === undefined){
+    req.query.timeframe = '1d';
+  }
   controller.deleteOnePoint(req, res);
 }); //use query to sp. time length
 

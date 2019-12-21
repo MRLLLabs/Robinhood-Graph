@@ -2,9 +2,11 @@ const fs = require('fs');
 const path = require('path');
 const faker = require('faker');
 const { promisify } = require('util');
+const moment = require('moment');
+const { exec } = require('child_process');
+const execp = promisify(exec);
 const appendFile = promisify(fs.appendFile);
 const unlink = promisify(fs.unlink);
-const moment = require('moment');
 
 const tagslist = ['3D Printing', 'Accounting', 'Aerospace & Defense', 'Agriculture', 'Airlines', 'Alternative Medicine', 'Animation', 'Apparel & Footwear', 'Architecture', 'Arts', 'Arts & Crafts', 'Asset Management', 'Audio', 'Automation', 'Automotive', 'Banking & Mortgages', 'Beverages', 'Biotechnology', 'Broadcasting', 'Building Materials', 'Business Supplies', 'Chemicals', 'Civil Engineering', 'Cloud Services', 'Communications', 'Computer Hardware', 'Construction', 'Construction Contractors & Services', 'Consulting & Professional Services', 'Consumer Discretionary', 'Consumer Electronics', 'Consumer Goods', 'Consumer Staples', 'Corporate & Business', 'Cosmetics', 'Design', 'E-Commerce & Marketplaces', 'E-Learning', 'Education', 'Electrical', 'Energy', 'Energy & Utilities', 'Entertainment & Recreation', 'Events', 'Eyewear', 'Facilities', 'Family Services', 'Finance', 'Financial Services', 'Fine Art', 'Firearms', 'Fishery', 'Food', 'Food Production', 'Forums', 'Fundraising', 'Gambling & Casinos', 'Government', 'Ground Transportation', 'Health & Wellness', 'Health Care', 'Higher Education', 'Home & Furniture', 'Home Improvement', 'Human Resources', 'Import & Export', 'Industrials & Manufacturing', 'Information Technology & Services', 'Insurance', 'International Relations', 'International Trade', 'Internet', 'Investment', 'Investment Banking', 'Investment Management', 'Jewelry, Watches & Luxury Goods', 'Judiciary', 'Law Enforcement', 'Legal Services', 'Libraries', 'Machinery', 'Maritime', 'Market Research', 'Marketing & Advertising', 'Mechanical Engineering', 'Media', 'Medicine', 'Military', 'Mining & Metals', 'Movies & TV', 'Museums', 'Music', 'Nanotechnology', 'Networking', 'Non-Profit & Philanthropy', 'Oil & Gas', 'Outsourcing', 'Packaging & Containers', 'Paper Goods', 'Payments', 'Performing Arts', 'Pharmaceuticals', 'Pharmacy', 'Photography', 'Plastics', 'Plumbing', 'Political Organization', 'Primary & Secondary Education', 'Printing', 'Public Relations', 'Publishing', 'Ranching', 'Real Estate', 'Religion', 'Renewables & Environment', 'Restaurants', 'Retail', 'Sanitization Services', 'Scientific & Academic Research', 'Security', 'Services', 'Shipbuilding', 'Shipping & Logistics', 'Society', 'Sporting Goods', 'Sports & Fitness', 'Stores', 'Talent Agencies', 'Technology', 'Telecommunications', 'Textiles', 'Tobacco', 'Tools', 'Translation', 'Transportation', 'Travel & Leisure', 'Utilities', 'Venture Capital', 'Veterinary', 'Video Games', 'Warehousing', 'Web Services & Apps', 'Wholesale'];
 
@@ -103,7 +105,7 @@ async function symbolloop() {
     let timesprices = {};
     if (!round) {
       for (let i = 0; i < identifier; i++) {
-        timesprices[time.format('YYYY-MM-DD HH:mm')] = newPrice;
+        timesprices[Date.parse(time.format('YYYY-MM-DD HH:mm'))] = newPrice;
         newPrice += ((Math.random() - 0.5) * delta * 2);
         newPrice = Math.round(newPrice * 100) / 100;
         if (newPrice < 0) {
@@ -122,7 +124,7 @@ async function symbolloop() {
       let cfTime = moment(time.format('YYYY-MM-DD HH:mm'));
       cfTime.subtract(identifier[0], identifier[1]);
       while (time.isSameOrAfter(cfTime)) {
-        timesprices[time.format('YYYY-MM-DD HH:mm')] = newPrice;
+        timesprices[Date.parse(time.format('YYYY-MM-DD HH:mm'))] = newPrice;
         newPrice += ((Math.random() - 0.5) * delta * 2);
         newPrice = Math.round(newPrice * 100) / 100;
         if (newPrice < 0) {
@@ -167,22 +169,22 @@ async function symbolloop() {
     const prices1yarray = ['\n' + tickerName, JSON.stringify(prices1y)];
     const prices5yarray = ['\n' + tickerName, JSON.stringify(prices5y)];
     for (let keys in prices1d) {
-      sqlprices1darray += `\n${tickerName}|${keys}|${prices1d[keys]}`;
+      sqlprices1darray += `\n${tickerName}|${moment(Number(keys)).format('YYYY-MM-DD HH:mm')}|${prices1d[keys]}`;
     }
     for (let keys in prices1w) {
-      sqlprices1warray += `\n${tickerName}|${keys}|${prices1w[keys]}`;
+      sqlprices1warray += `\n${tickerName}|${moment(Number(keys)).format('YYYY-MM-DD HH:mm')}|${prices1w[keys]}`;
     }
     for (let keys in prices1m) {
-      sqlprices1marray += `\n${tickerName}|${keys}|${prices1m[keys]}`;
+      sqlprices1marray += `\n${tickerName}|${moment(Number(keys)).format('YYYY-MM-DD HH:mm')}|${prices1m[keys]}`;
     }
     for (let keys in prices3m) {
-      sqlprices3marray += `\n${tickerName}|${keys}|${prices3m[keys]}`;
+      sqlprices3marray += `\n${tickerName}|${moment(Number(keys)).format('YYYY-MM-DD HH:mm')}|${prices3m[keys]}`;
     }
     for (let keys in prices1y) {
-      sqlprices1yarray += `\n${tickerName}|${keys}|${prices1y[keys]}`;
+      sqlprices1yarray += `\n${tickerName}|${moment(Number(keys)).format('YYYY-MM-DD HH:mm')}|${prices1y[keys]}`;
     }
     for (let keys in prices5y) {
-      sqlprices5yarray += `\n${tickerName}|${keys}|${prices5y[keys]}`;
+      sqlprices5yarray += `\n${tickerName}|${moment(Number(keys)).format('YYYY-MM-DD HH:mm')}|${prices5y[keys]}`;
     }
     const tags = ['\n' + tickerName];
     let tagscounter = 0;
@@ -222,7 +224,14 @@ async function symbolloop() {
     }
   }
 }
-symbolloop().catch(error => console.error(error));
-
-// tr '"' "'" < prices_1d.csv > prices_1d_new.csv converts double quotes to single quotes from prices_1d.csv and spits to prices_1d_new.csv
-// tr '"' "'" < prices_1d.csv > prices_1d_new.csv && tr '"' "'" < prices_1w.csv > prices_1w_new.csv && tr '"' "'" < prices_1m.csv > prices_1m_new.csv && tr '"' "'" < prices_3m.csv > prices_3m_new.csv && tr '"' "'" < prices_1y.csv > prices_1y_new.csv && tr '"' "'" < prices_5y.csv > prices_5y_new.csv
+symbolloop()
+.then(() => {
+  execp(`tr '"' "'" < /Users/hyungjinlee/Documents/hackreactor/mrlllabs/Robinhood-Graph/Seeding/csvs/prices_1d.csv > /Users/hyungjinlee/Documents/hackreactor/mrlllabs/Robinhood-Graph/Seeding/csvs/cql_prices_1d.csv && tr '"' "'" < /Users/hyungjinlee/Documents/hackreactor/mrlllabs/Robinhood-Graph/Seeding/csvs/prices_1w.csv > /Users/hyungjinlee/Documents/hackreactor/mrlllabs/Robinhood-Graph/Seeding/csvs/cql_prices_1w.csv && tr '"' "'" < /Users/hyungjinlee/Documents/hackreactor/mrlllabs/Robinhood-Graph/Seeding/csvs/prices_1m.csv > /Users/hyungjinlee/Documents/hackreactor/mrlllabs/Robinhood-Graph/Seeding/csvs/cql_prices_1m.csv && tr '"' "'" < /Users/hyungjinlee/Documents/hackreactor/mrlllabs/Robinhood-Graph/Seeding/csvs/prices_3m.csv > /Users/hyungjinlee/Documents/hackreactor/mrlllabs/Robinhood-Graph/Seeding/csvs/cql_prices_3m.csv && tr '"' "'" < /Users/hyungjinlee/Documents/hackreactor/mrlllabs/Robinhood-Graph/Seeding/csvs/prices_1y.csv > /Users/hyungjinlee/Documents/hackreactor/mrlllabs/Robinhood-Graph/Seeding/csvs/cql_prices_1y.csv && tr '"' "'" < /Users/hyungjinlee/Documents/hackreactor/mrlllabs/Robinhood-Graph/Seeding/csvs/prices_5y.csv > /Users/hyungjinlee/Documents/hackreactor/mrlllabs/Robinhood-Graph/Seeding/csvs/cql_prices_5y.csv`)
+})
+.then(() => {
+  execp('cqlsh -u cassandra -p cassandra -f /Users/hyungjinlee/Documents/hackreactor/mrlllabs/Robinhood-Graph/Seeding/cassandra/seed.cql')
+})
+.then(() => {
+  execp('psql -d rhgraph -f /Users/hyungjinlee/Documents/hackreactor/mrlllabs/Robinhood-Graph/Seeding/postgresql/seed.sql')
+})
+.catch(error => console.error(error));
