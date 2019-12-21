@@ -11,8 +11,7 @@
     "seed": "node seeding/seed.js",
     "test": "jest --coverage --colors",
     "test:watch": "jest --watch --coverage",
-    "seedCassandra": "node Seeding/cassandra/seed.js",
-    "writesymbolscsv": "node Seeding/writecsvs.js"
+    "writeandseed": "node Seeding/writecsvsandseed.js"
   },
   "keywords": [],
   "author": "Jin Lee <leehyungjin4u@gmail.com> (NA)",

@@ -20,7 +20,7 @@ client.connect()
 //     client.shutdown();
 //   });
   
-module.getSymbolInfo = (ticker, cb) => {
+module.exports.getSymbolInfo = (ticker, cb) => {
   client.execute(`SELECT * FROM SYMBOLS WHERE symbol='${ticker}'`)
     .then(result => {
       cb(null, result.rows);

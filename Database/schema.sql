@@ -1,3 +1,12 @@
+DROP TABLE IF EXISTS businesses CASCADE;
+DROP TABLE tags;
+DROP TABLE prices_1d;
+DROP TABLE prices_1w;
+DROP TABLE prices_1m;
+DROP TABLE prices_3m;
+DROP TABLE prices_1y;
+DROP TABLE prices_5y;
+
 CREATE TABLE businesses (
   symbol VARCHAR (10) PRIMARY KEY,
   bname VARCHAR (50),

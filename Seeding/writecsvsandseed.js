@@ -36,7 +36,24 @@ async function symbolloop() {
   if (fs.existsSync(path.resolve(__dirname, 'csvs/tags.csv'))) {
     await unlink(path.resolve(__dirname, 'csvs/tags.csv'));
   }
-
+  if (fs.existsSync(path.resolve(__dirname, 'csvs/cql_prices_1d.csv'))) {
+    await unlink(path.resolve(__dirname, 'csvs/cql_prices_1d.csv'));
+  }
+  if (fs.existsSync(path.resolve(__dirname, 'csvs/cql_prices_1w.csv'))) {
+    await unlink(path.resolve(__dirname, 'csvs/cql_prices_1w.csv'));
+  }
+  if (fs.existsSync(path.resolve(__dirname, 'csvs/cql_prices_1m.csv'))) {
+    await unlink(path.resolve(__dirname, 'csvs/cql_prices_1m.csv'));
+  }
+  if (fs.existsSync(path.resolve(__dirname, 'csvs/cql_prices_3m.csv'))) {
+    await unlink(path.resolve(__dirname, 'csvs/cql_prices_3m.csv'));
+  }
+  if (fs.existsSync(path.resolve(__dirname, 'csvs/cql_prices_1y.csv'))) {
+    await unlink(path.resolve(__dirname, 'csvs/cql_prices_1y.csv'));
+  }
+  if (fs.existsSync(path.resolve(__dirname, 'csvs/cql_prices_5y.csv'))) {
+    await unlink(path.resolve(__dirname, 'csvs/cql_prices_5y.csv'));
+  }
   if (fs.existsSync(path.resolve(__dirname, 'csvs/sql_prices_1d.csv'))) {
     await unlink(path.resolve(__dirname, 'csvs/sql_prices_1d.csv'));
   }
@@ -133,10 +150,10 @@ async function symbolloop() {
         time.add(timeamount, minorday);
         if (time.minutes() + time.hours() * 60 <= 540) {
           time.subtract(1, 'day');
+          time.set({ hour: 16, minute: 0 });
         }
         if (time.format('ddd') === 'SUN') {
           time.subtract(2, 'day');
-          time.set({ hour: 16, minute: 0 });
         }
       }
     }
@@ -226,12 +243,18 @@ async function symbolloop() {
 }
 symbolloop()
 .then(() => {
-  execp(`tr '"' "'" < /Users/hyungjinlee/Documents/hackreactor/mrlllabs/Robinhood-Graph/Seeding/csvs/prices_1d.csv > /Users/hyungjinlee/Documents/hackreactor/mrlllabs/Robinhood-Graph/Seeding/csvs/cql_prices_1d.csv && tr '"' "'" < /Users/hyungjinlee/Documents/hackreactor/mrlllabs/Robinhood-Graph/Seeding/csvs/prices_1w.csv > /Users/hyungjinlee/Documents/hackreactor/mrlllabs/Robinhood-Graph/Seeding/csvs/cql_prices_1w.csv && tr '"' "'" < /Users/hyungjinlee/Documents/hackreactor/mrlllabs/Robinhood-Graph/Seeding/csvs/prices_1m.csv > /Users/hyungjinlee/Documents/hackreactor/mrlllabs/Robinhood-Graph/Seeding/csvs/cql_prices_1m.csv && tr '"' "'" < /Users/hyungjinlee/Documents/hackreactor/mrlllabs/Robinhood-Graph/Seeding/csvs/prices_3m.csv > /Users/hyungjinlee/Documents/hackreactor/mrlllabs/Robinhood-Graph/Seeding/csvs/cql_prices_3m.csv && tr '"' "'" < /Users/hyungjinlee/Documents/hackreactor/mrlllabs/Robinhood-Graph/Seeding/csvs/prices_1y.csv > /Users/hyungjinlee/Documents/hackreactor/mrlllabs/Robinhood-Graph/Seeding/csvs/cql_prices_1y.csv && tr '"' "'" < /Users/hyungjinlee/Documents/hackreactor/mrlllabs/Robinhood-Graph/Seeding/csvs/prices_5y.csv > /Users/hyungjinlee/Documents/hackreactor/mrlllabs/Robinhood-Graph/Seeding/csvs/cql_prices_5y.csv`)
+  execp(`tr '"' "'" < /Users/hyungjinlee/Documents/hackreactor/mrlllabs/Robinhood-Graph/Seeding/csvs/prices_1d.csv > /Users/hyungjinlee/Documents/hackreactor/mrlllabs/Robinhood-Graph/Seeding/csvs/cql_prices_1d.csv && tr '"' "'" < /Users/hyungjinlee/Documents/hackreactor/mrlllabs/Robinhood-Graph/Seeding/csvs/prices_1w.csv > /Users/hyungjinlee/Documents/hackreactor/mrlllabs/Robinhood-Graph/Seeding/csvs/cql_prices_1w.csv && tr '"' "'" < /Users/hyungjinlee/Documents/hackreactor/mrlllabs/Robinhood-Graph/Seeding/csvs/prices_1m.csv > /Users/hyungjinlee/Documents/hackreactor/mrlllabs/Robinhood-Graph/Seeding/csvs/cql_prices_1m.csv && tr '"' "'" < /Users/hyungjinlee/Documents/hackreactor/mrlllabs/Robinhood-Graph/Seeding/csvs/prices_3m.csv > /Users/hyungjinlee/Documents/hackreactor/mrlllabs/Robinhood-Graph/Seeding/csvs/cql_prices_3m.csv && tr '"' "'" < /Users/hyungjinlee/Documents/hackreactor/mrlllabs/Robinhood-Graph/Seeding/csvs/prices_1y.csv > /Users/hyungjinlee/Documents/hackreactor/mrlllabs/Robinhood-Graph/Seeding/csvs/cql_prices_1y.csv && tr '"' "'" < /Users/hyungjinlee/Documents/hackreactor/mrlllabs/Robinhood-Graph/Seeding/csvs/prices_5y.csv > /Users/hyungjinlee/Documents/hackreactor/mrlllabs/Robinhood-Graph/Seeding/csvs/cql_prices_5y.csv`);
 })
 .then(() => {
-  execp('cqlsh -u cassandra -p cassandra -f /Users/hyungjinlee/Documents/hackreactor/mrlllabs/Robinhood-Graph/Seeding/cassandra/seed.cql')
+  execp('cqlsh -u cassandra -p cassandra -f /Users/hyungjinlee/Documents/hackreactor/mrlllabs/Robinhood-Graph/Database/schema.cql');
 })
 .then(() => {
-  execp('psql -d rhgraph -f /Users/hyungjinlee/Documents/hackreactor/mrlllabs/Robinhood-Graph/Seeding/postgresql/seed.sql')
+  execp('psql -d rhgraph -f /Users/hyungjinlee/Documents/hackreactor/mrlllabs/Robinhood-Graph/Database/schema.sql');
+})
+.then(() => {
+  execp('cqlsh -u cassandra -p cassandra -f /Users/hyungjinlee/Documents/hackreactor/mrlllabs/Robinhood-Graph/Seeding/cassandra/seed.cql');
+})
+.then(() => {
+  execp('psql -d rhgraph -f /Users/hyungjinlee/Documents/hackreactor/mrlllabs/Robinhood-Graph/Seeding/postgresql/seed.sql');
 })
 .catch(error => console.error(error));
