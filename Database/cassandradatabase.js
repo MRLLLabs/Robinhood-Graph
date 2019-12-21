@@ -29,3 +29,5 @@ module.exports.getTimeFrame = (cb) => {
       cb(err);
     })
 }
+
+module.exports.client = client;

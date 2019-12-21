@@ -10,11 +10,12 @@
     "seed": "node seeding/seed.js",
     "test": "jest --coverage --colors",
     "test:watch": "jest --watch --coverage",
-    "seedCassandra": "node Database/cassandradatabase.js"
+    "seedCassandra": "node Seeding/cassandra/seed.js",
+    "writesymbolscsv": "node Seeding/writecsvs.js"
   },
   "keywords": [],
-  "author": "Aston Khor <khoraston@gmail.com> (NA)",
-  "license": "Aston",
+  "author": "Jin Lee <leehyungjin4u@gmail.com> (NA)",
+  "license": "Jin",
   "dependencies": {
     "cassandra-driver": "^4.3.1",
     "cors": "^2.8.5",
@@ -22,6 +23,7 @@
     "d3": "^5.14.2",
     "d3fc": "^14.0.59",
     "express": "^4.17.1",
+    "faker": "^4.1.0",
     "isomorphic-fetch": "^2.2.1",
     "jquery": "^3.4.1",
     "moment": "^2.24.0",

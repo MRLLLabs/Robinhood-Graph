@@ -50,6 +50,7 @@ Query timeframe in search, e.g.: `?timeframe=1M`.<br />POST to `/graph/:symbol`
   }
 }
 ```
+
 ## Read
 Query timeframe in search, e.g.: `?timeframe=1M`.<br />GET to `/graph/:symbol`<br />Response body example:
 ```

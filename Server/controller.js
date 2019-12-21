@@ -1,4 +1,5 @@
 const db = require('../database/cassandradatabase.js');
+// const db = require('../Database/postgresqldatabase.js');
 
 module.exports.getPoints = (req, res) => {
   if (req.query.timeframe){
