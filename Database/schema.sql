@@ -8,7 +8,7 @@ CREATE TABLE businesses (
 CREATE TABLE tags (
   id SERIAL PRIMARY KEY,
   ticker VARCHAR (10) REFERENCES businesses(symbol),
-  tag VARCHAR (50)
+  tag VARCHAR (100)
 );
 
 CREATE TABLE prices_1d (
