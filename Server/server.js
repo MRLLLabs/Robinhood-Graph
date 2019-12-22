@@ -21,24 +21,28 @@ app.get('/graph/:symbol', (req, res) => {
   if(req.query.timeframe === undefined){
     req.query.timeframe = '1d';
   }
+  req.params.symbol = req.params.symbol.toUpperCase();
   controller.getPoints(req, res);
 });
 app.post('/graph/:symbol', (req, res) => {
   if(req.query.timeframe === undefined){
     req.query.timeframe = '1d';
   }
+  req.params.symbol = req.params.symbol.toUpperCase();
   controller.addOnePoint(req, res);
 }); //use query to sp. time length
 app.put('/graph/:symbol', (req, res) => {
   if(req.query.timeframe === undefined){
     req.query.timeframe = '1d';
   }
+  req.params.symbol = req.params.symbol.toUpperCase();
   controller.updatePrice(req, res);
 });
 app.delete('/graph/:symbol', (req, res) => {
   if(req.query.timeframe === undefined){
     req.query.timeframe = '1d';
   }
+  req.params.symbol = req.params.symbol.toUpperCase();
   controller.deleteOnePoint(req, res);
 }); //use query to sp. time length
 

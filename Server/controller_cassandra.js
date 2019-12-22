@@ -9,7 +9,7 @@ module.exports.getPoints = (req, res) => {
         res.status(400).send();
       } else {
         response.symbol = data[0].symbol;
-        response.analysthold = data[0].symbol;
+        response.analysthold = data[0].analysthold;
         response.name = data[0].name;
         response.price = Number(data[0].price);
         response.robinhoodowners = data[0].robinhoodowners;
@@ -23,7 +23,6 @@ module.exports.getPoints = (req, res) => {
           dates.sort((a, b) => Date.parse(a) - Date.parse(b));
           let sortedPrices = dates.map(date => Number(data[0].prices[date]));
           response.sortedPrices = sortedPrices;
-          debugger;
           res.status(200).send(JSON.stringify(response));
         }
       });
@@ -38,7 +37,6 @@ module.exports.getPoints = (req, res) => {
         dates.sort((a, b) => Date.parse(a) - Date.parse(b));
         let sortedPrices = dates.map(date => Number(data[0].prices[date]));
         response.sortedPrices = sortedPrices;
-        debugger;
         res.status(200).send(JSON.stringify(response));
       }
     });
