@@ -19,7 +19,6 @@ module.exports.getPoints = (req, res) => {
           console.log('Getting timeframe points data err: ', err);
           res.status(400).send();
         } else {
-          data.sort((a, b) => Date.parse(a.timest) - Date.parse(b.timest));
           let sortedPrices = data.map(date => Number(date.price));
           response.sortedPrices = sortedPrices;
           res.status(200).send(JSON.stringify(response));

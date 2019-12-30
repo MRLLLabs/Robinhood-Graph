@@ -17,7 +17,7 @@ module.exports.getSymbolInfo = (ticker, cb) => {
 
 module.exports.getTimeFrame = (ticker, timeframe, cb) => {
   pool
-    .query(`SELECT * FROM prices_${timeframe} WHERE ticker='${ticker}'`)
+    .query(`SELECT * FROM prices_${timeframe} WHERE ticker='${ticker}' ORDER BY timest ASC`)
     .then(res => {
       cb(null, res.rows);
     })
