@@ -1,3 +1,12 @@
+DROP TABLE IF EXISTS businesses CASCADE;
+DROP TABLE IF EXISTS tags;
+DROP TABLE IF EXISTS prices_1d;
+DROP TABLE IF EXISTS prices_1w;
+DROP TABLE IF EXISTS prices_1m;
+DROP TABLE IF EXISTS prices_3m;
+DROP TABLE IF EXISTS prices_1y;
+DROP TABLE IF EXISTS prices_5y;
+
 CREATE TABLE businesses (
   symbol VARCHAR (10) PRIMARY KEY,
   bname VARCHAR (50),
@@ -8,7 +17,7 @@ CREATE TABLE businesses (
 CREATE TABLE tags (
   id SERIAL PRIMARY KEY,
   ticker VARCHAR (10) REFERENCES businesses(symbol),
-  tag VARCHAR (50)
+  tag VARCHAR (100)
 );
 
 CREATE TABLE prices_1d (
@@ -47,3 +56,10 @@ CREATE TABLE prices_5y (
   price DECIMAL (9, 2),
   timest TIMESTAMP
 );
+
+CREATE INDEX prices_1d_index ON prices_1d (ticker);
+CREATE INDEX prices_1w_index ON prices_1w (ticker);
+CREATE INDEX prices_1m_index ON prices_1m (ticker);
+CREATE INDEX prices_3m_index ON prices_3m (ticker);
+CREATE INDEX prices_1y_index ON prices_1y (ticker);
+CREATE INDEX prices_5y_index ON prices_5y (ticker);
