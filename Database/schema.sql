@@ -56,3 +56,10 @@ CREATE TABLE prices_5y (
   price DECIMAL (9, 2),
   timest TIMESTAMP
 );
+
+CREATE INDEX prices_1d_index ON prices_1d (ticker);
+CREATE INDEX prices_1w_index ON prices_1w (ticker);
+CREATE INDEX prices_1m_index ON prices_1m (ticker);
+CREATE INDEX prices_3m_index ON prices_3m (ticker);
+CREATE INDEX prices_1y_index ON prices_1y (ticker);
+CREATE INDEX prices_5y_index ON prices_5y (ticker);
