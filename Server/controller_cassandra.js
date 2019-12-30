@@ -44,37 +44,34 @@ module.exports.getPoints = (req, res) => {
 }
 
 module.exports.addOnePoint = (req, res) => {
-  if (req.query.timeframe) {
-    console.log(req.body);
-    res.status(200).send(req.body)
-    // const addObj = {
-    //   symbol: req.params.symbol,
-    //   timeframe: 'historicPrice' + req.query.timeframe,
-    //   point: 0  
-    // }
-    // db.addOnePoint();
-  } else {
-    res.status(400).send();
-  }
+  db.addOnePoint(req.params.symbol, req.query.timeframe, req.body.time, req.body.price, (err, data) => {
+    if (err) {
+      console.log('Adding one point err: ', err);
+      res.status(400).send();
+    } else {
+      res.status(200).send('Success adding point');
+    }
+  });
 }
 
 module.exports.updatePrice = (req, res) => {
-  if (req.query.timeframe) {
-    const addObj = {
-      symbol: req.params.symbol,
-      timeframe: 'historicPrice' + req.query.timeframe,
-      point: 0  
+  db.updatePrice(req.params.symbol, req.body.price, (err, data) => {
+    if (err) {
+      console.log('Updating price err: ', err);
+      res.status(400).send();
+    } else {
+      res.status(200).send('Success updating price');
     }
-    // db.addOnePoint();
-  } else {
-    res.status(400).send();
-  }
+  });
 }
 
 module.exports.deleteOnePoint = (req, res) => {
-  if (req.query.timeframe) {
-
-  } else {
-    res.status(400).send();
-  }
+  db.deletePrice(req.params.symbol, req.query.timeframe, req.body.time, (err, data) => {
+    if (err) {
+      console.log('Deleting point err: ', err);
+      res.status(400).send();
+    } else {
+      res.status(200).send('Success deleting point');
+    }
+  });
 }

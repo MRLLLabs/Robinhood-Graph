@@ -6,6 +6,8 @@
   "scripts": {
     "startcas:dev": "nodemon --inspect server/server.js cassandra",
     "startpsg:dev": "nodemon --inspect server/server.js postgresql",
+    "startcas": "node server/server.js cassandra",
+    "startpsg": "node server/server.js postgresql",
     "start": "node server/server.js postgresql",
     "build": "webpack -w -d --mode=production",
     "seed": "node seeding/seed.js",

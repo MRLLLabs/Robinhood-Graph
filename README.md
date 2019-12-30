@@ -41,13 +41,8 @@ Query timeframe in search, e.g.: `?timeframe=1M`.<br />POST to `/graph/:symbol`
 <br />Sample post json body object:
 ```
 {
-  symbol: 'AAAAA',
-  prices: {
-    '2019-12-19': 300.00
-  }, 
-  {
-    '2019-12-19': 330.00
-  }
+  time: '2019-12-19',
+  price: 300.00
 }
 ```
 
