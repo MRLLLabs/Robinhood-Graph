@@ -1,18 +1,28 @@
 config:
   target: "http://localhost:3001"
   phases:
-    - duration: 120
+    - duration: 240
       arrivalRate: 5
-      rampTo: 50
-      name: "Warm up the application"
-    - duration: 600
-      arrivalRate: 50
-      name: "Sustained load"
+      rampTo: 1000
+      name: "Ramp to 1000 rps in 240 seconds"
+    - duration: 1200
+      arrivalRate: 1000
+      name: "Sustained load at 1000 rps for 1200 seconds"
   payload:
     path: "tickers.csv"
     fields:
       - "ticker"
+  variables:
+    timeframe:
+      - "1d"
+      - "1w"
+      - "1m"
+      - "3m"
+      - "1y"
+      - "5y"
+
 scenarios:
   - flow:
+    # - log: "Getting from /graph/{{ ticker }}?timeframe={{ timeframe }}"
     - get:
-        url: "/graph/{{ ticker }}"
+        url: "/graph/{{ ticker }}?timeframe={{ timeframe }}"
