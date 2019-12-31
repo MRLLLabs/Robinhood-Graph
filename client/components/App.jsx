@@ -46,7 +46,7 @@ class App extends React.Component {
 			this.updateBackgroundColor();
 			let { mostRecentDate, mostRecentPrice } = buildChart(this.state[`historicPrice${this.state.view}`], this.state.view, this.updateTicker, this.state.lineColor, this.state.backgroundColor);
 			this.updateTicker(mostRecentPrice);
-			this.updateGlobalColor();
+			// this.updateGlobalColor();
 		});
 	}
 
@@ -65,7 +65,17 @@ class App extends React.Component {
 	populateStocks(callback) {
 		fetch(`/graph${window.location.pathname}${window.location.search}`, { method: 'GET' })
 			.then((response) => response.json())
-			.then((data) => { this.setState(data[0], callback); });
+			.then((data) => {
+        let stateObj = {
+          name: data.name,
+          symbol: data.symbol,
+          analystHold: data.analysthold,
+          price: data.price,
+          robinhoodOwners: data.robinhoodowners,
+          historicPrice1D: data.sortedPrices.slice()
+        }
+        this.setState(stateObj, callback);
+       });
 	}
 
 	initializeTicker() {
@@ -93,15 +103,15 @@ class App extends React.Component {
 		})
 	}
 
-	updateGlobalColor() {
-		fetch(`/updateLineColors`, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({ color: this.state.lineColor })
-		})
-	}
+	// updateGlobalColor() {
+	// 	fetch(`/updateLineColors`, {
+	// 		method: 'POST',
+	// 		headers: {
+	// 			'Content-Type': 'application/json'
+	// 		},
+	// 		body: JSON.stringify({ color: this.state.lineColor })
+	// 	})
+	// }
 
 	updateTicker(price, text = buildViewText(this.state.view)) {
 		if (price !== undefined) this.ticker.update(price.toFixed(2));
