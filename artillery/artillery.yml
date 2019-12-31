@@ -1,0 +1,18 @@
+config:
+  target: "http://localhost:3001"
+  phases:
+    - duration: 120
+      arrivalRate: 5
+      rampTo: 50
+      name: "Warm up the application"
+    - duration: 600
+      arrivalRate: 50
+      name: "Sustained load"
+  payload:
+    path: "tickers.csv"
+    fields:
+      - "ticker"
+scenarios:
+  - flow:
+    - get:
+        url: "/graph/{{ ticker }}"

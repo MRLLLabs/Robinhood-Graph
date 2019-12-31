@@ -1,2 +1,5 @@
 node_modules
 csvs
+keys
+newrelic_agent.log
+artillery/tickers.csv
