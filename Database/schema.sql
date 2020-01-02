@@ -63,3 +63,10 @@ CREATE INDEX prices_1m_index ON prices_1m (ticker);
 CREATE INDEX prices_3m_index ON prices_3m (ticker);
 CREATE INDEX prices_1y_index ON prices_1y (ticker);
 CREATE INDEX prices_5y_index ON prices_5y (ticker);
+
+CREATE INDEX prices_1d_timest_index ON prices_1d (ticker, timest);
+CREATE INDEX prices_1w_timest_index ON prices_1w (ticker, timest);
+CREATE INDEX prices_1m_timest_index ON prices_1m (ticker, timest);
+CREATE INDEX prices_3m_timest_index ON prices_3m (ticker, timest);
+CREATE INDEX prices_1y_timest_index ON prices_1y (ticker, timest);
+CREATE INDEX prices_5y_timest_index ON prices_5y (ticker, timest);

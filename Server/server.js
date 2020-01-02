@@ -1,13 +1,7 @@
 require('newrelic');
 const express = require('express');
 const path = require('path');
-const dbchoice = process.argv[2];
-let controller;
-if(dbchoice === 'cassandra'){
-  controller = require('./controller_cassandra.js');
-} else if (dbchoice === 'postgresql'){
-  controller = require('./controller_postgresql.js');
-}
+const controller = require('./controller_postgresql.js');
 const cors = require('cors');
 const compression = require('compression');
 const port = 3001;
@@ -15,8 +9,8 @@ const app = express();
 
 app.use(compression());
 app.use(cors());
-app.use('/', express.static(path.resolve(__dirname, '../public')));
-app.use('/:symbol', express.static(path.join(__dirname, '../public')));
+app.use('/', express.static(path.resolve(__dirname, '../Public')));
+app.use('/:symbol', express.static(path.join(__dirname, '../Public')));
 
 app.get('/graph/:symbol', (req, res) => {
   if(req.query.timeframe === undefined){
@@ -47,4 +41,4 @@ app.delete('/graph/:symbol', (req, res) => {
   controller.deleteOnePoint(req, res);
 }); //use query to sp. time length
 
-app.listen(port, () => { console.log(`Graph server now running on ${port}`); });
+app.listen(port, () => { console.log('dirname: ', __dirname); console.log(`Graph server now running on ${port}`); });

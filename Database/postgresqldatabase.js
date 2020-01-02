@@ -1,6 +1,9 @@
+const posqlpassword = require('../keys/psqlrootpw');
 const { Pool } = require('pg');
 const moment = require('moment');
 const pool = new Pool({
+  user: 'root',
+  password: psqlpassword,
   database: 'rhgraph'
 });
 

@@ -20,7 +20,6 @@
   "author": "Jin Lee <leehyungjin4u@gmail.com> (NA)",
   "license": "Jin",
   "dependencies": {
-    "cassandra-driver": "^4.3.1",
     "compression": "^1.7.4",
     "cors": "^2.8.5",
     "css-loader": "^3.2.1",
