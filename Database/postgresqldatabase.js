@@ -1,4 +1,4 @@
-const posqlpassword = require('../keys/psqlrootpw');
+const psqlpassword = require('../keys/psqlrootpw');
 const { Pool } = require('pg');
 const moment = require('moment');
 const pool = new Pool({
