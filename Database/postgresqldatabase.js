@@ -5,15 +5,15 @@ let pool;
 const poolProcessor = (ticker) => {
   let host;
   if (ticker < 'C') {
-    host = '54.215.251.18';
+    host = '172.31.9.30';
   } else if (ticker < 'E') {
-    host = '13.57.207.54';
+    host = '172.31.3.116';
   } else if (ticker < 'G') {
-    host = '13.52.182.177';
+    host = '172.31.2.235';
   } else if (ticker < 'I') {
-    host = '13.52.214.153';
+    host = '172.31.4.3';
   } else {
-    host = '52.53.166.241';
+    host = '172.31.0.188';
   }
   pool = new Pool({
     user: 'root',
