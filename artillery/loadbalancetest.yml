@@ -1,0 +1,28 @@
+config:
+  target: "http://52.53.163.179"
+  phases:
+    - duration: 60
+      arrivalRate: 5
+      rampTo: 200
+      name: "Ramp to 200 rps in 60 seconds"
+    - duration: 1200
+      arrivalRate: 200
+      name: "Sustained load at 200 rps for 1200 seconds"
+  payload:
+    path: "tickers.csv"
+    fields:
+      - "ticker"
+  variables:
+    timeframe:
+      - "1d"
+      - "1w"
+      - "1m"
+      - "3m"
+      - "1y"
+      - "5y"
+
+scenarios:
+  - flow:
+    # - log: "Getting from /graph/{{ ticker }}?timeframe={{ timeframe }}"
+    - get:
+        url: "/graph/{{ ticker }}?timeframe={{ timeframe }}"
