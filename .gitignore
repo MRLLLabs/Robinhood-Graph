@@ -3,3 +3,5 @@ csvs
 keys
 newrelic_agent.log
 *.csv
+artillery/tickers.json
+artillery/timeframe.json
