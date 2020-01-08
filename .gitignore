@@ -2,4 +2,6 @@ node_modules
 csvs
 keys
 newrelic_agent.log
-artillery/tickers.csv
+*.csv
+artillery/tickers.json
+artillery/timeframe.json

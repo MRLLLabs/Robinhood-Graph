@@ -1,13 +1,13 @@
 config:
-  target: "http://localhost:3001"
+  target: "http://52.53.224.152"
   phases:
-    - duration: 60
+    - duration: 80
       arrivalRate: 5
-      rampTo: 100
-      name: "Ramp to 100 rps in 60 seconds"
+      rampTo: 1000
+      name: "Ramp to 1000 rps in 60 seconds"
     - duration: 1200
-      arrivalRate: 100
-      name: "Sustained load at 100 rps for 1200 seconds"
+      arrivalRate: 1000
+      name: "Sustained load at 1000 rps for 1200 seconds"
   payload:
     path: "tickers.csv"
     fields:
